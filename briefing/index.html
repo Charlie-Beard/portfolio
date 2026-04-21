@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Daily Briefing Preview | Fenimore Harper</title>
+    <meta name="description" content="Preview how Fenimore Harper adapts a morning briefing for communications, executive, policy, and resilience audiences.">
+    <link rel="icon" href="/assets/media/favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+  </head>
+  <body data-page="briefing">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div data-site-header></div>
+    <main id="main">
+      <section class="page-hero">
+        <div class="page-hero__grid">
+          <div class="page-hero__copy" data-reveal>
+            <span class="eyebrow">Public product preview</span>
+            <h1>A morning briefing should change shape with the person reading it.</h1>
+            <p>
+              Fenimore Harper already offers a public daily TikTok briefing as a window into the wider intelligence product. This page expands that idea into a more persuasive product experience: the same signal set, tailored to different decision-makers without losing the plot.
+            </p>
+            <div class="audience-switch" data-audience-switch>
+              <button class="is-active" type="button" data-audience="comms">Communications</button>
+              <button type="button" data-audience="executive">Executive</button>
+              <button type="button" data-audience="policy">Policy</button>
+              <button type="button" data-audience="risk">Risk</button>
+            </div>
+          </div>
+          <aside class="page-hero__card panel" data-reveal>
+            <div class="panel__label">Preview principles</div>
+            <div class="detail-list">
+              <li>Same monitored signal base, different emphasis by role</li>
+              <li>No extra dashboard training required to understand the brief</li>
+              <li>Clear CTA into a trial or subscriber briefing</li>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section section--tight">
+        <div class="audience-grid" data-audience-cards></div>
+      </section>
+
+      <section class="section">
+        <div class="briefing-layout">
+          <div class="briefing-sidebar" data-briefing-summary></div>
+          <div class="briefing-panel" data-briefing-detail></div>
+        </div>
+      </section>
+
+      <section class="section section--tight">
+        <div class="band band--split" data-reveal>
+          <div>
+            <div class="section-kicker">Lead generation</div>
+            <h2 style="font-size:clamp(2rem, 5vw, 3.6rem);">A stronger public preview makes the private product easier to buy.</h2>
+            <p style="margin-top:18px;">
+              Instead of describing an abstract AI briefing, this page lets prospects feel what a tailored morning deliverable looks like. That shortens the leap from curiosity to trial briefing.
+            </p>
+          </div>
+          <div class="form-card">
+            <form class="form-grid" data-mailto-form data-subject="Fenimore Harper daily briefing subscription enquiry">
+              <div class="field">
+                <label for="subscriber-name">Name</label>
+                <input id="subscriber-name" name="name" type="text" required>
+              </div>
+              <div class="field">
+                <label for="subscriber-email">Email</label>
+                <input id="subscriber-email" name="email" type="email" required>
+              </div>
+              <div class="field field--full">
+                <label for="subscriber-audience">Which briefing style interests you?</label>
+                <select id="subscriber-audience" name="audience">
+                  <option>Communications lead</option>
+                  <option>Executive team</option>
+                  <option>Policy and public affairs</option>
+                  <option>Risk and resilience</option>
+                </select>
+              </div>
+              <div class="field field--full">
+                <label for="subscriber-notes">What would you want monitored?</label>
+                <textarea id="subscriber-notes" name="watchlist" placeholder="Example: brand reputation, election deepfakes, financial scams, product misinformation"></textarea>
+              </div>
+              <div class="field field--full">
+                <button class="button" type="submit">Draft my subscription enquiry</button>
+              </div>
+              <div class="field field--full">
+                <div class="form-status" data-form-status aria-live="polite"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div data-site-footer></div>
+    <script src="/assets/js/data.js"></script>
+    <script src="/assets/js/site.js"></script>
+    <script src="/assets/js/briefing.js"></script>
+  </body>
+</html>
