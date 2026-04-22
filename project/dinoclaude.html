@@ -63,8 +63,8 @@
       const CHAR_DUCK_H = 30;   //  5 × P
 
       // ── Physics ───────────────────────────────────────────────────────────────
-      const GRAVITY  = 0.70;
-      const JUMP_VY  = -15;
+      const GRAVITY  = 0.229;  // reduced for 1.75× hang time (same peak height)
+      const JUMP_VY  = -10.71; // +25% air time via higher peak
       const BASE_SPD = 5;
       const MAX_SPD  = 15;
 
@@ -308,7 +308,7 @@
 
         frame++;
         score = Math.floor(frame / 8);
-        speed = Math.min(BASE_SPD + score * 0.009, MAX_SPD);
+        speed = Math.min(BASE_SPD + score * 0.0117, MAX_SPD);
 
         if (!char.ground) {
           char.vy += GRAVITY;
@@ -410,8 +410,17 @@
         }
         ctx.restore();
 
-        // Pixel art label centred on the brick face
-        drawPxLabel('CONTEXT', 'LIMIT', ob.x, ob.y, ob.w, ob.h, '#FFD8C0');
+        // Canvas text label centred on the brick face
+        ctx.save();
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.font = 'bold 13px monospace';
+        ctx.fillStyle = 'rgba(0,0,0,0.45)';
+        ctx.fillText('CONTEXT', ob.x + ob.w / 2 + 1, ob.y + ob.h / 2 - 9 + 1);
+        ctx.fillText('LIMIT',   ob.x + ob.w / 2 + 1, ob.y + ob.h / 2 + 9 + 1);
+        ctx.fillStyle = '#FFD8C0';
+        ctx.fillText('CONTEXT', ob.x + ob.w / 2, ob.y + ob.h / 2 - 9);
+        ctx.fillText('LIMIT',   ob.x + ob.w / 2, ob.y + ob.h / 2 + 9);
+        ctx.restore();
       }
 
       // ── Draw cloud ceiling ("OUT OF TOKENS") ──────────────────────────────────
