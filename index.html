@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -42,12 +44,30 @@
             <h2 id="selected-work">Selected Work</h2>
             <p class="section-copy">Five core Spectrum platform products — spanning design systems, telemetry, support, dashboards, and AI-assisted workflows — owned end-to-end.</p>
           </div>
-          <div class="project-grid" data-project-list>
-            <article class="project-card project-card--skeleton" aria-hidden="true"></article>
-            <article class="project-card project-card--skeleton" aria-hidden="true"></article>
-            <article class="project-card project-card--skeleton" aria-hidden="true"></article>
-            <article class="project-card project-card--skeleton" aria-hidden="true"></article>
-            <article class="project-card project-card--skeleton" aria-hidden="true"></article>
+          <div class="project-grid">
+            {% assign sorted_projects = site.projects | sort: "order" %}
+            {% for project in sorted_projects %}
+            <article class="project-card fade-in" data-delay="{{ project.order }}">
+              <div class="project-card__content">
+                <div class="project-card__intro">
+                  <h3 class="project-card__title">{{ project.title | escape }}</h3>
+                  <p class="project-card__summary">{{ project.cardSummary | escape }}</p>
+                </div>
+                <dl class="project-card__meta">
+                  <div>
+                    <dt>Role</dt>
+                    <dd>{{ project.role | escape }}</dd>
+                  </div>
+                  <div>
+                    <dt>Company</dt>
+                    <dd>{{ project.company | escape }}</dd>
+                  </div>
+                </dl>
+                <p class="project-card__impact">{{ project.impact | escape }}</p>
+              </div>
+              <a class="button-link" href="{{ project.url | prepend: site.baseurl }}">View case study</a>
+            </article>
+            {% endfor %}
           </div>
         </section>
       </main>

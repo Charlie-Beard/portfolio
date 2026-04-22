@@ -1,0 +1,21 @@
+title: Charles Beard | Senior Product Manager
+description: Senior Product Manager and CFA Charterholder at J.P.Morgan Chase, leading enterprise investment platforms, analytics, and AI-enabled tooling.
+baseurl: "/portfolio"
+url: "https://charlie-beard.github.io"
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+
+collections:
+  projects:
+    output: true
+    permalink: /project-:name.html
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - scripts/
+  - README.md
+  - "*.mjs"

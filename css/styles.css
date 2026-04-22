@@ -498,6 +498,22 @@ body.is-ready:not(.is-navigating) .page-loader {
   letter-spacing: -0.02em;
 }
 
+.case-study__body h2 {
+  margin: 0 0 0.9rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 1.32rem;
+  letter-spacing: -0.02em;
+}
+
+.case-study__body > h2:first-child {
+  margin-top: 0;
+}
+
+.case-study__body > *:not(h2) + h2 {
+  margin-top: 1.35rem;
+}
+
 .rich-text > :first-child {
   margin-top: 0;
 }

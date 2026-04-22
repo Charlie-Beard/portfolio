@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="{{ page.subtitle | default: page.title | escape }}">
+    <title>{{ page.title | escape }} | Charles Beard</title>
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/styles.css">
+    <script type="module" src="{{ site.baseurl }}/js/main.js"></script>
+  </head>
+  <body class="is-loading" data-page="project">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="page-loader" aria-hidden="true">
+      <div class="page-loader__bar"></div>
+    </div>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="site-header__inner">
+          <a class="site-brand" href="{{ site.baseurl }}/">Charles Beard</a>
+          <nav class="site-nav" aria-label="Primary">
+            <ul>
+              <li><a href="{{ site.baseurl }}/">Home</a></li>
+              <li><a href="{{ site.baseurl }}/about.html">About</a></li>
+              <li><a href="{{ site.baseurl }}/cv.html">CV</a></li>
+              <li><a href="{{ site.baseurl }}/dinoclaude.html">DinoClaude</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main class="page-content" id="main-content">
+        <article class="case-study">
+          <header class="case-study__header fade-in">
+            <p class="eyebrow">Case Study</p>
+            <h1 class="case-study__title">{{ page.title | escape }}</h1>
+            <p class="case-study__subtitle">{{ page.subtitle | escape }}</p>
+            <dl class="meta-grid">
+              <div>
+                <dt>Role</dt>
+                <dd>{{ page.role | default: "Senior Product Manager" | escape }}</dd>
+              </div>
+              <div>
+                <dt>Company</dt>
+                <dd>{{ page.company | default: "J.P.Morgan Chase" | escape }}</dd>
+              </div>
+              <div>
+                <dt>Timeline</dt>
+                <dd>{{ page.timeline | default: "Recent" | escape }}</dd>
+              </div>
+            </dl>
+          </header>
+
+          {% if page.heroImage %}
+          <figure class="case-study__media fade-in" data-delay="2">
+            <img src="{{ site.baseurl }}/{{ page.heroImage }}" alt="{{ page.heroAlt | default: page.title | escape }}" loading="lazy" width="1280" height="720">
+            {% if page.heroCaption %}<figcaption>{{ page.heroCaption | escape }}</figcaption>{% endif %}
+          </figure>
+          {% endif %}
+
+          <div class="case-study__body rich-text fade-in" data-delay="2">
+            {{ content }}
+          </div>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer__inner">
+          <p><a href="mailto:charlesjohnbeard@gmail.com">charlesjohnbeard@gmail.com</a> <span aria-hidden="true">/</span> <a href="https://www.linkedin.com/in/charlesjohnbeard/" target="_blank" rel="noreferrer">LinkedIn</a></p>
+          <p>&copy; <span data-year></span> Charles Beard</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
