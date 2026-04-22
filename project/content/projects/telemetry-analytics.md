@@ -3,7 +3,7 @@ title: Telemetry and Analytics
 slug: telemetry-analytics
 subtitle: Shared telemetry and analytics capability giving Spectrum products the insight to make better decisions.
 role: Senior Product Manager
-company: J.P. Morgan Asset Management | Spectrum
+company: J.P.Morgan Chase | Spectrum
 timeline: 2019 - Present
 impact: Established shared platform insight across 100+ applications, enabling more informed product and governance decisions.
 cardSummary: Led strategic telemetry and analytics capabilities, including Pendo.io integration, to bring product insight to thousands of Spectrum users.
