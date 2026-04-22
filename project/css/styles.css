@@ -116,10 +116,10 @@ select {
 
 .site-header__inner {
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
-  gap: 0.9rem;
+  gap: 0.5rem;
   padding-top: calc(var(--header-padding) + var(--safe-top));
   padding-bottom: var(--header-padding);
   transition: padding var(--transition);
@@ -143,10 +143,9 @@ body.is-scrolled .site-header__inner {
 }
 
 .site-nav ul {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.35rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -154,15 +153,16 @@ body.is-scrolled .site-header__inner {
 
 .site-nav a {
   display: block;
-  padding: 0.72rem 0.8rem;
+  padding: 0.45rem 0.55rem;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--background-soft);
   color: var(--text-muted);
   text-decoration: none;
   text-align: center;
-  font-size: 0.94rem;
+  font-size: 0.78rem;
   line-height: 1.1;
+  white-space: nowrap;
 }
 
 .site-nav a[aria-current="page"] {
@@ -659,6 +659,8 @@ body.is-ready:not(.is-navigating) .page-loader {
     border-radius: 0;
     background: transparent;
     text-align: left;
+    font-size: 0.94rem;
+    white-space: nowrap;
   }
 
   .site-nav a[aria-current="page"] {
@@ -729,10 +731,6 @@ body.is-ready:not(.is-navigating) .page-loader {
 @media (max-width: 23.5rem) {
   :root {
     --page-gutter: 0.9rem;
-  }
-
-  .site-nav ul {
-    grid-template-columns: 1fr;
   }
 
   .project-card__meta {

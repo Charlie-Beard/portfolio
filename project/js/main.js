@@ -179,9 +179,7 @@ function createProjectCardMarkup(project) {
 async function renderProjectCards() {
   const list = document.querySelector("[data-project-list]");
 
-  if (!list) {
-    return;
-  }
+  if (!list) return;
 
   try {
     const projects = await Promise.all(PROJECT_SLUGS.map((slug) => loadProject(slug)));
