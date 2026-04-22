@@ -535,18 +535,21 @@
     ctx.save();
     ctx.textBaseline = 'top';
 
-    // Clouds — multi-line, subtle blue-grey tint
-    ctx.font = '12px monospace';
-    const LINE_H = 13;
+    // Clouds — multi-line, blue tint
+    ctx.font = '13px monospace';
+    const LINE_H = 14;
     for (const c of bgClouds) {
       const cx = Math.round(c.x);
       const cy = Math.round(c.y * H);
-      // soft shadow pass for depth
-      ctx.fillStyle = 'rgba(100,140,200,0.07)';
+      // dark shadow pass for depth
+      ctx.fillStyle = 'rgba(20,60,180,0.22)';
       c.lines.forEach((l, i) => ctx.fillText(l, cx + 1, cy + i * LINE_H + 1));
-      // main colour: very faint blue-white
-      ctx.fillStyle = 'rgba(160,190,230,0.18)';
+      // main colour: vivid blue
+      ctx.fillStyle = 'rgba(90,155,255,0.52)';
       c.lines.forEach((l, i) => ctx.fillText(l, cx, cy + i * LINE_H));
+      // bright highlight pass for a lit edge
+      ctx.fillStyle = 'rgba(200,225,255,0.22)';
+      c.lines.forEach((l, i) => ctx.fillText(l, cx - 1, cy + i * LINE_H - 1));
     }
 
     // Birds — slightly warmer, smaller
