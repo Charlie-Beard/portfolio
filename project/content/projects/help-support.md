@@ -7,7 +7,7 @@ company: J.P.Morgan Chase
 timeline: 2019 - Present
 impact: Delivered a consistent, governed support experience for thousands of internal Spectrum users.
 cardSummary: Owned Help and Support as a core platform product, raising experience consistency and reducing fragmented support approaches across Spectrum.
-order: 3
+order: 4
 ---
 ## Problem
 Spectrum serves a broad internal user base across investment, client service, and operations. As the platform expanded, a fragmented support experience became a platform-quality problem — not just an operational inconvenience.

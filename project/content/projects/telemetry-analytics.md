@@ -7,7 +7,7 @@ company: J.P.Morgan Chase
 timeline: 2019 - Present
 impact: Established shared platform insight across 100+ applications, enabling more informed product and governance decisions.
 cardSummary: Led strategic telemetry and analytics capabilities, including Pendo.io integration, to bring product insight to thousands of Spectrum users.
-order: 2
+order: 3
 heroImage: content/projects/images/telemetry-analytics.svg
 heroAlt: Placeholder analytics interface showing product telemetry and platform reporting
 heroCaption: Placeholder concept for shared telemetry and analytics within Spectrum

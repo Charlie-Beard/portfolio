@@ -7,7 +7,7 @@ company: J.P.Morgan Chase
 timeline: 2019 - Present
 impact: Delivered shared portfolio visibility supporting consistent workflows for thousands of internal users across the platform.
 cardSummary: Led a strategic dashboards product to improve workflow visibility and consistency for thousands of internal users across Spectrum.
-order: 4
+order: 5
 ---
 ## Problem
 Spectrum needed shared visibility products that could support investment, client service, and operations users consistently across the platform. Without a strategic dashboards capability, teams risked building local solutions that delivered inconsistent workflow quality and did not scale.

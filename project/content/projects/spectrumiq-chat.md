@@ -7,7 +7,7 @@ company: J.P.Morgan Chase
 timeline: 2019 - Present
 impact: Delivered AI-enabled tooling to thousands of internal users, integrated within Spectrum's core product governance model.
 cardSummary: Led SpectrumIQ Chat — a new AI chat experience — as a governed platform product aligned with Spectrum's broader product strategy.
-order: 5
+order: 1
 ---
 ## Problem
 As AI capabilities became more relevant across enterprise platforms, Spectrum needed a way to introduce them responsibly — in a way that felt useful, resilient, and consistent with the rest of the platform experience.
