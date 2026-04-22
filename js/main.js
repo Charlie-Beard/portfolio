@@ -9,6 +9,7 @@ const PROJECT_SLUGS = [
 ];
 
 const PROJECT_PATH = "content/projects";
+const PROJECT_EXT = ".txt";
 const PAGE_TRANSITION_KEY = "portfolio-page-transition-end";
 
 const LOADER_MESSAGES = [
@@ -135,7 +136,7 @@ function setupYear() {
 }
 
 function getProjectFilePath(slug) {
-  return `${PROJECT_PATH}/${slug}.md`;
+  return `${PROJECT_PATH}/${slug}${PROJECT_EXT}`;
 }
 
 async function loadProject(slug) {
