@@ -9,9 +9,17 @@ const PROJECT_SLUGS = [
 ];
 
 const PROJECT_PATH = "content/projects";
-const PAGE_TRANSITION_MS = 750;
-const PAGE_EXIT_DELAY_MS = 220;
-const PAGE_TRANSITION_KEY = "portfolio-page-transition-start";
+const PAGE_TRANSITION_KEY = "portfolio-page-transition-end";
+
+const LOADER_MESSAGES = [
+  "Reading the work",
+  "Reviewing the details",
+  "Thinking through the approach",
+  "Curating the content",
+  "Loading case study",
+  "Considering the context",
+  "Almost ready",
+];
 
 function escapeHtml(value) {
   return String(value)
@@ -32,81 +40,91 @@ function setupHeaderState() {
 }
 
 function setupPageLoader() {
-  const releaseLoader = () => {
-    let delay = 0;
+  const loader = document.querySelector(".page-loader");
 
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      try {
-        const startedAt = Number(window.sessionStorage.getItem(PAGE_TRANSITION_KEY) || 0);
+  if (loader) {
+    loader.innerHTML = `<p class="page-loader__message"><span class="page-loader__text"></span><span class="page-loader__cursor"></span></p>`;
+  }
 
-        if (startedAt) {
-          delay = Math.max(0, PAGE_TRANSITION_MS - (Date.now() - startedAt));
-        }
-      } catch (error) {
-        delay = 0;
-      }
-    }
+  const textEl = loader?.querySelector(".page-loader__text");
+  let messageInterval = null;
+
+  function startMessages() {
+    if (!textEl) return;
+    let i = Math.floor(Math.random() * LOADER_MESSAGES.length);
+    textEl.textContent = LOADER_MESSAGES[i];
+    messageInterval = setInterval(() => {
+      i = (i + 1) % LOADER_MESSAGES.length;
+      textEl.textContent = LOADER_MESSAGES[i];
+    }, 750);
+  }
+
+  function stopMessages() {
+    clearInterval(messageInterval);
+    messageInterval = null;
+  }
+
+  let pendingEndTime = 0;
+  try {
+    pendingEndTime = Number(window.sessionStorage.getItem(PAGE_TRANSITION_KEY) || 0);
+  } catch (error) {}
+
+  if (pendingEndTime) {
+    startMessages();
+    const delay = Math.max(0, pendingEndTime - Date.now());
 
     window.setTimeout(() => {
       try {
         window.sessionStorage.removeItem(PAGE_TRANSITION_KEY);
-      } catch (error) {
-        // Ignore storage access issues and let the page render normally.
-      }
+      } catch (error) {}
 
+      stopMessages();
       requestAnimationFrame(() => {
         document.body.classList.add("is-ready");
         document.body.classList.remove("is-navigating");
       });
     }, delay);
-  };
+  } else {
+    document.body.classList.add("is-ready");
+  }
 
-  releaseLoader();
-  window.addEventListener("pageshow", releaseLoader);
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+      stopMessages();
+      document.body.classList.add("is-ready");
+      document.body.classList.remove("is-navigating");
+    }
+  });
 
   document.addEventListener("click", (event) => {
     const link = event.target.closest("a[href]");
 
-    if (!link) {
-      return;
-    }
-
-    if (link.target === "_blank" || link.hasAttribute("download")) {
-      return;
-    }
-
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
-      return;
-    }
+    if (!link) return;
+    if (link.target === "_blank" || link.hasAttribute("download")) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
     const url = new URL(link.href, window.location.href);
 
-    if (url.origin !== window.location.origin) {
-      return;
-    }
-
-    if (url.pathname === window.location.pathname && url.hash) {
-      return;
-    }
-
-    if (url.pathname === window.location.pathname && url.search === window.location.search && url.hash === window.location.hash) {
-      return;
-    }
+    if (url.origin !== window.location.origin) return;
+    if (url.pathname === window.location.pathname && url.hash) return;
+    if (url.pathname === window.location.pathname && url.search === window.location.search && url.hash === window.location.hash) return;
 
     event.preventDefault();
+
+    const randomDelay = Math.floor(Math.random() * 1000) + 2000;
+
+    try {
+      window.sessionStorage.setItem(PAGE_TRANSITION_KEY, String(Date.now() + randomDelay));
+    } catch (error) {}
+
     document.body.classList.add("is-navigating");
+    startMessages();
 
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      try {
-        window.sessionStorage.setItem(PAGE_TRANSITION_KEY, String(Date.now()));
-      } catch (error) {
-        // Ignore storage access issues and fall back to a local-only transition.
-      }
-    }
-
-    window.setTimeout(() => {
-      window.location.href = url.href;
-    }, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : PAGE_EXIT_DELAY_MS);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.location.href = url.href;
+      });
+    });
   });
 }
 

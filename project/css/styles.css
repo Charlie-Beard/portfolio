@@ -144,7 +144,7 @@ body.is-scrolled .site-header__inner {
 
 .site-nav ul {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
   gap: 0.55rem;
   margin: 0;
@@ -176,49 +176,39 @@ body.is-scrolled .site-header__inner {
   position: fixed;
   inset: 0;
   z-index: 100;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.96);
-  opacity: 1;
-  visibility: visible;
-  transition: opacity var(--transition), visibility var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
 }
 
-body.is-ready .page-loader {
-  opacity: 0;
-  visibility: hidden;
+body.is-ready:not(.is-navigating) .page-loader {
+  display: none;
 }
 
-body.is-navigating .page-loader {
-  opacity: 1;
-  visibility: visible;
+.page-loader__message {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-family: var(--font-system);
+  letter-spacing: -0.01em;
 }
 
-.page-loader__bar {
-  width: min(12rem, 45vw);
-  height: 0.18rem;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(31, 95, 214, 0.14);
+.page-loader__cursor {
+  display: inline-block;
+  width: 1.5px;
+  height: 1em;
+  background: var(--text-subtle);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: loader-cursor-blink 900ms step-end infinite;
 }
 
-.page-loader__bar::after {
-  content: "";
-  display: block;
-  width: 45%;
-  height: 100%;
-  background: var(--accent);
-  animation: loader-slide 1200ms ease-in-out infinite;
-}
-
-@keyframes loader-slide {
-  0% {
-    transform: translateX(-120%);
-  }
-
-  100% {
-    transform: translateX(260%);
-  }
+@keyframes loader-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .page-content {
@@ -646,26 +636,6 @@ body.is-navigating .page-loader {
   margin: 0;
 }
 
-.fade-in {
-  opacity: 0;
-  transform: translateY(0.8rem);
-  animation: fade-in 460ms ease forwards;
-}
-
-.fade-in[data-delay="2"] {
-  animation-delay: 80ms;
-}
-
-.fade-in[data-delay="3"] {
-  animation-delay: 140ms;
-}
-
-@keyframes fade-in {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 .is-hidden {
   display: none;
@@ -785,4 +755,39 @@ body.is-navigating .page-loader {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ── DinoClaude game page ─────────────────────────────────────────────────── */
+
+body[data-page="dinoclaude"] {
+  overflow: hidden;
+}
+
+body[data-page="dinoclaude"] .page-content {
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body[data-page="dinoclaude"] .site-footer {
+  display: none;
+}
+
+.game-wrapper {
+  flex: 1;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  background: var(--background);
+}
+
+#game-canvas {
+  display: block;
+  position: absolute;
+  inset: 0;
+  touch-action: none;
 }

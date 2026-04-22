@@ -1,30 +1,33 @@
 ---
 title: Help and Support
 slug: help-support
-subtitle: Creating a more consistent support experience for internal users across Spectrum.
+subtitle: A strategic shared support experience for thousands of Spectrum users across investment, client service, and operations.
 role: Senior Product Manager
 company: J.P. Morgan Asset Management | Spectrum
 timeline: 2019 - Present
-impact: Strengthened a shared support experience for thousands of Spectrum users.
-cardSummary: Owned a core Help and Support product designed to improve the user experience across Spectrum.
+impact: Delivered a consistent, governed support experience for thousands of internal Spectrum users.
+cardSummary: Owned Help and Support as a core platform product, raising experience consistency and reducing fragmented support approaches across Spectrum.
 order: 3
 ---
 ## Problem
-Spectrum serves a broad internal user base across investment, client service, and operations. As the platform expanded, support could not remain fragmented if the overall user experience was going to stay high quality.
+Spectrum serves a broad internal user base across investment, client service, and operations. As the platform expanded, a fragmented support experience became a platform-quality problem — not just an operational inconvenience.
 
-Users needed a clearer and more strategic path to help inside the platform, while product teams needed a shared support capability rather than isolated approaches.
+Users needed a clearer, more consistent path to help inside the platform. Product teams needed a shared support capability they could rely on, rather than building isolated approaches that diverged in quality and added cost to the overall estate.
 
 ## Approach
-I included Help and Support in the core product roadmap for Spectrum. The work was shaped by the same product model I used across the platform: define strategic shared capabilities, align teams around them, and use governance to improve consistency over time.
+I included Help and Support in the set of core products I own across the Spectrum roadmap, applying the same governance and prioritisation model used across the platform: define the strategic shared capability, align teams around it, and improve consistency through platform-level governance rather than team-by-team discretion.
 
 ## Solution
-Help and Support became one of the core products supporting Spectrum. It gave teams a more strategic, shared experience for supporting users, rather than relying on disconnected patterns across the application landscape.
+Help and Support became one of the core products supporting Spectrum. It gave the platform a shared, strategically governed support experience — replacing disconnected patterns across the application landscape with a consistent capability teams could build on.
 
-Because it sat inside the broader platform product set, it could be governed and improved alongside the design system, dashboards, analytics, and other shared capabilities.
+Because it sat within the broader platform product set, it could be governed, iterated, and improved alongside the design system, dashboards, analytics, and other shared capabilities — rather than drifting independently.
+
+### Product decisions
+- Owned support as a platform product with its own roadmap, not as a feature left to individual teams
+- Applied platform governance to ensure consistency of experience across the user base
+- Positioned Help and Support as part of the strategic core product portfolio, not an operational add-on
 
 ## Impact
-- Improved the consistency of the support experience for internal users
-- Contributed to a higher-quality overall user experience in Spectrum
-- Reinforced the role of shared core products in platform governance
-
-The most important outcome was that support became part of the product strategy for the platform, not just an operational afterthought.
+- Delivered a consistent, governed support experience for thousands of internal users across Spectrum
+- Reduced fragmentation in how teams approached user support across the platform estate
+- Reinforced the role of shared core products in maintaining platform quality as Spectrum scales
