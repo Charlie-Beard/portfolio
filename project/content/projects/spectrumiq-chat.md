@@ -3,7 +3,7 @@ title: SpectrumIQ Chat
 slug: spectrumiq-chat
 subtitle: AI-enabled chat experience introduced as a strategic core product within Spectrum.
 role: Senior Product Manager
-company: J.P.Morgan Chase | Spectrum
+company: J.P.Morgan Chase
 timeline: 2019 - Present
 impact: Delivered AI-enabled tooling to thousands of internal users, integrated within Spectrum's core product governance model.
 cardSummary: Led SpectrumIQ Chat — a new AI chat experience — as a governed platform product aligned with Spectrum's broader product strategy.

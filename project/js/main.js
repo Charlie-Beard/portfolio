@@ -111,7 +111,7 @@ function setupPageLoader() {
 
     event.preventDefault();
 
-    const randomDelay = Math.floor(Math.random() * 1000) + 2000;
+    const randomDelay = Math.floor(Math.random() * 1000) + 500;
 
     try {
       window.sessionStorage.setItem(PAGE_TRANSITION_KEY, String(Date.now() + randomDelay));

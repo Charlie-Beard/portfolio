@@ -3,7 +3,7 @@ title: Spectrum Design System
 slug: spectrum-design-system
 subtitle: A strategic shared foundation delivering consistent platform experiences across 100+ Spectrum applications.
 role: Senior Product Manager
-company: J.P.Morgan Chase | Spectrum
+company: J.P.Morgan Chase
 timeline: 2019 - Present
 impact: Accelerated product delivery and raised experience consistency across a 100+ application platform estate.
 cardSummary: Owned roadmap and delivery for the design system establishing consistent portfolio workflows and experience standards across Spectrum.
