@@ -190,8 +190,7 @@ async function renderProjectCards() {
       <article class="project-card">
         <div class="project-card__content">
           <h3 class="project-card__title">Projects are temporarily unavailable</h3>
-          <p class="project-card__summary">The case study markdown could not be loaded in this preview.</p>
-          <p class="project-card__impact">Check that you are serving the site over a local web server.</p>
+          <p class="project-card__summary">The case study content could not be loaded. Please try refreshing the page.</p>
         </div>
       </article>
     `;
