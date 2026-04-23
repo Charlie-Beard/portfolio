@@ -64,28 +64,6 @@
     ],
   ];
 
-  const TREE_SHAPES = [
-    [             // small pine
-      '   /\\',
-      '  /  \\',
-      ' /----\\',
-      '  ||||',
-    ],
-    [             // medium pine
-      '    /\\',
-      '   /  \\',
-      '  / /\\ \\',
-      ' /  \\/  \\',
-      '   ||||',
-    ],
-    [             // round deciduous
-      '  .---.',
-      ' ( ~~~ )',
-      '(  ~~~  )',
-      '  |||||',
-    ],
-  ];
-
   const BIRD_SHAPES = [
     [             // small bird in flight
       '   ___',
@@ -110,23 +88,15 @@
     { x: 1.52, y: 0.06, s: 0 },
   ];
 
-  const BG_TREES_INIT = [
-    { x: 0.20, s: 0 },
-    { x: 0.50, s: 2 },
-    { x: 0.78, s: 1 },
-    { x: 1.10, s: 0 },
-  ];
-
   const BG_BIRDS_INIT = [
     { x: 0.55, y: 0.25, s: 0 },
     { x: 1.85, y: 0.32, s: 1 },
   ];
 
-  let bgClouds = [], bgTrees = [], bgBirds = [];
+  let bgClouds = [], bgBirds = [];
 
   function initBg() {
     bgClouds = BG_CLOUDS.map(c => ({ x: c.x * W, y: c.y, lines: CLOUD_SHAPES[c.s] }));
-    bgTrees  = BG_TREES_INIT.map(t => ({ x: t.x * W, lines: TREE_SHAPES[t.s] }));
     bgBirds  = BG_BIRDS_INIT.map(b => ({ x: b.x * W, y: b.y, lines: BIRD_SHAPES[b.s] }));
   }
 
@@ -571,7 +541,6 @@
 
   function updateBg() {
     for (const c of bgClouds) { c.x -= speed * 0.18; if (c.x + 100 < 0) c.x += W + 150; }
-    for (const t of bgTrees)  { t.x -= speed * 0.22; if (t.x + 80  < 0) t.x += W + 200; }
     for (const b of bgBirds)  { b.x -= speed * 0.32; if (b.x + 100 < 0) b.x += W + 400; }
   }
 
@@ -591,18 +560,6 @@
       c.lines.forEach((l, i) => ctx.fillText(l, cx, cy + i * LINE_H));
       ctx.fillStyle = 'rgba(200,225,255,0.22)';
       c.lines.forEach((l, i) => ctx.fillText(l, cx - 1, cy + i * LINE_H - 1));
-    }
-
-    // Trees — multi-line, muted green tint, anchored to ground
-    for (const t of bgTrees) {
-      const tx = Math.round(t.x);
-      const ty = Math.round(GY) - t.lines.length * LINE_H;
-      ctx.fillStyle = 'rgba(20,50,25,0.20)';
-      t.lines.forEach((l, i) => ctx.fillText(l, tx + 1, ty + i * LINE_H + 1));
-      ctx.fillStyle = 'rgba(65,115,80,0.42)';
-      t.lines.forEach((l, i) => ctx.fillText(l, tx, ty + i * LINE_H));
-      ctx.fillStyle = 'rgba(140,190,150,0.18)';
-      t.lines.forEach((l, i) => ctx.fillText(l, tx - 1, ty + i * LINE_H - 1));
     }
 
     // Birds — rare, multi-line ASCII, muted blue-grey
