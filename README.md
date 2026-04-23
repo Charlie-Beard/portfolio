@@ -1,66 +1,65 @@
 # Personal Portfolio Static Site
 
-This folder contains a production-ready static portfolio built with plain HTML, vanilla CSS, and vanilla JavaScript. It is designed to run without build tools or dependencies and works well for GitHub Pages.
+A Jekyll-based portfolio site for Charles Beard, deployed to GitHub Pages at `https://charlie-beard.github.io/portfolio`.
 
-## Local preview
+## Local development
 
-Because the project pages load markdown via `fetch()`, preview the site through a local web server rather than opening the files directly.
+Requires Ruby and Bundler. Install dependencies once:
 
-1. Open a terminal in `/Users/charlesbeard/Documents/New project/project`
-2. Run `python3 -m http.server 8000`
-3. Open `http://localhost:8000`
+```bash
+bundle install
+```
+
+Then serve the site locally:
+
+```bash
+bundle exec jekyll serve
+```
+
+Open `http://localhost:4000/portfolio` in your browser. Jekyll watches for file changes and rebuilds automatically.
 
 ## Structure
 
-- `index.html` home page
-- `about.html` about page
-- `cv.html` CV page
-- `project-template.html` reusable markdown-driven case study template
-- `project-*.html` generated project pages that point to specific markdown files
-- `css/styles.css` shared styles
-- `js/main.js` shared site behavior
-- `js/markdown.js` lightweight markdown parser and renderer
-- `content/projects/*.md` project content source files
-- `content/projects/images/*.svg` placeholder case study images
+- `_config.yml` — Jekyll site config (title, baseurl, collection settings)
+- `_layouts/project.html` — shared layout for all project/case study pages
+- `_projects/*.md` — project content source files (front matter + markdown body)
+- `index.html` — home page (reads project collection at build time)
+- `about.html` — about page
+- `cv.html` — CV page
+- `dinoclaude.html` — DinoClaude easter egg page
+- `css/styles.css` — shared styles
+- `js/main.js` — shared site behaviour
+- `Gemfile` — Ruby gem dependencies (jekyll, kramdown-parser-gfm)
 
-## Deploying to GitHub Pages
+## Adding or editing a case study
 
-GitHub Pages does not publish from an arbitrary `/project` folder on the main branch. The two clean deployment options are:
+Each file in `_projects/` is a markdown file with a YAML front matter block. Jekyll renders these into project pages at build time.
 
-### Option 1: Publish from `/docs`
-
-1. Rename the `project` folder to `docs`
-2. Push the repository to GitHub
-3. In the repository settings, open **Pages**
-4. Set the source to the `main` branch and the `/docs` folder
-5. Save and wait for the site to publish
-
-### Option 2: Publish from a `gh-pages` branch
-
-1. Create a `gh-pages` branch
-2. Copy the contents of `/project` to the root of that branch
-3. Push the branch to GitHub
-4. In the repository settings, open **Pages**
-5. Set the source to the `gh-pages` branch root
-
-## Editing case studies
-
-Each project is driven by a markdown file with a small metadata block at the top:
-
-```md
+```markdown
 ---
+layout: project
 title: Example Project
-slug: example-project
 subtitle: Short summary
-role: Technical Product Manager
-company: Example Co
+role: Senior Product Manager
+company: J.P.Morgan Chase
 timeline: 2024
 impact: Key outcome
-cardSummary: Homepage summary
+cardSummary: Homepage card summary
 order: 1
 ---
+
 ## Problem
 ...
 ```
 
-The homepage cards and project pages both read from these markdown files, so you only need to update content in one place.
+The `order` field controls the sort order on the homepage. The `cardSummary` field is what appears on the homepage project cards.
+
+## Deploying to GitHub Pages
+
+The site is configured to deploy directly from the `main` branch root. GitHub Pages has native Jekyll support, so no build step is needed — push to `main` and Pages will build and publish automatically.
+
+In the repository **Settings → Pages**, set:
+- Source: `Deploy from a branch`
+- Branch: `main`, folder: `/ (root)`
+
+The `baseurl` is set to `/portfolio` in `_config.yml` to match the GitHub Pages path.
