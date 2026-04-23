@@ -64,4 +64,4 @@ Iterative improvements to the pipeline and model produced the following results:
 - **83.21% F1 Score** on unseen support ticket data — exceeding the 75% OKR threshold defined in the project requirements
 - **$9.15 estimated saving per automated ticket** — with 58% of 12,000+ annual tickets identified as candidates for automation, the research demonstrates meaningful operational efficiency at scale
 - **Distinction awarded** at the University of Bath — validated through the rigorous academic assessment process of the MSc Computer Science programme
-- The research directly informs how I think about AI-enabled tooling in my day-to-day product work on Spectrum — particularly the SpectrumIQ Chat and Help and Support products I own, where understanding how unstructured user language maps to intent and resolution paths is central to the product strategy
+- The research directly informs how I think about AI-enabled tooling in my day-to-day product work on Spectrum — particularly the SpectrumIQ and Help and Support products I own, where understanding how unstructured user language maps to intent and resolution paths is central to the product strategy
