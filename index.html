@@ -12,9 +12,7 @@
   </head>
   <body class="is-loading" data-page="home">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="page-loader" aria-hidden="true">
-      <div class="page-loader__bar"></div>
-    </div>
+    <div class="page-loader" aria-hidden="true"></div>
     <div class="page-shell">
       <header class="site-header">
         <div class="site-header__inner">
@@ -31,7 +29,7 @@
       </header>
 
       <main class="page-content" id="main-content">
-        <section class="page-intro fade-in">
+        <section class="page-intro">
           <p class="eyebrow">Senior Product Manager</p>
           <h1 class="page-title">Leading enterprise investment platforms that power better decisions at scale.</h1>
           <p class="page-lead">
@@ -39,7 +37,7 @@
           </p>
         </section>
 
-        <section class="page-section fade-in" data-delay="2" aria-labelledby="selected-work">
+        <section class="page-section" aria-labelledby="selected-work">
           <div class="section-heading">
             <h2 id="selected-work">Selected Work</h2>
             <p class="section-copy">Five core Spectrum platform products — spanning design systems, telemetry, support, dashboards, and AI-assisted workflows — owned end-to-end.</p>
@@ -47,7 +45,7 @@
           <div class="project-grid">
             {% assign sorted_projects = site.projects | sort: "order" %}
             {% for project in sorted_projects %}
-            <article class="project-card fade-in" data-delay="{{ project.order }}">
+            <article class="project-card">
               <div class="project-card__content">
                 <div class="project-card__intro">
                   <h3 class="project-card__title">{{ project.title | escape }}</h3>

@@ -351,8 +351,7 @@ body.is-ready:not(.is-navigating) .page-loader {
 }
 
 .project-card__meta dt,
-.meta-grid dt,
-.cv-label {
+.meta-grid dt {
   color: var(--text-subtle);
   font-size: 0.88rem;
 }
@@ -414,14 +413,12 @@ body.is-ready:not(.is-navigating) .page-loader {
   margin-top: 0;
 }
 
-.simple-list,
 .rich-text ul,
 .cv-list {
   margin: 0;
   padding-left: 1.1rem;
 }
 
-.simple-list li + li,
 .rich-text li + li,
 .cv-list li + li {
   margin-top: 0.45rem;
@@ -584,21 +581,6 @@ body.is-ready:not(.is-navigating) .page-loader {
   color: var(--text-muted);
 }
 
-.tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.tag-list li {
-  padding: 0.55rem 0.8rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--background-soft);
-}
 
 .site-footer {
   margin-top: auto;

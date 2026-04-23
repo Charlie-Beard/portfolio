@@ -10,9 +10,7 @@
   </head>
   <body class="is-loading" data-page="project">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="page-loader" aria-hidden="true">
-      <div class="page-loader__bar"></div>
-    </div>
+    <div class="page-loader" aria-hidden="true"></div>
     <div class="page-shell">
       <header class="site-header">
         <div class="site-header__inner">
@@ -30,7 +28,7 @@
 
       <main class="page-content" id="main-content">
         <article class="case-study">
-          <header class="case-study__header fade-in">
+          <header class="case-study__header">
             <p class="eyebrow">Case Study</p>
             <h1 class="case-study__title">{{ page.title | escape }}</h1>
             <p class="case-study__subtitle">{{ page.subtitle | escape }}</p>
@@ -51,13 +49,13 @@
           </header>
 
           {% if page.heroImage %}
-          <figure class="case-study__media fade-in" data-delay="2">
+          <figure class="case-study__media">
             <img src="{{ site.baseurl }}/{{ page.heroImage }}" alt="{{ page.heroAlt | default: page.title | escape }}" loading="lazy" width="1280" height="720">
             {% if page.heroCaption %}<figcaption>{{ page.heroCaption | escape }}</figcaption>{% endif %}
           </figure>
           {% endif %}
 
-          <div class="case-study__body rich-text fade-in" data-delay="2">
+          <div class="case-study__body rich-text">
             {{ content }}
           </div>
         </article>
