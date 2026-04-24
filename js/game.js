@@ -31,12 +31,17 @@
   const MAX_SPD  = 15;
 
   // ── State ────────────────────────────────────────────────────────────────
-  const S = { IDLE: 0, RUNNING: 1, DEAD: 2 };
+  const S = { IDLE: 0, RUNNING: 1, DEAD: 2, PAUSED: 3 };
   let state = S.IDLE;
 
   let W, H, GY, dpr;
   let score = 0, hiScore = 0, speed = BASE_SPD, frame = 0;
   let obstacles = [], spawnCD = 80, groundOffset = 0;
+
+  // ── Near-miss & streak state ──────────────────────────────────────────────
+  let nearMissMsg = '', nearMissFr = 0;
+  let streakCount = 0;
+  let milestoneColor = null; // null = default accent blue, else custom colour
 
   // ── Sound (Web Audio API) ─────────────────────────────────────────────────
   // Lazy-initialised on first user gesture to satisfy browser autoplay policy.
@@ -79,9 +84,11 @@
       case 'land':       sweep(160,  80, 'triangle', t,    0.06, 0.18); break;
       case 'duck-start': sweep(300, 180, 'sine',     t,    0.07, 0.08); break;
       case 'duck-end':   sweep(180, 260, 'sine',     t,    0.06, 0.07); break;
-      case 'die':       [330, 220, 165].forEach((f, i) => tone(f, 'square', t + i * 0.12, 0.10, 0.10)); break;
-      case 'milestone': [440, 660].forEach((f, i)       => tone(f, 'sine',   t + i * 0.10, 0.15, 0.10)); break;
-      case 'hiscore':   [440, 554, 659].forEach((f, i)  => tone(f, 'sine',   t + i * 0.12, 0.18, 0.12)); break;
+      case 'die':        [330, 220, 165].forEach((f, i) => tone(f, 'square', t + i * 0.12, 0.10, 0.10)); break;
+      case 'milestone':  [440, 660].forEach((f, i)       => tone(f, 'sine',   t + i * 0.10, 0.15, 0.10)); break;
+      case 'hiscore':    [440, 554, 659].forEach((f, i)  => tone(f, 'sine',   t + i * 0.12, 0.18, 0.12)); break;
+      case 'near-miss':  sweep(420, 180, 'sine', t, 0.05, 0.07); break;
+      case 'streak':     [520, 660].forEach((f, i)       => tone(f, 'sine',   t + i * 0.07, 0.10, 0.09)); break;
     }
   }
 
@@ -157,22 +164,29 @@
   const MILESTONES = [
     { score: 100,  msg: 'Context loading...'          },
     { score: 250,  msg: 'Running on vibes'             },
+    { score: 350,  msg: 'Latency creeping in…'   },
     { score: 500,  msg: 'Full context window'          },
+    { score: 600,  msg: 'Multi-step reasoning active'  },
     { score: 750,  msg: 'Entering Sonnet territory'    },
     { score: 1000, msg: 'Anthropic certified'          },
     { score: 1500, msg: 'Opus mode unlocked'           },
     { score: 2000, msg: 'Beyond the context limit'     },
   ];
-  let milestoneMsg = null, milestoneFr = 0, nextMilestoneIdx = 0;
+
+  const STREAK_MILESTONES = { 5: '5× STREAK!', 10: 'ON FIRE!', 20: 'UNSTOPPABLE' };
+  let milestoneMsg = null, milestoneFr = 0, milestoneDur = 90, nextMilestoneIdx = 0;
 
   function drawMilestone() {
     if (!milestoneMsg || milestoneFr <= 0) return;
-    const elapsed = 90 - milestoneFr;
+    const elapsed = milestoneDur - milestoneFr;
     let alpha;
-    if      (elapsed < 10) alpha = elapsed / 10;
-    else if (elapsed < 75) alpha = 1;
-    else                   alpha = (90 - elapsed) / 15;
+    if      (elapsed < 10)              alpha = elapsed / 10;
+    else if (elapsed < milestoneDur - 15) alpha = 1;
+    else                                alpha = (milestoneDur - elapsed) / 15;
     alpha = Math.max(0, Math.min(1, alpha));
+
+    const col = milestoneColor || C_ACCENT;
+    const bgA = milestoneColor ? 'rgba(212,103,61,0.12)' : 'rgba(31,95,214,0.12)';
 
     ctx.save();
     ctx.globalAlpha = alpha;
@@ -183,9 +197,28 @@
     const pad = 18;
     const bw  = tw + pad * 2, bh = 32;
     const cy  = H * 0.28;
-    rr(W / 2 - bw / 2, cy - bh / 2, bw, bh, bh / 2, 'rgba(31,95,214,0.12)');
-    ctx.fillStyle = C_ACCENT;
+    rr(W / 2 - bw / 2, cy - bh / 2, bw, bh, bh / 2, bgA);
+    ctx.fillStyle = col;
     ctx.fillText(milestoneMsg, W / 2, cy);
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
+  function drawNearMiss() {
+    if (!nearMissMsg || nearMissFr <= 0) return;
+    const elapsed = 40 - nearMissFr;
+    const alpha = elapsed < 6 ? elapsed / 6 : nearMissFr < 10 ? nearMissFr / 10 : 1;
+    ctx.save();
+    ctx.globalAlpha  = alpha;
+    ctx.textAlign    = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    const tw  = ctx.measureText(nearMissMsg).width;
+    const bw  = tw + 24, bh = 26;
+    const cy  = H * 0.44;
+    rr(W / 2 - bw / 2, cy - bh / 2, bw, bh, bh / 2, 'rgba(212,103,61,0.14)');
+    ctx.fillStyle = OR;
+    ctx.fillText(nearMissMsg, W / 2, cy);
     ctx.globalAlpha = 1;
     ctx.restore();
   }
@@ -196,6 +229,10 @@
     'Tokens exhausted.',
     'Rate limit hit.',
     'Session terminated.',
+    'Hallucination detected.',
+    'Connection timed out.',
+    'Out of memory.',
+    'Model deprecated.',
   ];
   let deathLine = '', deathScore = 0, deathDisplayScore = 0, deathFrame = 0;
 
@@ -494,7 +531,9 @@
   // ── Game actions ─────────────────────────────────────────────────────────
 
   function jump() {
-    if (state === S.IDLE || state === S.DEAD) { begin(); return; }
+    if (state === S.PAUSED) { state = S.RUNNING; return; }
+    if (state === S.IDLE)   { begin(); return; }
+    if (state === S.DEAD)   { if (deathFrame < 30) return; begin(); return; }
     if (char.ground && !char.ducking) {
       char.vy = JUMP_VY; char.ground = false;
       buzz(12); playSound('jump'); spawnJumpDust();
@@ -517,7 +556,9 @@
     char.y = GY; char.vy = 0; char.ground = true;
     char.ducking = false; char.animF = 0; char.animT = 0;
     particles = [];
-    milestoneMsg = null; milestoneFr = 0; nextMilestoneIdx = 0;
+    milestoneMsg = null; milestoneFr = 0; milestoneDur = 90; nextMilestoneIdx = 0; milestoneColor = null;
+    nearMissMsg = ''; nearMissFr = 0;
+    streakCount = 0;
     shakeFr = 0; flashFr = 0;
     shareBtnRect = null; shareConfirmFr = 0;
     stopAutoBtnRect = null; tryAutoBtnRect = null;
@@ -525,6 +566,7 @@
 
   function die() {
     state = S.DEAD;
+    streakCount = 0;
     buzz([30, 20, 70]);
     flashFr = 15;
     deathScore        = score;
@@ -562,8 +604,10 @@
 
   window.addEventListener('keydown', e => {
     if (e.code === 'Escape') {
-      if (showAutoModal) { showAutoModal = false; return; }
-      if (autoMode)      { stopAutoMode(); return; }
+      if (showAutoModal)              { showAutoModal = false; return; }
+      if (autoMode)                   { stopAutoMode(); return; }
+      if (state === S.RUNNING)        { state = S.PAUSED; return; }
+      if (state === S.PAUSED)         { state = S.RUNNING; return; }
       return;
     }
 
@@ -695,8 +739,35 @@
       handleShare(); return;
     }
     if (!autoMode && state === S.DEAD && inRect(pos.x, pos.y, tryAutoBtnRect)) {
-      autoMode = true; begin();
+      autoMode = true; begin(); return;
     }
+
+    // Resume from pause on canvas click
+    if (state === S.PAUSED && !autoMode) { jump(); return; }
+  });
+
+  // ── Mouse hold = duck ─────────────────────────────────────────────────────
+
+  let mouseHoldTimer = null, mouseDucking = false;
+
+  canvas.addEventListener('mousedown', e => {
+    if (e.button !== 0) return;
+    initAudio();
+    if (showAutoModal || (autoMode && state === S.RUNNING)) return;
+    mouseDucking   = false;
+    mouseHoldTimer = setTimeout(() => { mouseDucking = true; duck(true); }, 150);
+  });
+
+  canvas.addEventListener('mouseup', e => {
+    if (e.button !== 0) return;
+    clearTimeout(mouseHoldTimer);
+    if (mouseDucking) { mouseDucking = false; duck(false); }
+    // tap (no duck) — click event fires jump automatically
+  });
+
+  canvas.addEventListener('mouseleave', () => {
+    clearTimeout(mouseHoldTimer);
+    if (mouseDucking) { mouseDucking = false; duck(false); }
   });
 
   // ── Bitmap pixel font (5×5, flat row-major 25-element arrays) ─────────────
@@ -768,7 +839,12 @@
     const t = forceCloud
       ? OBSTACLE_DEFS.find(o => !o.ground)
       : pool[Math.floor(Math.random() * pool.length)];
-    if (!t.ground) firstCloudDone = true;
+    if (!t.ground) {
+      firstCloudDone = true;
+      milestoneMsg   = '↓  Hold to duck!';
+      milestoneFr    = 100; milestoneDur = 100;
+      milestoneColor = OR;
+    }
 
     const makeTall = t.ground && !t.double && Math.random() < 0.35;
     const oh = t.ground ? (makeTall ? t.h * 2 : t.h) : Math.max(60, GY - CHAR_DUCK_H - 20);
@@ -835,15 +911,17 @@
     // AutoClicker AI
     if (autoMode) autoAct();
 
-    // Milestone check
+    // Milestone check (score-based — use blue, clear custom colour first)
     if (nextMilestoneIdx < MILESTONES.length &&
         score >= MILESTONES[nextMilestoneIdx].score) {
-      milestoneMsg = MILESTONES[nextMilestoneIdx].msg;
-      milestoneFr  = 90;
+      milestoneMsg   = MILESTONES[nextMilestoneIdx].msg;
+      milestoneFr    = 90; milestoneDur = 90;
+      milestoneColor = null;
       nextMilestoneIdx++;
       playSound('milestone');
     }
     if (milestoneFr > 0) milestoneFr--;
+    if (nearMissFr > 0) nearMissFr--;
 
     if (--spawnCD <= 0) {
       spawnObstacle();
@@ -852,6 +930,38 @@
 
     for (let i = obstacles.length - 1; i >= 0; i--) {
       obstacles[i].x -= speed;
+
+      // Obstacle just cleared the character this frame — streak + near-miss check
+      const rightEdge = obstacles[i].x + obstacles[i].w;
+      if (rightEdge >= CHAR_X - speed && rightEdge < CHAR_X) {
+        streakCount++;
+        const streakMsg = STREAK_MILESTONES[streakCount];
+        if (streakMsg) {
+          milestoneMsg   = streakMsg;
+          milestoneFr    = 70; milestoneDur = 70;
+          milestoneColor = null;
+          playSound('streak');
+        }
+
+        // Near-miss: vertical clearance < 14 px
+        const ob = obstacles[i];
+        let margin = 999;
+        if (ob.ground) {
+          const headroom = (char.y - char.h) - ob.y; // char head vs obstacle top
+          if (headroom >= 0) margin = headroom;
+        } else {
+          const gap = (char.y - char.h) - (ob.y + ob.h); // char head vs cloud bottom
+          if (gap >= 0) margin = gap;
+        }
+        if (margin < 14) {
+          nearMissMsg = 'CLOSE!';
+          nearMissFr  = 40;
+          frame      += 24; // +3 pts
+          playSound('near-miss');
+          spawnDuckDust(true);
+        }
+      }
+
       if (obstacles[i].x + obstacles[i].w < 0) { obstacles.splice(i, 1); continue; }
       if (hits(obstacles[i])) { die(); return; }
     }
@@ -872,14 +982,23 @@
     ctx.save();
     ctx.imageSmoothingEnabled = false;
 
+    // Lean forward at high speed
+    const leanAngle = Math.max(0, (speed - 7) / (MAX_SPD - 7)) * 0.13;
+    if (leanAngle > 0) {
+      const pivotX = bx + CHAR_W / 2;
+      const pivotY = by - char.h / 2;
+      ctx.translate(pivotX, pivotY);
+      ctx.rotate(leanAngle);
+      ctx.translate(-pivotX, -pivotY);
+    }
+
     if (char.ducking) {
-      sq(bx, by, -1, 1, 10, 4, OR);
-      sq(bx, by, -1, 1, 10, 1, OR2);
-      sq(bx, by,  0, 3,  2, 1, DK);
-      sq(bx, by,  6, 3,  2, 1, DK);
-      sq(bx, by,  0, 0,  2, 1, OR);
-      sq(bx, by,  3, 0,  2, 1, OR2);
-      sq(bx, by,  6, 0,  2, 1, OR);
+      sq(bx, by, -1, 1, 10, 4, OR);   // body
+      sq(bx, by, -1, 1, 10, 1, OR2);  // belly shading
+      sq(bx, by,  0, 3,  2, 1, DK);   // eye L
+      sq(bx, by,  6, 3,  2, 1, DK);   // eye R
+      sq(bx, by, -3, 2,  2, 2, OR);   // ear L (side)
+      sq(bx, by,  9, 2,  2, 2, OR);   // ear R (side)
     } else {
       sq(bx, by, 1, 9, 2, 2, OR);    // antenna L
       sq(bx, by, 5, 9, 2, 2, OR);    // antenna R
@@ -1109,11 +1228,13 @@
     ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
     ctx.fillStyle = C_MUTED;
     ctx.fillText('Tap or press Space to begin', W / 2, H / 2 - 10);
+    ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillStyle = C_SUBTLE;
     if (W >= 480) {
-      ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-      ctx.fillStyle = C_SUBTLE;
       ctx.fillText('Jump over  CONTEXT LIMIT  ·  Duck under  OUT OF TOKENS', W / 2, H / 2 + 14);
       ctx.fillText('Tap to jump  ·  Tap and hold to duck', W / 2, H / 2 + 30);
+    } else {
+      ctx.fillText('Tap: jump  ·  Hold: duck', W / 2, H / 2 + 14);
     }
     ctx.restore();
   }
@@ -1196,6 +1317,23 @@
     ctx.restore();
   }
 
+  // ── Pause overlay ─────────────────────────────────────────────────────────
+
+  function drawPause() {
+    ctx.fillStyle = 'rgba(240,244,255,0.82)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.save();
+    ctx.textAlign    = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillStyle = C_TEXT;
+    ctx.fillText('PAUSED', W / 2, H / 2 - 14);
+    ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillStyle = C_MUTED;
+    ctx.fillText('Tap or press Space · Esc to resume', W / 2, H / 2 + 12);
+    ctx.restore();
+  }
+
   // ── Main loop ─────────────────────────────────────────────────────────────
 
   function draw() {
@@ -1221,8 +1359,19 @@
 
     ctx.restore(); // end shake region
 
+    // Edge-warn tint: pulsing right-edge glow when an obstacle is about to enter
+    const danger = obstacles.some(o => o.x > W - 80 && o.x < W + o.w);
+    if (danger && state === S.RUNNING) {
+      const grad = ctx.createLinearGradient(W - 50, 0, W, 0);
+      grad.addColorStop(0, 'rgba(200,80,40,0)');
+      grad.addColorStop(1, `rgba(200,80,40,${(0.07 + 0.05 * Math.sin(frame * 0.4)).toFixed(3)})`);
+      ctx.fillStyle = grad;
+      ctx.fillRect(W - 50, 0, 50, H);
+    }
+
     drawHUD();
     drawMilestone();
+    drawNearMiss();
 
     // AutoClicker running indicator (top-left, pulsing)
     if (autoMode && state === S.RUNNING) drawAutoIndicator();
@@ -1234,8 +1383,9 @@
       flashFr--;
     }
 
-    if (state === S.IDLE) drawIdle();
-    if (state === S.DEAD) drawGameOver();
+    if (state === S.IDLE)   drawIdle();
+    if (state === S.DEAD)   drawGameOver();
+    if (state === S.PAUSED) drawPause();
 
     // Modal draws last — on top of everything
     drawAutoModal();
