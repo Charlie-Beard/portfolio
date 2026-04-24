@@ -617,7 +617,7 @@
       }
 
       if (!touchDucking) {
-        jump();
+        if (!autoMode || state !== S.RUNNING) jump();
       } else {
         touchDucking = false; duck(false);
       }
