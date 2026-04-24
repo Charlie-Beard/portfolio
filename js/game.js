@@ -38,9 +38,8 @@
   let score = 0, hiScore = 0, speed = BASE_SPD, frame = 0;
   let obstacles = [], spawnCD = 80, groundOffset = 0;
 
-  // ── Near-miss & streak state ──────────────────────────────────────────────
+  // ── Near-miss state ───────────────────────────────────────────────────────
   let nearMissMsg = '', nearMissFr = 0;
-  let streakCount = 0;
   let milestoneColor = null; // null = default accent blue, else custom colour
 
   // ── Sound (Web Audio API) ─────────────────────────────────────────────────
@@ -173,7 +172,6 @@
     { score: 2000, msg: 'Beyond the context limit'     },
   ];
 
-  const STREAK_MILESTONES = { 5: '5× STREAK!', 10: 'ON FIRE!', 20: 'UNSTOPPABLE' };
   let milestoneMsg = null, milestoneFr = 0, milestoneDur = 90, nextMilestoneIdx = 0;
 
   function drawMilestone() {
@@ -558,7 +556,6 @@
     particles = [];
     milestoneMsg = null; milestoneFr = 0; milestoneDur = 90; nextMilestoneIdx = 0; milestoneColor = null;
     nearMissMsg = ''; nearMissFr = 0;
-    streakCount = 0;
     shakeFr = 0; flashFr = 0;
     shareBtnRect = null; shareConfirmFr = 0;
     stopAutoBtnRect = null; tryAutoBtnRect = null;
@@ -566,7 +563,6 @@
 
   function die() {
     state = S.DEAD;
-    streakCount = 0;
     buzz([30, 20, 70]);
     flashFr = 15;
     deathScore        = score;
@@ -840,10 +836,12 @@
       ? OBSTACLE_DEFS.find(o => !o.ground)
       : pool[Math.floor(Math.random() * pool.length)];
     if (!t.ground) {
+      if (!firstCloudDone) {
+        milestoneMsg   = '↓  Hold to duck!';
+        milestoneFr    = 100; milestoneDur = 100;
+        milestoneColor = OR;
+      }
       firstCloudDone = true;
-      milestoneMsg   = '↓  Hold to duck!';
-      milestoneFr    = 100; milestoneDur = 100;
-      milestoneColor = OR;
     }
 
     const makeTall = t.ground && !t.double && Math.random() < 0.35;
@@ -899,7 +897,7 @@
     // Landing: spawn dust + play land sound
     if (!wasGround && char.ground) { spawnDust(); playSound('land'); }
 
-    if (char.ground && !char.ducking) {
+    if (char.ground) {
       const thresh = Math.max(3, Math.round(7 - speed * 0.28));
       if (++char.animT >= thresh) { char.animT = 0; char.animF ^= 1; }
     }
@@ -931,18 +929,9 @@
     for (let i = obstacles.length - 1; i >= 0; i--) {
       obstacles[i].x -= speed;
 
-      // Obstacle just cleared the character this frame — streak + near-miss check
+      // Obstacle just cleared the character this frame — near-miss check
       const rightEdge = obstacles[i].x + obstacles[i].w;
       if (rightEdge >= CHAR_X - speed && rightEdge < CHAR_X) {
-        streakCount++;
-        const streakMsg = STREAK_MILESTONES[streakCount];
-        if (streakMsg) {
-          milestoneMsg   = streakMsg;
-          milestoneFr    = 70; milestoneDur = 70;
-          milestoneColor = null;
-          playSound('streak');
-        }
-
         // Near-miss: vertical clearance < 14 px
         const ob = obstacles[i];
         let margin = 999;
@@ -999,6 +988,14 @@
       sq(bx, by,  6, 3,  2, 1, DK);   // eye R
       sq(bx, by, -3, 2,  2, 2, OR);   // ear L (side)
       sq(bx, by,  9, 2,  2, 2, OR);   // ear R (side)
+      // Small running legs (same animation cadence as normal)
+      if (char.animF === 0) {
+        sq(bx, by, 1, 0, 2, 1, OR);   // left leg down
+        sq(bx, by, 5, 0, 2, 1, OR2);  // right leg up (darker)
+      } else {
+        sq(bx, by, 1, 0, 2, 1, OR2);  // left leg up (darker)
+        sq(bx, by, 5, 0, 2, 1, OR);   // right leg down
+      }
     } else {
       sq(bx, by, 1, 9, 2, 2, OR);    // antenna L
       sq(bx, by, 5, 9, 2, 2, OR);    // antenna R
@@ -1358,16 +1355,6 @@
     drawChar();
 
     ctx.restore(); // end shake region
-
-    // Edge-warn tint: pulsing right-edge glow when an obstacle is about to enter
-    const danger = obstacles.some(o => o.x > W - 80 && o.x < W + o.w);
-    if (danger && state === S.RUNNING) {
-      const grad = ctx.createLinearGradient(W - 50, 0, W, 0);
-      grad.addColorStop(0, 'rgba(200,80,40,0)');
-      grad.addColorStop(1, `rgba(200,80,40,${(0.07 + 0.05 * Math.sin(frame * 0.4)).toFixed(3)})`);
-      ctx.fillStyle = grad;
-      ctx.fillRect(W - 50, 0, 50, H);
-    }
 
     drawHUD();
     drawMilestone();
