@@ -92,6 +92,7 @@
   let particles = [];
 
   function spawnDust() {
+    // Landing: orange particles burst upward from feet
     const cx = CHAR_X + CHAR_W * 0.5;
     for (let i = 0; i < 5; i++) {
       particles.push({
@@ -99,7 +100,38 @@
         y: GY,
         dx: (Math.random() - 0.5) * 2.2,
         dy: -(Math.random() * 1.8 + 0.4),
-        life: 18, max: 18,
+        life: 18, max: 18, rgb: '212,103,61',
+      });
+    }
+  }
+
+  function spawnJumpDust() {
+    // Take-off: orange particles pushed outward and slightly downward
+    const cx = CHAR_X + CHAR_W * 0.5;
+    for (let i = 0; i < 5; i++) {
+      const side = i % 2 === 0 ? -1 : 1;
+      particles.push({
+        x: cx + side * (6 + Math.random() * 12),
+        y: GY,
+        dx: side * (1.2 + Math.random() * 1.4),
+        dy: Math.random() * 0.8,           // downward push-off
+        life: 14, max: 14, rgb: '212,103,61',
+      });
+    }
+  }
+
+  function spawnDuckDust(rising) {
+    // Duck start/end: blue particles fan outward from character sides
+    const cx = CHAR_X + CHAR_W * 0.5;
+    const count = 4;
+    for (let i = 0; i < count; i++) {
+      const side = i % 2 === 0 ? -1 : 1;
+      particles.push({
+        x: cx + side * (8 + Math.random() * 10),
+        y: GY - (rising ? 14 : 4),
+        dx: side * (1.0 + Math.random() * 1.2),
+        dy: rising ? -(0.8 + Math.random() * 1.2) : (Math.random() * 0.4),
+        life: 14, max: 14, rgb: '90,148,255',
       });
     }
   }
@@ -116,7 +148,7 @@
     for (const p of particles) {
       const a  = p.life / p.max;
       const sz = Math.round(2 + a * 2);
-      ctx.fillStyle = `rgba(212,103,61,${(a * 0.65).toFixed(2)})`;
+      ctx.fillStyle = `rgba(${p.rgb},${(a * 0.62).toFixed(2)})`;
       ctx.fillRect(Math.round(p.x - sz / 2), Math.round(p.y - sz / 2), sz, sz);
     }
   }
@@ -463,7 +495,8 @@
   function jump() {
     if (state === S.IDLE || state === S.DEAD) { begin(); return; }
     if (char.ground && !char.ducking) {
-      char.vy = JUMP_VY; char.ground = false; buzz(12); playSound('jump');
+      char.vy = JUMP_VY; char.ground = false;
+      buzz(12); playSound('jump'); spawnJumpDust();
     }
   }
 
@@ -473,6 +506,7 @@
     char.ducking = on;
     if (on && !char.ground) char.vy = Math.max(char.vy, 5);
     playSound(on ? 'duck-start' : 'duck-end');
+    if (char.ground) spawnDuckDust(!on);
   }
 
   function begin() {
