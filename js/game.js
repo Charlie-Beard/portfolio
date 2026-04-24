@@ -75,8 +75,10 @@
     }
 
     switch (type) {
-      case 'jump':      sweep(220, 440, 'sine',     t,           0.08, 0.12); break;
-      case 'land':      sweep(160,  80, 'triangle', t,           0.06, 0.18); break;
+      case 'jump':       sweep(220, 440, 'sine',     t,    0.08, 0.12); break;
+      case 'land':       sweep(160,  80, 'triangle', t,    0.06, 0.18); break;
+      case 'duck-start': sweep(300, 180, 'sine',     t,    0.07, 0.08); break;
+      case 'duck-end':   sweep(180, 260, 'sine',     t,    0.06, 0.07); break;
       case 'die':       [330, 220, 165].forEach((f, i) => tone(f, 'square', t + i * 0.12, 0.10, 0.10)); break;
       case 'milestone': [440, 660].forEach((f, i)       => tone(f, 'sine',   t + i * 0.10, 0.15, 0.10)); break;
       case 'hiscore':   [440, 554, 659].forEach((f, i)  => tone(f, 'sine',   t + i * 0.12, 0.18, 0.12)); break;
@@ -467,8 +469,10 @@
 
   function duck(on) {
     if (state !== S.RUNNING) return;
+    if (on === char.ducking) return;
     char.ducking = on;
     if (on && !char.ground) char.vy = Math.max(char.vy, 5);
+    playSound(on ? 'duck-start' : 'duck-end');
   }
 
   function begin() {
@@ -487,7 +491,7 @@
   function die() {
     state = S.DEAD;
     buzz([30, 20, 70]);
-    shakeFr = 18; flashFr = 15;
+    flashFr = 15;
     deathScore        = score;
     deathDisplayScore = 0;
     deathFrame        = 0;
