@@ -198,6 +198,161 @@
     }
   }
 
+  // ── AutoClicker ───────────────────────────────────────────────────────────
+  let autoMode      = false;
+  let autoHiScore   = 0;
+  let showAutoModal = false;
+
+  // Hit-test rects set each frame during draw (null when not visible)
+  let autoBtnRect       = null; // "AutoClicker" button on idle screen
+  let autoIndicatorRect = null; // pulsing "AUTO" badge during running
+  let modalCancelRect   = null; // modal Cancel button
+  let modalStartRect    = null; // modal Start AutoClicker button
+  let stopAutoBtnRect   = null; // "Stop AutoClicker" on game-over screen in auto mode
+
+  try { autoHiScore = parseInt(localStorage.getItem('dc-hi-auto'), 10) || 0; } catch (_) {}
+
+  function stopAutoMode() {
+    autoMode      = false;
+    showAutoModal = false;
+    state         = S.IDLE;
+    obstacles     = [];
+    particles     = [];
+    char.y        = GY; char.vy = 0; char.ground = true; char.ducking = false;
+    char.animF    = 0;  char.animT = 0;
+  }
+
+  // ── AutoClicker AI ────────────────────────────────────────────────────────
+  // Called every running frame when autoMode is on.
+  // Scans upcoming obstacles and fires jump() / duck() at the right distance.
+  //
+  // Jump window: the character clears a 68 px obstacle from frame 6–88 of its
+  // 93-frame arc. Jumping when the obstacle is speed×28 px ahead puts arrival
+  // at frame 28 — comfortably inside the safe window at all speeds.
+  //
+  // Duck: engage when a cloud ceiling is within speed×22 px or overhead;
+  // release as soon as no cloud remains within that range.
+
+  function autoAct() {
+    let needsDuck  = false;
+    let shouldJump = false;
+
+    for (const ob of obstacles) {
+      const rightEdge = ob.x + ob.w;
+      if (rightEdge < CHAR_X - 10) continue; // already fully past
+
+      const distToChar = ob.x - (CHAR_X + CHAR_W);
+
+      if (!ob.ground) {
+        // Cloud ceiling — duck when approaching or overhead
+        if (distToChar < Math.max(160, speed * 22)) needsDuck = true;
+      } else {
+        // Ground obstacle — jump
+        const jumpThreshold = Math.max(180, speed * 28);
+        if (distToChar < jumpThreshold && distToChar > -(ob.w + CHAR_W)) shouldJump = true;
+      }
+    }
+
+    if (needsDuck) {
+      if (!char.ducking) duck(true);
+    } else {
+      if (char.ducking) duck(false);
+      if (shouldJump && char.ground) jump();
+    }
+  }
+
+  // ── AutoClicker draw helpers ──────────────────────────────────────────────
+
+  function drawAutoBtn() {
+    // "AutoClicker" button in the top-left of the idle screen
+    const bw = 130, bh = 32;
+    const bx = 14, by = 14;
+    autoBtnRect = { x: bx, y: by, w: bw, h: bh };
+    rr(bx, by, bw, bh, 8, C_ACCENT);
+    ctx.save();
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('⚡ AutoClicker', bx + bw / 2, by + bh / 2);
+    ctx.restore();
+  }
+
+  function drawAutoIndicator() {
+    // Pulsing badge in top-left while autoMode is running — click to stop
+    const pulse = 0.72 + 0.28 * Math.sin(frame * 0.13);
+    const bw = 68, bh = 26;
+    const bx = 14, by = 14;
+    autoIndicatorRect = { x: bx, y: by, w: bw, h: bh };
+    ctx.save();
+    ctx.globalAlpha = pulse;
+    rr(bx, by, bw, bh, 7, C_ACCENT);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = 'bold 11px monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('● AUTO', bx + bw / 2, by + bh / 2);
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
+  function drawAutoModal() {
+    if (!showAutoModal) return;
+
+    // Dim backdrop
+    ctx.fillStyle = 'rgba(18,32,51,0.58)';
+    ctx.fillRect(0, 0, W, H);
+
+    // Card
+    const mw = Math.min(360, W - 40);
+    const mh = 210;
+    const mx = W / 2 - mw / 2;
+    const my = H / 2 - mh / 2;
+    rr(mx, my, mw, mh, 14, '#ffffff');
+
+    ctx.save();
+    ctx.textAlign = 'center';
+
+    // Title
+    ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillStyle = C_TEXT;
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText('AutoClicker', W / 2, my + 46);
+
+    // Description lines
+    ctx.font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillStyle = C_MUTED;
+    const lines = [
+      'AutoClicker will automatically jump and duck',
+      'to see how far an automated machine can get.',
+      'Scores are tracked on a separate leaderboard.',
+    ];
+    lines.forEach((l, i) => ctx.fillText(l, W / 2, my + 80 + i * 21));
+
+    // Buttons
+    const cancelW = 100, startW = 148, btnH = 36, gap = 10;
+    const totalBW = cancelW + gap + startW;
+    const cbx = W / 2 - totalBW / 2;
+    const sbx = cbx + cancelW + gap;
+    const btnY = my + mh - 58;
+
+    // Cancel
+    modalCancelRect = { x: cbx, y: btnY, w: cancelW, h: btnH };
+    rr(cbx, btnY, cancelW, btnH, 8, 'rgba(18,32,51,0.09)');
+    ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillStyle = C_TEXT;
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Cancel', cbx + cancelW / 2, btnY + btnH / 2);
+
+    // Start AutoClicker
+    modalStartRect = { x: sbx, y: btnY, w: startW, h: btnH };
+    rr(sbx, btnY, startW, btnH, 8, C_ACCENT);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('Start AutoClicker', sbx + startW / 2, btnY + btnH / 2);
+
+    ctx.restore();
+  }
+
+  // ── Utility ───────────────────────────────────────────────────────────────
+
   function inRect(x, y, r) {
     return r && x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h;
   }
@@ -326,40 +481,66 @@
     milestoneMsg = null; milestoneFr = 0; nextMilestoneIdx = 0;
     shakeFr = 0; flashFr = 0;
     shareBtnRect = null; shareConfirmFr = 0;
+    stopAutoBtnRect = null;
   }
 
   function die() {
     state = S.DEAD;
     buzz([30, 20, 70]);
     shakeFr = 18; flashFr = 15;
-    deathScore       = score;
+    deathScore        = score;
     deathDisplayScore = 0;
-    deathFrame       = 0;
-    deathLine        = DEATH_LINES[Math.floor(Math.random() * DEATH_LINES.length)];
-    if (score > hiScore) {
-      hiScore = score;
-      try { localStorage.setItem('dc-hi', hiScore); } catch (_) {}
-      setTimeout(() => playSound('hiscore'), 350);
+    deathFrame        = 0;
+    deathLine         = DEATH_LINES[Math.floor(Math.random() * DEATH_LINES.length)];
+
+    if (autoMode) {
+      if (score > autoHiScore) {
+        autoHiScore = score;
+        try { localStorage.setItem('dc-hi-auto', autoHiScore); } catch (_) {}
+        setTimeout(() => playSound('hiscore'), 350);
+      } else {
+        playSound('die');
+      }
     } else {
-      playSound('die');
+      if (score > hiScore) {
+        hiScore = score;
+        try { localStorage.setItem('dc-hi', hiScore); } catch (_) {}
+        setTimeout(() => playSound('hiscore'), 350);
+      } else {
+        playSound('die');
+      }
     }
   }
 
   // ── Keyboard input ────────────────────────────────────────────────────────
+  // Space tap  (released before 150 ms) → jump
+  // Space hold (still down after 150 ms) → duck until released
+  // Escape → close modal or stop AutoClicker
 
   let spaceHoldTimer = null;
   let spacePending   = false;
   let spaceDown      = false;
 
   window.addEventListener('keydown', e => {
+    if (e.code === 'Escape') {
+      if (showAutoModal) { showAutoModal = false; return; }
+      if (autoMode)      { stopAutoMode(); return; }
+      return;
+    }
+
     if (e.code !== 'Space' || spaceDown) return;
     e.preventDefault();
     initAudio();
+
+    // Block space if modal is open
+    if (showAutoModal) return;
+
     spaceDown = true;
 
     if (state !== S.RUNNING) {
       jump();
-    } else {
+    } else if (!autoMode) {
+      // Manual control only — auto mode drives its own inputs
       spacePending   = true;
       spaceHoldTimer = setTimeout(() => { spacePending = false; duck(true); }, 150);
     }
@@ -370,8 +551,10 @@
     e.preventDefault();
     spaceDown = false;
     clearTimeout(spaceHoldTimer);
-    if (spacePending) { spacePending = false; jump(); }
-    else              { duck(false); }
+    if (!autoMode) {
+      if (spacePending) { spacePending = false; jump(); }
+      else              { duck(false); }
+    }
   });
 
   // ── Touch input ───────────────────────────────────────────────────────────
@@ -385,6 +568,9 @@
     touchId      = e.changedTouches[0].identifier;
     touchStart   = Date.now();
     touchDucking = false;
+
+    // Don't start hold timer if modal is open or auto mode is controlling
+    if (showAutoModal || (autoMode && state === S.RUNNING)) return;
     touchHoldTimer = setTimeout(() => { touchDucking = true; duck(true); }, 150);
   }, { passive: false });
 
@@ -394,14 +580,39 @@
       if (t.identifier !== touchId) continue;
       touchId = null;
       clearTimeout(touchHoldTimer);
+
+      const rect = canvas.getBoundingClientRect();
+      const tx = (t.clientX - rect.left) * (W / rect.width);
+      const ty = (t.clientY - rect.top)  * (H / rect.height);
+
+      // Modal buttons
+      if (showAutoModal) {
+        if (inRect(tx, ty, modalCancelRect)) { showAutoModal = false; return; }
+        if (inRect(tx, ty, modalStartRect))  { showAutoModal = false; autoMode = true; begin(); return; }
+        return; // tap outside modal — close it
+      }
+
+      // AutoClicker button on idle screen
+      if (state === S.IDLE && inRect(tx, ty, autoBtnRect)) {
+        showAutoModal = true; return;
+      }
+
+      // AUTO indicator badge (stop auto mode)
+      if (autoMode && state === S.RUNNING && inRect(tx, ty, autoIndicatorRect)) {
+        stopAutoMode(); return;
+      }
+
+      // Stop AutoClicker button on game-over screen
+      if (autoMode && state === S.DEAD && inRect(tx, ty, stopAutoBtnRect)) {
+        stopAutoMode(); return;
+      }
+
+      // Share button on game-over screen (non-auto mode)
+      if (!autoMode && state === S.DEAD && inRect(tx, ty, shareBtnRect)) {
+        handleShare(); return;
+      }
+
       if (!touchDucking) {
-        // Check share button before restarting
-        if (state === S.DEAD && shareBtnRect) {
-          const rect = canvas.getBoundingClientRect();
-          const tx = (t.clientX - rect.left) * (W / rect.width);
-          const ty = (t.clientY - rect.top)  * (H / rect.height);
-          if (inRect(tx, ty, shareBtnRect)) { handleShare(); return; }
-        }
         jump();
       } else {
         touchDucking = false; duck(false);
@@ -415,11 +626,32 @@
     if (touchDucking) { touchDucking = false; duck(false); }
   }, { passive: false });
 
-  // ── Mouse click (share button on desktop) ─────────────────────────────────
+  // ── Mouse click handler ───────────────────────────────────────────────────
+
   canvas.addEventListener('click', e => {
-    if (state !== S.DEAD || !shareBtnRect) return;
     const pos = canvasXY(e);
-    if (inRect(pos.x, pos.y, shareBtnRect)) handleShare();
+
+    if (showAutoModal) {
+      if (inRect(pos.x, pos.y, modalCancelRect)) { showAutoModal = false; return; }
+      if (inRect(pos.x, pos.y, modalStartRect))  { showAutoModal = false; autoMode = true; begin(); return; }
+      showAutoModal = false; return; // click outside closes modal
+    }
+
+    if (state === S.IDLE && inRect(pos.x, pos.y, autoBtnRect)) {
+      showAutoModal = true; return;
+    }
+
+    if (autoMode && state === S.RUNNING && inRect(pos.x, pos.y, autoIndicatorRect)) {
+      stopAutoMode(); return;
+    }
+
+    if (autoMode && state === S.DEAD && inRect(pos.x, pos.y, stopAutoBtnRect)) {
+      stopAutoMode(); return;
+    }
+
+    if (!autoMode && state === S.DEAD && inRect(pos.x, pos.y, shareBtnRect)) {
+      handleShare();
+    }
   });
 
   // ── Bitmap pixel font (5×5, flat row-major 25-element arrays) ─────────────
@@ -517,7 +749,7 @@
   // ── Update ────────────────────────────────────────────────────────────────
 
   function update() {
-    // Dead state: tick counters for death-screen animation only
+    // Dead state: tick death-screen animation; auto-restart after 2.5 s
     if (state === S.DEAD) {
       deathFrame++;
       deathDisplayScore = Math.min(
@@ -525,6 +757,7 @@
         Math.floor(deathScore * Math.min(1, deathFrame / 60))
       );
       if (shareConfirmFr > 0) shareConfirmFr--;
+      if (autoMode && deathFrame >= 150) begin(); // auto-restart
       return;
     }
     if (state !== S.RUNNING) return;
@@ -553,6 +786,9 @@
     groundOffset = (groundOffset + speed) % 60;
     updateBg();
     updateParticles();
+
+    // AutoClicker AI
+    if (autoMode) autoAct();
 
     // Milestone check
     if (nextMilestoneIdx < MILESTONES.length &&
@@ -805,8 +1041,10 @@
     ctx.save();
     ctx.font = 'bold 15px monospace'; ctx.fillStyle = C_MUTED;
     ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    const hi    = autoMode ? autoHiScore : hiScore;
+    const label = autoMode ? 'AUTO HI' : 'HI';
     ctx.fillText(
-      'HI ' + String(hiScore).padStart(5, '0') + '  ' + String(score).padStart(5, '0'),
+      label + ' ' + String(hi).padStart(5, '0') + '  ' + String(score).padStart(5, '0'),
       W - 16, 16
     );
     ctx.restore();
@@ -815,6 +1053,9 @@
   // ── Overlays ──────────────────────────────────────────────────────────────
 
   function drawIdle() {
+    // AutoClicker button — top-left
+    drawAutoBtn();
+
     ctx.save();
     ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
     ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
@@ -833,7 +1074,6 @@
   }
 
   function drawGameOver() {
-    // Frosted overlay — slightly blue-tinted, not blinding white
     ctx.fillStyle = 'rgba(240,244,255,0.88)';
     ctx.fillRect(0, 0, W, H);
 
@@ -851,33 +1091,52 @@
     ctx.fillText('GAME OVER', W / 2, H / 2 - 28);
 
     // Animated score count-up
+    const scoreLabel = autoMode ? 'Auto score: ' : 'Score: ';
     ctx.font = '15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
     ctx.fillStyle = C_MUTED;
-    ctx.fillText('Score: ' + deathDisplayScore, W / 2, H / 2);
+    ctx.fillText(scoreLabel + deathDisplayScore, W / 2, H / 2);
 
-    // New high score
-    if (deathScore > 0 && deathScore >= hiScore) {
+    // High score celebration
+    const isNewHi = autoMode
+      ? (deathScore > 0 && deathScore >= autoHiScore)
+      : (deathScore > 0 && deathScore >= hiScore);
+    if (isNewHi) {
       ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
       ctx.fillStyle = C_ACCENT;
-      ctx.fillText('New high score!', W / 2, H / 2 + 22);
+      ctx.fillText(autoMode ? 'New auto record!' : 'New high score!', W / 2, H / 2 + 22);
     }
 
-    // Share button
-    const btnW = 148, btnH = 36;
+    const btnW = 160, btnH = 36;
     const btnX = W / 2 - btnW / 2;
     const btnY = H / 2 + 40;
-    shareBtnRect = { x: btnX, y: btnY, w: btnW, h: btnH };
-    rr(btnX, btnY, btnW, btnH, 8, shareConfirmFr > 0 ? '#1e7a3c' : C_ACCENT);
-    ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-    ctx.fillStyle = '#ffffff';
     ctx.textBaseline = 'middle';
-    ctx.fillText(shareConfirmFr > 0 ? '✓ Copied!' : 'Share score', W / 2, btnY + btnH / 2);
 
-    // Restart hint
-    ctx.font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-    ctx.fillStyle = C_SUBTLE;
-    ctx.textBaseline = 'alphabetic';
-    ctx.fillText('Tap or press Space to restart', W / 2, H / 2 + 96);
+    if (autoMode) {
+      // Stop AutoClicker button
+      stopAutoBtnRect = { x: btnX, y: btnY, w: btnW, h: btnH };
+      rr(btnX, btnY, btnW, btnH, 8, '#516072');
+      ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('Stop AutoClicker', W / 2, btnY + btnH / 2);
+
+      // Auto-restart notice
+      ctx.font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      ctx.fillStyle = C_SUBTLE;
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText('Restarting automatically…', W / 2, H / 2 + 96);
+    } else {
+      // Share button
+      shareBtnRect = { x: btnX, y: btnY, w: btnW, h: btnH };
+      rr(btnX, btnY, btnW, btnH, 8, shareConfirmFr > 0 ? '#1e7a3c' : C_ACCENT);
+      ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(shareConfirmFr > 0 ? '✓ Copied!' : 'Share score', W / 2, btnY + btnH / 2);
+
+      ctx.font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      ctx.fillStyle = C_SUBTLE;
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText('Tap or press Space to restart', W / 2, H / 2 + 96);
+    }
 
     ctx.restore();
   }
@@ -885,7 +1144,6 @@
   // ── Main loop ─────────────────────────────────────────────────────────────
 
   function draw() {
-    // Atmospheric background colour (shifts at high scores)
     ctx.fillStyle = getBgColor();
     ctx.fillRect(0, 0, W, H);
 
@@ -911,7 +1169,10 @@
     drawHUD();
     drawMilestone();
 
-    // Death flash (drawn above HUD, below state overlay)
+    // AutoClicker running indicator (top-left, pulsing)
+    if (autoMode && state === S.RUNNING) drawAutoIndicator();
+
+    // Death flash (above HUD, below state overlay)
     if (flashFr > 0) {
       ctx.fillStyle = `rgba(200,50,30,${((flashFr / 15) * 0.32).toFixed(2)})`;
       ctx.fillRect(0, 0, W, H);
@@ -920,6 +1181,9 @@
 
     if (state === S.IDLE) drawIdle();
     if (state === S.DEAD) drawGameOver();
+
+    // Modal draws last — on top of everything
+    drawAutoModal();
   }
 
   function loop() { update(); draw(); requestAnimationFrame(loop); }
