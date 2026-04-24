@@ -1239,6 +1239,17 @@
 
     // Modal draws last — on top of everything
     drawAutoModal();
+
+    // AutoClicker border — 4 px accent stroke that pulses with the indicator
+    if (autoMode) {
+      const pulse = 0.72 + 0.28 * Math.sin(frame * 0.13);
+      ctx.save();
+      ctx.globalAlpha = pulse;
+      ctx.strokeStyle = C_ACCENT;
+      ctx.lineWidth   = 4;
+      ctx.strokeRect(2, 2, W - 4, H - 4);
+      ctx.restore();
+    }
   }
 
   function loop() { update(); draw(); requestAnimationFrame(loop); }
