@@ -259,7 +259,7 @@
   }
 
   function handleShare() {
-    const msg = `I scored ${deathScore} in DinoClaude 🦕\nJump the CONTEXT LIMIT · Duck the OUT OF TOKENS\n${window.location.href}`;
+    const msg = `I scored ${deathScore} in DinoClaude 🦕🦀\nJump the CONTEXT LIMIT · Duck the OUT OF TOKENS\n${window.location.href}`;
     if (navigator.share) {
       navigator.share({ title: 'DinoClaude', text: msg }).catch(() => copyToClipboard(msg));
     } else {
@@ -279,6 +279,7 @@
   let modalStartRect    = null; // modal Start AutoClicker button
   let stopAutoBtnRect   = null; // "Stop AutoClicker" on game-over screen in auto mode
   let tryAutoBtnRect    = null; // "⚡ AutoClicker" on normal game-over screen
+  let tryAgainBtnRect   = null; // "Try Again" primary CTA on normal game-over screen
 
   try { autoHiScore = parseInt(localStorage.getItem('dc-hi-auto'), 10) || 0; } catch (_) {}
 
@@ -686,12 +687,10 @@
         stopAutoMode(); return;
       }
 
-      // Share button on game-over screen (non-auto mode)
-      if (!autoMode && state === S.DEAD && inRect(tx, ty, shareBtnRect)) {
-        handleShare(); return;
-      }
-      if (!autoMode && state === S.DEAD && inRect(tx, ty, tryAutoBtnRect)) {
-        autoMode = true; begin(); return;
+      // Game-over buttons (non-auto mode)
+      if (!autoMode && state === S.DEAD) {
+        if (inRect(tx, ty, shareBtnRect))    { handleShare(); return; }
+        if (inRect(tx, ty, tryAutoBtnRect))  { autoMode = true; begin(); return; }
       }
 
       if (!touchDucking) {
@@ -731,11 +730,10 @@
       stopAutoMode(); return;
     }
 
-    if (!autoMode && state === S.DEAD && inRect(pos.x, pos.y, shareBtnRect)) {
-      handleShare(); return;
-    }
-    if (!autoMode && state === S.DEAD && inRect(pos.x, pos.y, tryAutoBtnRect)) {
-      autoMode = true; begin(); return;
+    if (!autoMode && state === S.DEAD) {
+      if (inRect(pos.x, pos.y, shareBtnRect))   { handleShare(); return; }
+      if (inRect(pos.x, pos.y, tryAutoBtnRect))  { autoMode = true; begin(); return; }
+      begin(); return; // click anywhere else on game-over → restart
     }
 
     // Resume from pause on canvas click
@@ -1243,72 +1241,77 @@
     ctx.save();
     ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
 
+    const SYS = '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+
     // Claude-flavored death line
-    ctx.font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.font = `12px ${SYS}`;
     ctx.fillStyle = C_SUBTLE;
-    ctx.fillText(deathLine, W / 2, H / 2 - 52);
+    ctx.fillText(deathLine, W / 2, H / 2 - 58);
 
     // GAME OVER
-    ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.font = `bold 26px ${SYS}`;
     ctx.fillStyle = C_TEXT;
-    ctx.fillText('GAME OVER', W / 2, H / 2 - 28);
+    ctx.fillText('GAME OVER', W / 2, H / 2 - 33);
 
     // Animated score count-up
     const scoreLabel = autoMode ? 'Auto score: ' : 'Score: ';
-    ctx.font = '15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.font = `15px ${SYS}`;
     ctx.fillStyle = C_MUTED;
-    ctx.fillText(scoreLabel + deathDisplayScore, W / 2, H / 2);
+    ctx.fillText(scoreLabel + deathDisplayScore, W / 2, H / 2 - 10);
 
     // High score celebration
     const isNewHi = autoMode
       ? (deathScore > 0 && deathScore >= autoHiScore)
       : (deathScore > 0 && deathScore >= hiScore);
     if (isNewHi) {
-      ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      ctx.font = `bold 13px ${SYS}`;
       ctx.fillStyle = C_ACCENT;
-      ctx.fillText(autoMode ? 'New auto record!' : 'New high score!', W / 2, H / 2 + 22);
+      ctx.fillText(autoMode ? 'New auto record!' : 'New high score!', W / 2, H / 2 + 9);
     }
 
-    const btnW = 160, btnH = 36;
-    const btnX = W / 2 - btnW / 2;
-    const btnY = H / 2 + 40;
     ctx.textBaseline = 'middle';
 
     if (autoMode) {
       // Stop AutoClicker button
+      const btnW = 180, btnH = 42;
+      const btnX = W / 2 - btnW / 2, btnY = H / 2 + 22;
       stopAutoBtnRect = { x: btnX, y: btnY, w: btnW, h: btnH };
-      rr(btnX, btnY, btnW, btnH, 8, '#516072');
-      ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      rr(btnX, btnY, btnW, btnH, 10, '#516072');
+      ctx.font = `bold 14px ${SYS}`;
       ctx.fillStyle = '#ffffff';
       ctx.fillText('Stop AutoClicker', W / 2, btnY + btnH / 2);
 
-      // Auto-restart notice
-      ctx.font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      ctx.font = `12px ${SYS}`;
       ctx.fillStyle = C_SUBTLE;
       ctx.textBaseline = 'alphabetic';
-      ctx.fillText('Restarting automatically…', W / 2, H / 2 + 96);
+      ctx.fillText('Restarting automatically…', W / 2, H / 2 + 86);
     } else {
-      // Share button
-      shareBtnRect = { x: btnX, y: btnY, w: btnW, h: btnH };
-      rr(btnX, btnY, btnW, btnH, 8, shareConfirmFr > 0 ? '#1e7a3c' : C_ACCENT);
-      ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      // 1. PRIMARY — Try Again
+      const taW = 200, taH = 44;
+      const taX = W / 2 - taW / 2, taY = H / 2 + 20;
+      tryAgainBtnRect = { x: taX, y: taY, w: taW, h: taH };
+      rr(taX, taY, taW, taH, 10, C_ACCENT);
+      ctx.font = `bold 16px ${SYS}`;
       ctx.fillStyle = '#ffffff';
-      ctx.fillText(shareConfirmFr > 0 ? '✓ Copied!' : 'Share score', W / 2, btnY + btnH / 2);
+      ctx.fillText('Try Again', W / 2, taY + taH / 2);
 
-      ctx.font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-      ctx.fillStyle = C_SUBTLE;
-      ctx.textBaseline = 'alphabetic';
-      ctx.fillText('Tap or press Space to restart', W / 2, H / 2 + 88);
-
-      // AutoClicker switch — subtle secondary button
-      const acW = 148, acH = 28;
-      const acX = W / 2 - acW / 2, acY = H / 2 + 100;
+      // 2. SECONDARY — AutoClicker
+      const acW = 176, acH = 36;
+      const acX = W / 2 - acW / 2, acY = taY + taH + 8;
       tryAutoBtnRect = { x: acX, y: acY, w: acW, h: acH };
-      rr(acX, acY, acW, acH, acH / 2, 'rgba(31,95,214,0.10)');
-      ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      rr(acX, acY, acW, acH, acH / 2, 'rgba(31,95,214,0.11)');
+      ctx.font = `13px ${SYS}`;
       ctx.fillStyle = C_ACCENT;
-      ctx.textBaseline = 'middle';
-      ctx.fillText('⚡ Try AutoClicker', W / 2, acY + acH / 2);
+      ctx.fillText('⚡ AutoClicker', W / 2, acY + acH / 2);
+
+      // 3. TERTIARY — Share
+      const shW = 156, shH = 30;
+      const shX = W / 2 - shW / 2, shY = acY + acH + 8;
+      shareBtnRect = { x: shX, y: shY, w: shW, h: shH };
+      rr(shX, shY, shW, shH, shH / 2, 'rgba(102,117,138,0.12)');
+      ctx.font = `12px ${SYS}`;
+      ctx.fillStyle = shareConfirmFr > 0 ? '#1e7a3c' : C_SUBTLE;
+      ctx.fillText(shareConfirmFr > 0 ? '✓ Copied!' : 'Share score', W / 2, shY + shH / 2);
     }
 
     ctx.restore();
