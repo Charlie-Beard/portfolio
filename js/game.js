@@ -243,6 +243,7 @@
   let modalCancelRect   = null; // modal Cancel button
   let modalStartRect    = null; // modal Start AutoClicker button
   let stopAutoBtnRect   = null; // "Stop AutoClicker" on game-over screen in auto mode
+  let tryAutoBtnRect    = null; // "⚡ AutoClicker" on normal game-over screen
 
   try { autoHiScore = parseInt(localStorage.getItem('dc-hi-auto'), 10) || 0; } catch (_) {}
 
@@ -519,7 +520,7 @@
     milestoneMsg = null; milestoneFr = 0; nextMilestoneIdx = 0;
     shakeFr = 0; flashFr = 0;
     shareBtnRect = null; shareConfirmFr = 0;
-    stopAutoBtnRect = null;
+    stopAutoBtnRect = null; tryAutoBtnRect = null;
   }
 
   function die() {
@@ -649,6 +650,9 @@
       if (!autoMode && state === S.DEAD && inRect(tx, ty, shareBtnRect)) {
         handleShare(); return;
       }
+      if (!autoMode && state === S.DEAD && inRect(tx, ty, tryAutoBtnRect)) {
+        autoMode = true; begin(); return;
+      }
 
       if (!touchDucking) {
         if (!autoMode || state !== S.RUNNING) jump();
@@ -688,7 +692,10 @@
     }
 
     if (!autoMode && state === S.DEAD && inRect(pos.x, pos.y, shareBtnRect)) {
-      handleShare();
+      handleShare(); return;
+    }
+    if (!autoMode && state === S.DEAD && inRect(pos.x, pos.y, tryAutoBtnRect)) {
+      autoMode = true; begin();
     }
   });
 
@@ -1173,7 +1180,17 @@
       ctx.font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
       ctx.fillStyle = C_SUBTLE;
       ctx.textBaseline = 'alphabetic';
-      ctx.fillText('Tap or press Space to restart', W / 2, H / 2 + 96);
+      ctx.fillText('Tap or press Space to restart', W / 2, H / 2 + 88);
+
+      // AutoClicker switch — subtle secondary button
+      const acW = 148, acH = 28;
+      const acX = W / 2 - acW / 2, acY = H / 2 + 100;
+      tryAutoBtnRect = { x: acX, y: acY, w: acW, h: acH };
+      rr(acX, acY, acW, acH, acH / 2, 'rgba(31,95,214,0.10)');
+      ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      ctx.fillStyle = C_ACCENT;
+      ctx.textBaseline = 'middle';
+      ctx.fillText('⚡ Try AutoClicker', W / 2, acY + acH / 2);
     }
 
     ctx.restore();
