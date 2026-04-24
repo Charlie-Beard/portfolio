@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="{{ site.baseurl }}/css/styles.css?v={{ site.time | date: '%s' }}">
     <script type="module" src="{{ site.baseurl }}/js/main.js?v={{ site.time | date: '%s' }}"></script>
   </head>
-  <body class="is-loading" data-page="project">
+  <body data-page="project">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="page-loader" aria-hidden="true"></div>
     <div class="page-shell">
       <header class="site-header">
         <div class="site-header__inner">
@@ -28,6 +27,9 @@
       </header>
 
       <main class="page-content" id="main-content">
+        <nav aria-label="Breadcrumb" class="case-study__breadcrumb">
+          <a href="{{ site.baseurl }}/">← Work</a>
+        </nav>
         <article class="case-study">
           <header class="case-study__header">
             <p class="eyebrow">Case Study</p>

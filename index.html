@@ -15,9 +15,8 @@ schema_person: true
     <link rel="stylesheet" href="css/styles.css?v={{ site.time | date: '%s' }}">
     <script type="module" src="js/main.js?v={{ site.time | date: '%s' }}"></script>
   </head>
-  <body class="is-loading" data-page="home">
+  <body data-page="home">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="page-loader" aria-hidden="true"></div>
     <div class="page-shell">
       <header class="site-header">
         <div class="site-header__inner">
@@ -35,17 +34,17 @@ schema_person: true
 
       <main class="page-content" id="main-content">
         <section class="page-intro">
-          <p class="eyebrow">Senior Product Manager</p>
+          <p class="eyebrow">J.P.Morgan Chase · London</p>
           <h1 class="page-title">Leading enterprise investment platforms that power better decisions at scale.</h1>
           <p class="page-lead">
-            Senior Product Manager and CFA Charterholder at J.P.Morgan Chase, leading multiple squads delivering core platform services, analytics, and AI-enabled tooling for thousands of users across Spectrum.
+            I own roadmap, prioritisation, and delivery across multiple squads building the shared foundations that thousands of investment, client service, and operations users depend on every day — the design system, analytics, AI tooling, support, and dashboards that keep Spectrum coherent as it scales.
           </p>
         </section>
 
         <section class="page-section" aria-labelledby="selected-work">
           <div class="section-heading">
             <h2 id="selected-work">Selected Work</h2>
-            <p class="section-copy">Five core Spectrum platform products spanning design systems, telemetry, support, dashboards, and AI-enabled workflows — plus independent NLP and machine learning research at the University of Bath.</p>
+            <p class="section-copy">Core platform products from J.P.Morgan Chase's Spectrum — plus independent ML research at the University of Bath.</p>
           </div>
           <div class="project-grid">
             {% assign sorted_projects = site.projects | sort: "order" %}
@@ -68,16 +67,24 @@ schema_person: true
                 </dl>
                 <p class="project-card__impact">{{ project.impact | escape }}</p>
               </div>
-              <a class="button-link" href="{{ project.url | prepend: site.baseurl }}">View case study</a>
+              <a class="button-link" href="{{ project.url | prepend: site.baseurl }}" aria-label="View {{ project.title }} case study">View case study</a>
             </article>
             {% endfor %}
+          </div>
+        </section>
+
+        <section class="page-section contact-section" aria-labelledby="contact">
+          <div class="contact-panel">
+            <h2 id="contact">Get in touch</h2>
+            <p>Open to conversations about senior product leadership roles in enterprise financial platforms.</p>
+            <a class="button-link" href="mailto:charlesjohnbeard@gmail.com">charlesjohnbeard@gmail.com</a>
           </div>
         </section>
       </main>
 
       <footer class="site-footer">
         <div class="site-footer__inner">
-          <p>Charles Beard, CFA, builds enterprise investment platform products for global asset management.</p>
+          <p>Product Manager · CFA Charterholder · J.P.Morgan Chase</p>
           <p><a href="mailto:charlesjohnbeard@gmail.com">charlesjohnbeard@gmail.com</a> <span aria-hidden="true">/</span> <a href="https://www.linkedin.com/in/charlesjohnbeard/" target="_blank" rel="noreferrer">LinkedIn</a></p>
           <p>&copy; <span data-year></span> Charles Beard</p>
         </div>

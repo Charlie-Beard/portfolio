@@ -37,5 +37,5 @@ Because it sat within the broader platform product set, it could be governed, it
 ## Impact
 
 - Delivered a consistent, governed support experience for thousands of internal users across Spectrum
-- Reduced fragmentation in how teams approached user support across the platform estate
+- Eliminated the need for individual product teams to build and maintain their own support patterns — removing duplication and keeping experience quality consistent as the platform grows
 - Reinforced the role of shared core products in maintaining platform quality as Spectrum scales

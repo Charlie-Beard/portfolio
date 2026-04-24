@@ -36,6 +36,6 @@ Like the other core products I own, Dashboards was developed through close triad
 
 ## Impact
 
-- Supported thousands of internal users across investment, client service, and operations
-- Delivered more consistent portfolio workflow visibility across the Spectrum estate
-- Strengthened the set of strategic shared products underpinning the platform
+- Supported thousands of internal users across investment, client service, and operations with a shared, governed visibility surface
+- Extended the platform's shared capability set with a dashboard product that teams could rely on — removing the need for each group to solve portfolio visibility locally
+- Delivered more consistent portfolio workflow visibility across the Spectrum estate, reinforcing the platform's model of shared products over local reinvention

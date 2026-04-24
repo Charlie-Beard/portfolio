@@ -38,6 +38,6 @@ Because it was built within the platform product strategy from day one, it could
 
 ## Impact
 
-- Delivered AI-enabled tooling to thousands of internal users as a strategic platform product within Spectrum
-- Demonstrated how emerging capabilities can be introduced at enterprise scale without compromising platform consistency or resiliency
-- Extended the Spectrum core product portfolio with a new capability aligned with the platform's governance and quality standards
+- Established AI capability as a governed, iterable platform product — preventing the fragmentation that typically results from team-level AI experiments across a large estate
+- Set a repeatable model for introducing emerging capabilities within Spectrum's governance and quality standards, making the next AI-enabled product easier to deliver well
+- Extended the Spectrum core product portfolio with a new capability that thousands of internal users can rely on with the same confidence they have in the rest of the platform

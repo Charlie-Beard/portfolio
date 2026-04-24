@@ -163,6 +163,13 @@ body.is-scrolled .site-header__inner {
   font-size: 0.78rem;
   line-height: 1.1;
   white-space: nowrap;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+
+.site-nav a:hover {
+  background: var(--border);
+  border-color: var(--border-strong);
+  color: var(--text);
 }
 
 .site-nav a[aria-current="page"] {
@@ -170,54 +177,6 @@ body.is-scrolled .site-header__inner {
   font-weight: 600;
   background: var(--surface);
   border-color: var(--border-strong);
-}
-
-.page-loader {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-}
-
-body.is-ready:not(.is-navigating) .page-loader {
-  display: none;
-}
-
-.loader {
-  width: 64px;
-  height: 64px;
-  position: relative;
-  animation: loader-rotate 1.5s ease-in infinite alternate;
-}
-
-.loader::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  color: var(--accent);
-  background: currentColor;
-  width: 64px;
-  height: 32px;
-  border-radius: 0 0 50px 50px;
-}
-
-.loader::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 10%;
-  background: #000;
-  width: 8px;
-  height: 64px;
-  animation: loader-rotate 1.2s linear infinite alternate-reverse;
-}
-
-@keyframes loader-rotate {
-  100% { transform: rotate(360deg); }
 }
 
 .page-content {
@@ -390,6 +349,13 @@ body.is-ready:not(.is-navigating) .page-loader {
   color: var(--accent);
   font-weight: 600;
   text-decoration: none;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.button-link:hover {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
 }
 
 
@@ -623,6 +589,12 @@ body.is-ready:not(.is-navigating) .page-loader {
     white-space: nowrap;
   }
 
+  .site-nav a:hover {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text);
+  }
+
   .site-nav a[aria-current="page"] {
     background: transparent;
     border-color: transparent;
@@ -639,8 +611,6 @@ body.is-ready:not(.is-navigating) .page-loader {
   }
 
 .section-heading {
-    flex-direction: row;
-    align-items: center;
     margin-bottom: 1.25rem;
   }
 
@@ -709,6 +679,46 @@ body.is-ready:not(.is-navigating) .page-loader {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+.case-study__breadcrumb {
+  padding-top: 1.75rem;
+  width: min(calc(100% - 2rem), var(--reading-width));
+  margin-inline: auto;
+}
+
+.case-study__breadcrumb a {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.case-study__breadcrumb a:hover {
+  color: var(--accent);
+}
+
+.contact-section {
+  padding-bottom: 2rem;
+}
+
+.contact-panel {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background-soft);
+}
+
+.contact-panel h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+}
+
+.contact-panel p {
+  margin: 0 0 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.96rem;
 }
 
 /* ── DinoClaude game page ─────────────────────────────────────────────────── */
