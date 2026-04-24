@@ -3,6 +3,21 @@ description: Senior Product Manager and CFA Charterholder at J.P.Morgan Chase, l
 baseurl: "/portfolio"
 url: "https://charlie-beard.github.io"
 
+# SEO & social metadata — consumed by _includes/head-meta.html
+author:
+  name: Charles Beard
+
+social:
+  name: Charles Beard
+  links:
+    - https://www.linkedin.com/in/charlesjohnbeard/
+    - https://charlie-beard.github.io/portfolio/
+
+# og_image: content/og-image.png   # uncomment and add a 1200×630 px image for social previews
+
+plugins:
+  - jekyll-sitemap
+
 markdown: kramdown
 kramdown:
   input: GFM

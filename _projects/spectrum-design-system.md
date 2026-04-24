@@ -3,6 +3,7 @@ layout: project
 title: Spectrum Design System
 slug: spectrum-design-system
 subtitle: A strategic shared foundation delivering consistent platform experiences across 100+ Spectrum applications.
+description: How Charles Beard led the Spectrum Design System as a governed shared platform product at J.P.Morgan Chase, accelerating product delivery and raising experience consistency across a 100+ application estate.
 role: Senior Product Manager
 company: J.P.Morgan Chase
 timeline: 2019 - Present

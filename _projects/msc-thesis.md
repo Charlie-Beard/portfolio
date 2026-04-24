@@ -3,6 +3,7 @@ layout: project
 title: MSc Thesis — NLP and ML for Support Ticket Classification
 slug: msc-thesis
 subtitle: Research into automating support ticket classification on JPMorgan's Spectrum platform using natural language processing and machine learning.
+description: MSc dissertation by Charles Beard (University of Bath, Distinction 2023) applying TF-IDF and SVM classification to automate support ticket triage on J.P.Morgan Chase's Spectrum platform, achieving 83.21% F1 Score with an estimated $9.15 saving per automated ticket.
 role: MSc Researcher
 company: University of Bath
 timeline: 2022–2023

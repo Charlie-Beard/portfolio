@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 11" shape-rendering="crispEdges">
+  <!-- Antennas -->
+  <rect x="1" y="0" width="2" height="2" fill="#D4673D"/>
+  <rect x="5" y="0" width="2" height="2" fill="#D4673D"/>
+  <!-- Body -->
+  <rect x="0" y="2" width="8" height="5" fill="#D4673D"/>
+  <!-- Belly shading -->
+  <rect x="0" y="7" width="8" height="1" fill="#B85530"/>
+  <!-- Eyes -->
+  <rect x="1" y="3" width="2" height="2" fill="#1E0A02"/>
+  <rect x="5" y="3" width="2" height="2" fill="#1E0A02"/>
+  <!-- Legs: left extended, right raised -->
+  <rect x="1" y="8" width="2" height="3" fill="#D4673D"/>
+  <rect x="5" y="8" width="2" height="2" fill="#B85530"/>
+</svg>

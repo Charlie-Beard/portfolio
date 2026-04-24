@@ -1,0 +1,128 @@
+{%- comment -%}
+  head-meta.html — injected into every page <head>.
+  Outputs canonical, Open Graph, Twitter Card, and JSON-LD at build time.
+  Reads from page front matter and _config.yml — no runtime JS needed.
+{%- endcomment -%}
+
+{%- assign _title = page.title | default: site.title -%}
+{%- assign _desc  = page.description | default: page.subtitle | default: site.description -%}
+{%- assign _url   = site.url | append: site.baseurl | append: page.url -%}
+{%- assign _type  = page.og_type | default: "website" -%}
+
+  <!-- Canonical -->
+  <link rel="canonical" href="{{ _url }}">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="{{ _type }}">
+  <meta property="og:title"       content="{{ _title | escape }}">
+  <meta property="og:description" content="{{ _desc | escape }}">
+  <meta property="og:url"         content="{{ _url }}">
+  <meta property="og:site_name"   content="{{ site.author.name | default: site.title | escape }}">
+  {%- if site.og_image %}
+  <meta property="og:image"       content="{{ site.url }}{{ site.baseurl }}/{{ site.og_image }}">
+  {%- endif %}
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="{{ _title | escape }}">
+  <meta name="twitter:description" content="{{ _desc | escape }}">
+  {%- if site.og_image %}
+  <meta name="twitter:image"       content="{{ site.url }}{{ site.baseurl }}/{{ site.og_image }}">
+  {%- endif %}
+
+  {%- if page.schema_website %}
+  <!-- JSON-LD: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {{ site.title | jsonify }},
+    "url": {{ site.url | append: site.baseurl | jsonify }},
+    "description": {{ site.description | jsonify }},
+    "author": {
+      "@type": "Person",
+      "name": {{ site.author.name | jsonify }}
+    }
+  }
+  </script>
+  {%- endif %}
+
+  {%- if page.schema_person %}
+  <!-- JSON-LD: Person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Charles Beard",
+    "jobTitle": "Senior Product Manager",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "J.P.Morgan Chase"
+    },
+    "alumniOf": [
+      { "@type": "EducationalOrganization", "name": "University of Bath" },
+      { "@type": "EducationalOrganization", "name": "University of Exeter" }
+    ],
+    "hasCredential": [
+      { "@type": "EducationalOccupationalCredential", "name": "CFA Charterholder" },
+      { "@type": "EducationalOccupationalCredential", "name": "MSc Computer Science (Distinction), University of Bath" }
+    ],
+    "knowsAbout": [
+      "Product Management",
+      "Enterprise Investment Platforms",
+      "AI-Enabled Tooling",
+      "Analytics",
+      "Asset Management",
+      "Capital Markets",
+      "Natural Language Processing",
+      "Machine Learning"
+    ],
+    "url": {{ site.url | append: site.baseurl | jsonify }},
+    "sameAs": [
+      "https://www.linkedin.com/in/charlesjohnbeard/"
+    ]
+  }
+  </script>
+  {%- endif %}
+
+  {%- if page.layout == "project" %}
+  <!-- JSON-LD: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": {{ site.url | append: site.baseurl | append: "/" | jsonify }}
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ page.title | jsonify }},
+        "item": {{ _url | jsonify }}
+      }
+    ]
+  }
+  </script>
+  <!-- JSON-LD: Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": {{ page.title | jsonify }},
+    "description": {{ _desc | jsonify }},
+    "author": {
+      "@type": "Person",
+      "name": "Charles Beard",
+      "url": {{ site.url | append: site.baseurl | jsonify }}
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Charles Beard"
+    }
+  }
+  </script>
+  {%- endif %}

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="{{ page.subtitle | default: page.title | escape }}">
     <title>{{ page.title | escape }} | Charles Beard</title>
+    {% include head-meta.html %}
     <link rel="stylesheet" href="{{ site.baseurl }}/css/styles.css?v={{ site.time | date: '%s' }}">
     <script type="module" src="{{ site.baseurl }}/js/main.js?v={{ site.time | date: '%s' }}"></script>
   </head>

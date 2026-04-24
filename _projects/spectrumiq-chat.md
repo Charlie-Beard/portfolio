@@ -3,6 +3,7 @@ layout: project
 title: SpectrumIQ
 slug: spectrumiq-chat
 subtitle: AI-enabled chat experience introduced as a strategic core product within Spectrum.
+description: How Charles Beard led SpectrumIQ — an AI-enabled chat experience — as a governed platform product within J.P.Morgan Chase's Spectrum investment platform, delivering AI tooling to thousands of internal users.
 role: Senior Product Manager
 company: J.P.Morgan Chase
 timeline: 2019 - Present

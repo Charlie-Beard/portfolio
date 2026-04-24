@@ -1,0 +1,24 @@
+---
+layout: null
+---
+# {{ site.title }}
+
+> {{ site.description }}
+
+Charles Beard is a Senior Product Manager at J.P.Morgan Chase with extensive experience building enterprise investment platforms for global asset management. He holds a CFA designation and an MSc in Computer Science (Distinction) from the University of Bath, where his dissertation applied NLP and machine learning to automate support ticket classification on the Spectrum platform.
+
+## Pages
+
+- [Home]({{ site.url }}{{ site.baseurl }}/): {{ site.description }}
+- [About]({{ site.url }}{{ site.baseurl }}/about.html): Professional background, focus areas, and approach to platform product management
+- [CV]({{ site.url }}{{ site.baseurl }}/cv.html): Full career history, education, certifications, and skills
+- [DinoClaude]({{ site.url }}{{ site.baseurl }}/dinoclaude.html): Browser-based endless runner game built for the portfolio
+
+## Case Studies
+{% assign sorted_projects = site.projects | sort: "order" %}
+{% for project in sorted_projects %}
+- [{{ project.title }}]({{ site.url }}{{ project.url | prepend: site.baseurl }}): {{ project.subtitle }}
+{% endfor %}
+## Optional
+
+- [Sitemap]({{ site.url }}{{ site.baseurl }}/sitemap.xml)

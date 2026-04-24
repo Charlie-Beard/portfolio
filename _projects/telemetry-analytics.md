@@ -3,6 +3,7 @@ layout: project
 title: Telemetry and Analytics
 slug: telemetry-analytics
 subtitle: Shared telemetry and analytics capability giving Spectrum products the insight to make better decisions.
+description: How Charles Beard built shared telemetry and analytics capability across J.P.Morgan Chase's Spectrum platform, including Pendo.io integration, to give 100+ applications the product insight needed to make better decisions.
 role: Senior Product Manager
 company: J.P.Morgan Chase
 timeline: 2019 - Present

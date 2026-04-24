@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Research into automating support ticket classification on JPMorgan&#39;s Spectrum platform using natural language processing and machine learning.">
+    <title>MSc Thesis — NLP and ML for Support Ticket Classification | Charles Beard</title>
+    <!-- Canonical -->
+  <link rel="canonical" href="https://charlie-beard.github.io/portfolio/project-msc-thesis.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="MSc Thesis — NLP and ML for Support Ticket Classification">
+  <meta property="og:description" content="MSc dissertation by Charles Beard (University of Bath, Distinction 2023) applying TF-IDF and SVM classification to automate support ticket triage on J.P.Morgan Chase&#39;s Spectrum platform, achieving 83.21% F1 Score with an estimated $9.15 saving per automated ticket.">
+  <meta property="og:url"         content="https://charlie-beard.github.io/portfolio/project-msc-thesis.html">
+  <meta property="og:site_name"   content="Charles Beard">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="MSc Thesis — NLP and ML for Support Ticket Classification">
+  <meta name="twitter:description" content="MSc dissertation by Charles Beard (University of Bath, Distinction 2023) applying TF-IDF and SVM classification to automate support ticket triage on J.P.Morgan Chase&#39;s Spectrum platform, achieving 83.21% F1 Score with an estimated $9.15 saving per automated ticket.">
+  <!-- JSON-LD: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://charlie-beard.github.io/portfolio/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "MSc Thesis — NLP and ML for Support Ticket Classification",
+        "item": "https://charlie-beard.github.io/portfolio/project-msc-thesis.html"
+      }
+    ]
+  }
+  </script>
+  <!-- JSON-LD: Article -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "MSc Thesis — NLP and ML for Support Ticket Classification",
+    "description": "MSc dissertation by Charles Beard (University of Bath, Distinction 2023) applying TF-IDF and SVM classification to automate support ticket triage on J.P.Morgan Chase's Spectrum platform, achieving 83.21% F1 Score with an estimated $9.15 saving per automated ticket.",
+    "author": {
+      "@type": "Person",
+      "name": "Charles Beard",
+      "url": "https://charlie-beard.github.io/portfolio"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Charles Beard"
+    }
+  }
+  </script>
+
+    <link rel="stylesheet" href="/portfolio/css/styles.css?v=1777041909">
+    <script type="module" src="/portfolio/js/main.js?v=1777041909"></script>
+  </head>
+  <body class="is-loading" data-page="project">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="page-loader" aria-hidden="true"></div>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="site-header__inner">
+          <a class="site-brand" href="/portfolio/">Charles Beard</a>
+          <nav class="site-nav" aria-label="Primary">
+            <ul>
+              <li><a href="/portfolio/">Home</a></li>
+              <li><a href="/portfolio/about.html">About</a></li>
+              <li><a href="/portfolio/cv.html">CV</a></li>
+              <li><a href="/portfolio/dinoclaude.html">DinoClaude</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main class="page-content" id="main-content">
+        <article class="case-study">
+          <header class="case-study__header">
+            <p class="eyebrow">Case Study</p>
+            <h1 class="case-study__title">MSc Thesis — NLP and ML for Support Ticket Classification</h1>
+            <p class="case-study__subtitle">Research into automating support ticket classification on JPMorgan&#39;s Spectrum platform using natural language processing and machine learning.</p>
+            <dl class="meta-grid">
+              <div>
+                <dt>Role</dt>
+                <dd>MSc Researcher</dd>
+              </div>
+              <div>
+                <dt>Company</dt>
+                <dd>University of Bath</dd>
+              </div>
+              <div>
+                <dt>Timeline</dt>
+                <dd>2022–2023</dd>
+              </div>
+            </dl>
+          </header>
+
+          
+          <figure class="case-study__media">
+            <img src="/portfolio/content/projects/images/msc-thesis.svg" alt="Placeholder diagram showing an NLP and machine learning classification pipeline for support tickets" loading="lazy" width="1280" height="720">
+            <figcaption>Conceptual pipeline illustrating the NLP pre-processing and SVM classification system built for the dissertation</figcaption>
+          </figure>
+          
+
+          <div class="case-study__body rich-text">
+            <h2 id="problem">Problem</h2>
+
+<p>Spectrum — JPMorgan Asset Management’s internal investment platform — generates over 12,000 support tickets a year across 120+ applications and 5,000 users. A significant subset of those tickets can be resolved without human review: they require a pre-defined response (for access requests, AG Grid licence queries, or blank ticket auto-closures) or need routing to a specific team.</p>
+
+<p>Without automated classification, every ticket enters a first-in-first-out queue and requires a support agent to read, categorise, and respond — even for repeat, predictable queries. Each unnecessarily manual classification costs approximately $9.15 in staff time, and customers wait longer for resolutions that could have been instant.</p>
+
+<p>The research question: can NLP and machine learning classify these tickets with sufficient accuracy to make automation viable in a production environment?</p>
+
+<h2 id="approach">Approach</h2>
+
+<p>This research formed the dissertation for my MSc in Computer Science at the University of Bath, awarded with Distinction. I worked with real support ticket data from Spectrum — 1,297 tickets manually labelled across 10 classification categories, drawn from two years of live support operations.</p>
+
+<p>The study was structured around three phases.</p>
+
+<p><strong>Literature and technology review</strong> — Surveying NLP pre-processing techniques (tokenisation, lemmatisation, stemming, stop word removal), feature extraction methods (BoW, TF-IDF, Word2Vec), and multi-class classification algorithms including Naïve Bayes, KNN, Decision Trees, Random Forest, SVM, and LSTM neural networks.</p>
+
+<p><strong>System design and implementation</strong> — Building a modular Python classification pipeline using NLTK, spaCy, scikit-learn, and Pandas. The architecture followed low-coupling and high-cohesion principles, ensuring components could be improved or replaced without refactoring the whole system. Three support ticket ingestion channels — Help, Portal, and Email — each introduced different data quality characteristics that shaped the pre-processing design.</p>
+
+<p><strong>Iterative evaluation and improvement</strong> — Using F1 Score as the primary metric (preferred over accuracy for class-imbalanced data), systematically improving the pipeline from a baseline result toward and beyond the 75% OKR threshold set in the project requirements.</p>
+
+<h2 id="solution">Solution</h2>
+
+<p>TF-IDF feature extraction paired with a LinearSVC (Support Vector Machine) classifier was selected after comparing multiple approaches. TF-IDF weighted infrequent, domain-specific terms more heavily than common cross-document tokens — better suited to the relatively small, domain-specific corpus than Word2Vec, which requires large corpora to learn quality embeddings.</p>
+
+<p>The NLP pre-processing pipeline included tokenisation, case normalisation, contraction expansion, accented character removal, punctuation removal, Part-of-Speech-aware lemmatisation, and a custom stop word set combining NLTK, spaCy, and domain-specific tokens (JPMorgan email addresses, URL fragments, tokens exceeding 20 characters).</p>
+
+<p>Iterative improvements to the pipeline and model produced the following results:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Technique applied</th>
+      <th>F1 Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Baseline (standard pre-processing, full vocabulary)</td>
+      <td>64.35%</td>
+    </tr>
+    <tr>
+      <td>Enhanced stop word removal (spaCy + domain tokens)</td>
+      <td>70.52%</td>
+    </tr>
+    <tr>
+      <td>Class balancing (inversely proportional class weights)</td>
+      <td>71.61%</td>
+    </tr>
+    <tr>
+      <td>C hyperparameter optimisation (C = 0.5)</td>
+      <td>~71%</td>
+    </tr>
+    <tr>
+      <td>Feature selection (3,500 features via TF-IDF)</td>
+      <td>~71%</td>
+    </tr>
+    <tr>
+      <td>Problem reframing (ambiguous categories merged into Other)</td>
+      <td><strong>83.21%</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="key-decisions">Key decisions</h3>
+
+<ul>
+  <li><strong>TF-IDF over Word2Vec</strong> — the corpus of ~1,300 tickets was insufficient for quality word embeddings; TF-IDF’s inverse document frequency weighting handled domain-specific vocabulary (product names, internal system identifiers) more effectively at this scale</li>
+  <li><strong>LinearSVC over standard SVC</strong> — better scaling characteristics and more flexibility on penalty and loss functions for this text classification task, as documented in scikit-learn</li>
+  <li><strong>Custom stop word enhancement</strong> — adding domain-specific tokens to the combined NLTK and spaCy stop word set increased stop word removal by 15% and contributed a 6 percentage point improvement in F1</li>
+  <li><strong>Class balancing</strong> — the ‘Other’ category comprised 42% of all tickets; weighting classes inversely proportional to frequency improved minority-class precision meaningfully</li>
+  <li><strong>Problem reframing</strong> — two low-volume, ambiguous categories (‘help’ and ‘log’) were recategorised as ‘Other’, removing classification noise that had capped the F1 ceiling</li>
+</ul>
+
+<h2 id="impact">Impact</h2>
+
+<ul>
+  <li><strong>83.21% F1 Score</strong> on unseen support ticket data — exceeding the 75% OKR threshold defined in the project requirements</li>
+  <li><strong>$9.15 estimated saving per automated ticket</strong> — with 58% of 12,000+ annual tickets identified as candidates for automation, the research demonstrates meaningful operational efficiency at scale</li>
+  <li><strong>Distinction awarded</strong> at the University of Bath — validated through the rigorous academic assessment process of the MSc Computer Science programme</li>
+  <li>The research directly informs how I think about AI-enabled tooling in my day-to-day product work on Spectrum — particularly the SpectrumIQ and Help and Support products I own, where understanding how unstructured user language maps to intent and resolution paths is central to the product strategy</li>
+</ul>
+
+          </div>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer__inner">
+          <p><a href="mailto:charlesjohnbeard@gmail.com">charlesjohnbeard@gmail.com</a> <span aria-hidden="true">/</span> <a href="https://www.linkedin.com/in/charlesjohnbeard/" target="_blank" rel="noreferrer">LinkedIn</a></p>
+          <p>&copy; <span data-year></span> Charles Beard</p>
+        </div>
+      </footer>
+    </div>
+    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6bbaa05b99284a46898a940262447e2d"}'></script><!-- End Cloudflare Web Analytics -->
+  </body>
+</html>
