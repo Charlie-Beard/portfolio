@@ -319,6 +319,7 @@
         if (distToChar < Math.max(160, speed * 22)) needsDuck = true;
       } else {
         // Ground obstacle — jump
+        if (ob.double) continue; // skip block 1 of pair; block 2 sets correct jump timing
         const jumpThreshold = Math.max(180, speed * 28);
         if (distToChar < jumpThreshold && distToChar > -(ob.w + CHAR_W)) shouldJump = true;
       }
