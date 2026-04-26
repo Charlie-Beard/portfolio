@@ -2,8 +2,8 @@
 layout: project
 title: MSc Thesis — NLP and ML for Support Ticket Classification
 slug: msc-thesis
-subtitle: Research into automating support ticket classification on JPMorgan's Spectrum platform using natural language processing and machine learning.
-description: MSc dissertation by Charles Beard (University of Bath, Distinction 2023) applying TF-IDF and SVM classification to automate support ticket triage on J.P.Morgan Chase's Spectrum platform, achieving 83.21% F1 Score with an estimated $9.15 saving per automated ticket.
+subtitle: Research into automating support ticket classification on J.P.Morgan Asset Management's Spectrum platform using natural language processing and machine learning.
+description: MSc dissertation by Charles Beard (University of Bath, Distinction 2023) applying TF-IDF and SVM classification to automate support ticket triage on J.P.Morgan Asset Management's Spectrum platform, achieving 83.21% F1 Score with an estimated $9.15 saving per automated ticket.
 role: MSc Researcher
 company: University of Bath
 timeline: 2022–2023
@@ -17,7 +17,7 @@ heroCaption: Conceptual pipeline illustrating the NLP pre-processing and SVM cla
 
 ## Problem
 
-Spectrum — JPMorgan Asset Management's internal investment platform — generates over 12,000 support tickets a year across 120+ applications and 5,000 users. A significant subset of those tickets can be resolved without human review: they require a pre-defined response (for access requests, AG Grid licence queries, or blank ticket auto-closures) or need routing to a specific team.
+Spectrum — J.P.Morgan Asset Management's internal investment platform — generates over 12,000 support tickets a year across 120+ applications and 5,000 users. A significant subset of those tickets can be resolved without human review: they require a pre-defined response (for access requests, AG Grid licence queries, or blank ticket auto-closures) or need routing to a specific team.
 
 Without automated classification, every ticket enters a first-in-first-out queue and requires a support agent to read, categorise, and respond — even for repeat, predictable queries. Each unnecessarily manual classification costs approximately $9.15 in staff time, and customers wait longer for resolutions that could have been instant.
 

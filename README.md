@@ -40,8 +40,8 @@ Each file in `_projects/` is a markdown file with a YAML front matter block. Jek
 layout: project
 title: Example Project
 subtitle: Short summary
-role: Senior Product Manager
-company: J.P.Morgan Chase
+role: Senior AI Product Manager
+company: J.P.Morgan Asset Management
 timeline: 2024
 impact: Key outcome
 cardSummary: Homepage card summary

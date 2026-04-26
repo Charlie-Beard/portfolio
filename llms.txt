@@ -5,7 +5,7 @@ layout: null
 
 > {{ site.description }}
 
-Charles Beard is a Senior Product Manager at J.P.Morgan Chase with extensive experience building enterprise investment platforms for global asset management. He holds a CFA designation and an MSc in Computer Science (Distinction) from the University of Bath, where his dissertation applied NLP and machine learning to automate support ticket classification on the Spectrum platform.
+Charles Beard is a Senior AI Product Manager at J.P.Morgan Asset Management with extensive experience building enterprise investment platforms for global asset management. He holds a CFA designation and an MSc in Computer Science (Distinction) from the University of Bath, where his dissertation applied NLP and machine learning to automate support ticket classification on the Spectrum platform.
 
 ## Pages
 

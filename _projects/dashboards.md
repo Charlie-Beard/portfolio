@@ -3,9 +3,9 @@ layout: project
 title: Dashboards
 slug: dashboards
 subtitle: Shared dashboards delivering clearer portfolio visibility across investment, client service, and operations in Spectrum.
-description: How Charles Beard led a shared dashboards product at J.P.Morgan Chase's Spectrum platform, delivering clearer portfolio visibility and consistent workflows for thousands of users across investment, client service, and operations.
+description: How Charles Beard led a shared dashboards product at J.P.Morgan Asset Management's Spectrum platform, delivering clearer portfolio visibility and consistent workflows for thousands of users across investment, client service, and operations.
 role: Senior Product Manager
-company: J.P.Morgan Chase
+company: J.P.Morgan Asset Management
 timeline: 2019 - Present
 impact: Delivered shared portfolio visibility supporting consistent workflows for thousands of internal users across the platform.
 cardSummary: Led a strategic dashboards product to improve workflow visibility and consistency for thousands of internal users across Spectrum.

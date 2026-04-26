@@ -3,9 +3,9 @@ layout: project
 title: Help and Support
 slug: help-support
 subtitle: A strategic shared support experience for thousands of Spectrum users across investment, client service, and operations.
-description: How Charles Beard delivered a governed shared Help and Support product for J.P.Morgan Chase's Spectrum platform, creating a consistent support experience for thousands of users across investment, client service, and operations.
+description: How Charles Beard delivered a governed shared Help and Support product for J.P.Morgan Asset Management's Spectrum platform, creating a consistent support experience for thousands of users across investment, client service, and operations.
 role: Senior Product Manager
-company: J.P.Morgan Chase
+company: J.P.Morgan Asset Management
 timeline: 2019 - Present
 impact: Delivered a consistent, governed support experience for thousands of internal Spectrum users.
 cardSummary: Owned Help and Support as a core platform product, raising experience consistency and reducing fragmented support approaches across Spectrum.
