@@ -5,7 +5,7 @@ layout: null
 
 > {{ site.description }}
 
-Charles Beard is a Senior AI Product Manager at J.P.Morgan Asset Management with extensive experience building enterprise investment platforms for global asset management. He holds a CFA designation and an MSc in Computer Science (Distinction) from the University of Bath, where his dissertation applied NLP and machine learning to automate support ticket classification on the Spectrum platform.
+Charles Beard is a Senior AI Product Manager at J.P.Morgan Asset Management with extensive experience building enterprise investment platforms for global asset management. He holds a CFA designation and an MSc in Computer Science (Distinction) from the University of Bath, where his dissertation applied NLP and machine learning to automate support ticket classification on the Spectrum platform. He leads the Spectrum Design System — a tokenised React component library and Figma design library kept in sync via shared design tokens — now distributed as an MCP server to hundreds of engineers, enabling thousands of automated code changes across the enterprise through engineers' AI tools of choice. He has published on design system product ownership (https://medium.com/swlh/product-owning-a-design-system-things-ive-learned-3f799e301280) and designing for AI experiences (https://medium.com/design-bootcamp/designing-for-ai-experiences-a6f5248b0e86).
 
 ## Pages
 
