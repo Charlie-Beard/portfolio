@@ -4,6 +4,19 @@
   Reads from page front matter and _config.yml — no runtime JS needed.
 {%- endcomment -%}
 
+  <!-- Security: CSP + Referrer-Policy (meta fallback — GitHub Pages cannot set HTTP headers) -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self';
+             script-src 'self' static.cloudflareinsights.com;
+             style-src 'self';
+             img-src 'self' data:;
+             font-src 'self';
+             connect-src 'self' cloudflareinsights.com;
+             frame-src 'none';
+             object-src 'none';
+             base-uri 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
 {%- assign _title = page.title | default: site.title -%}
 {%- assign _desc  = page.description | default: page.subtitle | default: site.description -%}
 {%- assign _url   = site.url | append: site.baseurl | append: page.url -%}
