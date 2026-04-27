@@ -56,10 +56,14 @@ The `order` field controls the sort order on the homepage. The `cardSummary` fie
 
 ## Deploying to GitHub Pages
 
-The site is configured to deploy directly from the `main` branch root. GitHub Pages has native Jekyll support, so no build step is needed — push to `main` and Pages will build and publish automatically.
+Deployment is handled by the GitHub Actions workflow at `.github/workflows/deploy.yml`. On every push to `main` (or a manual trigger via the Actions UI), the workflow:
+
+1. Checks out the repo
+2. Sets up Ruby 3.3 with bundler caching
+3. Runs `bundle exec jekyll build` with `JEKYLL_ENV=production`
+4. Uploads the built site as a Pages artifact and deploys it
 
 In the repository **Settings → Pages**, set:
-- Source: `Deploy from a branch`
-- Branch: `main`, folder: `/ (root)`
+- Source: `GitHub Actions`
 
-The `baseurl` is set to `/portfolio` in `_config.yml` to match the GitHub Pages path.
+The workflow uses `actions/configure-pages` to inject the correct `base_path` at build time, so `baseurl` does not need to be hardcoded in `_config.yml` for production builds.
