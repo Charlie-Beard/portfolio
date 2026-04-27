@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "SESSION=$(jq -r '.session_id // \"default\"') && touch \"/tmp/claude-portfolio-changed-${SESSION}\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "INPUT=$(cat); SESSION=$(printf '%s' \"$INPUT\" | jq -r '.session_id // \"default\"'); SENTINEL=\"/tmp/claude-portfolio-changed-${SESSION}\"; if [ -f \"$SENTINEL\" ] && git status --porcelain 2>/dev/null | grep -q .; then rm -f \"$SENTINEL\"; jq -n '{\"systemMessage\":\"Files changed — reply Yes to commit and push, No to skip, or type your next step.\",\"hookSpecificOutput\":{\"hookEventName\":\"Stop\",\"additionalContext\":\"Project files were modified this session and the user has been shown a commit prompt. When they reply: Yes → stage changed files, write a clear commit message, commit, and push to origin/main; No → acknowledge and wait; anything else → follow their instruction.\"}}'; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
