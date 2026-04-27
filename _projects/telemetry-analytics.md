@@ -1,44 +1,49 @@
 ---
 layout: project
-title: Telemetry and Analytics
+title: Analytics, Training & Surveys (Pendo.io)
 slug: telemetry-analytics
-subtitle: Shared telemetry and analytics capability giving Spectrum products the insight to make better decisions.
-description: How Charles Beard built shared telemetry and analytics capability across J.P.Morgan Asset Management's Spectrum platform, including Pendo.io integration, to give 100+ applications the product insight needed to make better decisions.
+subtitle: Owning Pendo.io across J.P.Morgan Asset Management — product analytics, in-app training and standardised feedback surveys that help teams build the right things and prove it.
+description: How Charles Beard led the integration and governance of Pendo.io at J.P.Morgan Asset Management, establishing product analytics, in-app training guides, and standardised feedback surveys that give Product, UX and Engineering measurable insight into how their platforms are used.
 role: Senior Product Manager
 company: J.P.Morgan Asset Management
-timeline: 2019 - Present
-impact: Established shared platform insight across 100+ applications, enabling more informed product and governance decisions.
-cardSummary: Led strategic telemetry and analytics capabilities, including Pendo.io integration, to bring product insight to thousands of Spectrum users.
+timeline: 2022 - Present
+impact: Tracking thousands of users across tens of thousands of features, with hundreds of in-app training guides and feedback surveys deployed across the firm.
+cardSummary: Led the firm-wide integration of Pendo.io — delivering analytics, in-app training and standardised feedback surveys to help teams build the right things and demonstrate measurable outcomes.
 order: 3
 heroImage: content/projects/images/telemetry-analytics.svg
-heroAlt: Placeholder analytics interface showing product telemetry and platform reporting
-heroCaption: Placeholder concept for shared telemetry and analytics within Spectrum
+heroAlt: Three-panel interface showing a product analytics dashboard, an in-app Pendo training guide overlay, and a standardised feedback survey form
+heroCaption: Product analytics, in-app training guides, and standardised feedback surveys through Pendo.io
 ---
 
 ## Problem
 
-With Spectrum supporting thousands of internal users across 100+ applications, platform teams lacked the shared visibility needed to understand how core products were performing and where the experience needed to improve.
-
-Without a strategic analytics capability, insight was fragmented across teams and tools — making it harder to govern the platform effectively or direct investment where it would have the greatest impact on user experience.
+J.P.Morgan Asset Management needed a structured, firm-wide approach to product analytics, user training, and feedback collection. Without it, teams built products without reliable insight into how they were being used, relied on costly off-platform training, and lacked a consistent mechanism for gathering structured user feedback at scale.
 
 ## Approach
 
-I made Telemetry and Analytics a strategic core capability in the Spectrum roadmap — a deliberate leadership decision to treat platform insight as a shared product, not as local instrumentation owned by individual teams.
+I led the integration of [Pendo.io](https://www.pendo.io) into the firm — taking ownership of the governance model, technical configuration, and the learning and reporting infrastructure needed to make it work across the organisation.
 
-The focus was on establishing shared tooling and processes that gave the whole platform access to meaningful usage and experience signals, while ensuring the capability sat within the broader governance model I oversee across Spectrum.
+Rather than treating Pendo as a tool for individual teams to adopt independently, I established it as a shared platform capability — with a monthly Centre of Excellence and a structured onboarding and support process to help product teams extract lasting value.
 
 ## Solution
 
-The product delivered telemetry and analytics capabilities with Pendo.io integration, giving Spectrum a structured, shared approach to platform insight. Teams moved from fragmented, locally owned reporting to a strategic shared capability for understanding usage patterns and experience quality across the estate.
+The programme delivered three interconnected capabilities through [Pendo.io](https://www.pendo.io):
 
-### Product decisions
+### Product analytics and learning curriculum
 
-- Positioned analytics as a core platform service from the outset, not a feature added to individual products
-- Anchored delivery around shared tooling and processes so the capability could scale across the estate
-- Connected telemetry outcomes directly to platform governance, experience quality, and product prioritisation
+Rolled out a comprehensive analytics capability and learning curriculum that helps Product, UX and Engineering understand how users engage with features, validate product decisions, and demonstrate measurable outcomes to stakeholders. Teams now have access to consistent, structured data rather than fragmented local reporting — giving them the evidence needed to prioritise the right work and prove impact.
+
+### In-app training guides
+
+Deployed hundreds of in-app training guides using [Pendo's Guides](https://www.pendo.io/product/in-app-guides/) functionality — delivering contextual, just-in-time support directly within the products users already work in. This has reduced reliance on off-platform training, lowered training costs, and improved adoption of existing technology by meeting users at the point of need.
+
+### Feedback surveys
+
+Established standardised templates and UX patterns for feedback surveys — giving teams a governed, consistent way to capture structured input from users at meaningful moments. The governance framework prevents survey fatigue and ensures quality and consistency across the user population.
 
 ## Impact
 
-- Built a shared platform insight capability serving 100+ applications and thousands of internal users
-- Improved visibility across a complex, multi-application environment — enabling better governance and more informed product decisions
-- Turned platform analytics from a collection of disconnected reporting efforts into a reusable strategic product
+- Tracking **thousands of users** and **tens of thousands of features** across the firm through [Pendo.io](https://www.pendo.io)
+- Deployed **hundreds of in-app training guides and feedback surveys** — reducing training costs and improving adoption of existing technology
+- Built a monthly Centre of Excellence and structured support process to embed analytics, training and survey capability across Product, UX and Engineering
+- Gave teams the analytics and learning infrastructure to build the right things — and the evidence to demonstrate measurable outcomes to stakeholders

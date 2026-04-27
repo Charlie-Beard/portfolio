@@ -1,27 +1,131 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
-  <title id="title">Checkout Risk Engine placeholder</title>
-  <desc id="desc">A simplified admin interface placeholder with a rules table, metrics charts, and a review queue.</desc>
+  <title id="title">Analytics, training guides and feedback surveys via Pendo.io</title>
+  <desc id="desc">Three-panel interface: product analytics dashboard on the left, an in-app Pendo training guide overlay in the centre, and a standardised feedback survey on the right.</desc>
+
   <rect width="1280" height="720" fill="#f7f9fc"/>
   <rect x="64" y="56" width="1152" height="608" rx="28" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
-  <rect x="104" y="104" width="288" height="504" rx="20" fill="#f8fafc" stroke="#dbe3ee" stroke-width="2"/>
-  <rect x="424" y="104" width="752" height="224" rx="20" fill="#f8fafc" stroke="#dbe3ee" stroke-width="2"/>
-  <rect x="424" y="360" width="752" height="248" rx="20" fill="#f8fafc" stroke="#dbe3ee" stroke-width="2"/>
-  <rect x="136" y="138" width="132" height="16" rx="8" fill="#122033" opacity="0.76"/>
-  <rect x="136" y="176" width="216" height="12" rx="6" fill="#7d8ca0" opacity="0.35"/>
-  <rect x="136" y="226" width="224" height="46" rx="14" fill="#edf4ff" stroke="#c4d0e0" stroke-width="2"/>
-  <rect x="136" y="292" width="224" height="46" rx="14" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
-  <rect x="136" y="358" width="224" height="46" rx="14" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
-  <rect x="456" y="136" width="200" height="16" rx="8" fill="#122033" opacity="0.78"/>
-  <rect x="456" y="176" width="320" height="12" rx="6" fill="#7d8ca0" opacity="0.35"/>
-  <path d="M472 274h76l52-86 88 54 84-96 64 30 80-46 116 144" fill="none" stroke="#1f5fd6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="600" cy="188" r="8" fill="#1f5fd6"/>
-  <circle cx="688" cy="242" r="8" fill="#1f5fd6"/>
-  <circle cx="772" cy="146" r="8" fill="#1f5fd6"/>
-  <circle cx="916" cy="130" r="8" fill="#1f5fd6"/>
-  <rect x="456" y="394" width="188" height="16" rx="8" fill="#122033" opacity="0.78"/>
-  <rect x="456" y="434" width="280" height="12" rx="6" fill="#7d8ca0" opacity="0.35"/>
-  <rect x="456" y="482" width="688" height="42" rx="14" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
-  <rect x="456" y="538" width="688" height="42" rx="14" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
-  <rect x="968" y="492" width="144" height="22" rx="11" fill="#edf4ff"/>
-  <rect x="990" y="548" width="122" height="22" rx="11" fill="#edf4ff"/>
+
+  <!-- LEFT PANEL: Analytics -->
+  <rect x="104" y="104" width="336" height="504" rx="18" fill="#f8fafc" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="130" y="132" width="110" height="16" rx="8" fill="#1f5fd6" opacity="0.85"/>
+  <rect x="130" y="160" width="220" height="12" rx="6" fill="#7d8ca0" opacity="0.4"/>
+
+  <!-- Stat card: Users -->
+  <rect x="130" y="192" width="140" height="76" rx="14" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="150" y="212" width="82" height="20" rx="10" fill="#122033" opacity="0.82"/>
+  <rect x="150" y="244" width="60" height="10" rx="5" fill="#7d8ca0" opacity="0.4"/>
+
+  <!-- Stat card: Features -->
+  <rect x="286" y="192" width="140" height="76" rx="14" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="306" y="212" width="82" height="20" rx="10" fill="#122033" opacity="0.82"/>
+  <rect x="306" y="244" width="72" height="10" rx="5" fill="#7d8ca0" opacity="0.4"/>
+
+  <!-- Chart panel -->
+  <rect x="130" y="288" width="288" height="172" rx="14" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="152" y="308" width="120" height="12" rx="6" fill="#122033" opacity="0.7"/>
+  <line x1="152" y1="372" x2="406" y2="372" stroke="#dbe3ee" stroke-width="1"/>
+  <line x1="152" y1="412" x2="406" y2="412" stroke="#dbe3ee" stroke-width="1"/>
+  <line x1="152" y1="452" x2="406" y2="452" stroke="#dbe3ee" stroke-width="1"/>
+  <path d="M152 446 L200 424 L252 434 L304 392 L356 402 L402 360 L402 454 L152 454 Z" fill="#1f5fd6" opacity="0.07"/>
+  <path d="M152 446 L200 424 L252 434 L304 392 L356 402 L402 360" fill="none" stroke="#1f5fd6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="304" cy="392" r="5" fill="#1f5fd6"/>
+  <circle cx="402" cy="360" r="6" fill="#ffffff" stroke="#1f5fd6" stroke-width="2.5"/>
+
+  <!-- Feature usage rows -->
+  <rect x="130" y="480" width="288" height="44" rx="12" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="130" y="536" width="288" height="44" rx="12" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="154" y="498" width="130" height="10" rx="5" fill="#122033" opacity="0.7"/>
+  <rect x="154" y="514" width="96" height="8" rx="4" fill="#7d8ca0" opacity="0.35"/>
+  <rect x="154" y="554" width="110" height="10" rx="5" fill="#122033" opacity="0.7"/>
+  <rect x="154" y="570" width="80" height="8" rx="4" fill="#7d8ca0" opacity="0.35"/>
+  <rect x="370" y="499" width="32" height="16" rx="8" fill="#edf4ff"/>
+  <rect x="370" y="555" width="32" height="16" rx="8" fill="#edf4ff"/>
+
+  <!-- CENTER PANEL: In-app Guide -->
+  <rect x="464" y="104" width="336" height="504" rx="18" fill="#f8fafc" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="488" y="132" width="130" height="16" rx="8" fill="#122033" opacity="0.78"/>
+  <rect x="488" y="160" width="210" height="12" rx="6" fill="#7d8ca0" opacity="0.4"/>
+
+  <!-- App nav bar -->
+  <rect x="488" y="192" width="288" height="36" rx="10" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="504" y="204" width="52" height="12" rx="6" fill="#1f5fd6" opacity="0.7"/>
+  <rect x="572" y="204" width="44" height="12" rx="6" fill="#7d8ca0" opacity="0.28"/>
+  <rect x="632" y="204" width="44" height="12" rx="6" fill="#7d8ca0" opacity="0.28"/>
+  <rect x="700" y="204" width="44" height="12" rx="6" fill="#7d8ca0" opacity="0.28"/>
+
+  <!-- App row 1 (normal) -->
+  <rect x="488" y="240" width="288" height="56" rx="10" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="508" y="258" width="160" height="10" rx="5" fill="#7d8ca0" opacity="0.25"/>
+  <rect x="508" y="276" width="130" height="8" rx="4" fill="#7d8ca0" opacity="0.18"/>
+
+  <!-- App row 2 (highlighted — being guided) -->
+  <rect x="488" y="308" width="288" height="56" rx="10" fill="#edf4ff" stroke="#1f5fd6" stroke-width="2"/>
+  <rect x="508" y="326" width="148" height="10" rx="5" fill="#1f5fd6" opacity="0.5"/>
+  <rect x="508" y="344" width="196" height="8" rx="4" fill="#1f5fd6" opacity="0.3"/>
+
+  <!-- Guide modal -->
+  <rect x="476" y="380" width="312" height="212" rx="16" fill="#1f5fd6"/>
+  <!-- Arrow pointer connecting guide to highlighted row -->
+  <polygon points="588,380 610,362 632,380" fill="#1f5fd6"/>
+
+  <!-- Guide title -->
+  <rect x="500" y="406" width="145" height="14" rx="7" fill="#ffffff" opacity="0.92"/>
+
+  <!-- Guide body text -->
+  <rect x="500" y="436" width="264" height="9" rx="4" fill="#ffffff" opacity="0.55"/>
+  <rect x="500" y="452" width="244" height="9" rx="4" fill="#ffffff" opacity="0.45"/>
+  <rect x="500" y="468" width="204" height="9" rx="4" fill="#ffffff" opacity="0.38"/>
+
+  <!-- Guide interactive element -->
+  <rect x="500" y="494" width="212" height="28" rx="10" fill="#ffffff" opacity="0.12"/>
+  <rect x="516" y="504" width="140" height="8" rx="4" fill="#ffffff" opacity="0.55"/>
+  <circle cx="696" cy="508" r="9" fill="#ffffff" opacity="0.25"/>
+
+  <!-- Guide buttons: Back / Next -->
+  <rect x="500" y="540" width="72" height="26" rx="13" fill="#ffffff" opacity="0.18"/>
+  <rect x="590" y="540" width="80" height="26" rx="13" fill="#ffffff" opacity="0.88"/>
+
+  <!-- Step progress dots -->
+  <circle cx="706" cy="553" r="4" fill="#ffffff" opacity="0.4"/>
+  <circle cx="718" cy="553" r="4" fill="#ffffff" opacity="0.9"/>
+  <circle cx="730" cy="553" r="4" fill="#ffffff" opacity="0.4"/>
+  <circle cx="742" cy="553" r="4" fill="#ffffff" opacity="0.3"/>
+
+  <!-- RIGHT PANEL: Survey -->
+  <rect x="824" y="104" width="352" height="504" rx="18" fill="#f8fafc" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="848" y="132" width="150" height="16" rx="8" fill="#122033" opacity="0.78"/>
+  <rect x="848" y="160" width="240" height="12" rx="6" fill="#7d8ca0" opacity="0.4"/>
+
+  <!-- Q1: Rating scale -->
+  <rect x="848" y="192" width="304" height="100" rx="14" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="868" y="212" width="196" height="12" rx="6" fill="#122033" opacity="0.72"/>
+  <circle cx="878" cy="262" r="13" fill="#edf4ff" stroke="#c4d0e0" stroke-width="2"/>
+  <circle cx="914" cy="262" r="13" fill="#edf4ff" stroke="#c4d0e0" stroke-width="2"/>
+  <circle cx="950" cy="262" r="13" fill="#edf4ff" stroke="#c4d0e0" stroke-width="2"/>
+  <circle cx="986" cy="262" r="13" fill="#1f5fd6"/>
+  <circle cx="1022" cy="262" r="13" fill="#edf4ff" stroke="#c4d0e0" stroke-width="2"/>
+  <circle cx="1058" cy="262" r="13" fill="#edf4ff" stroke="#c4d0e0" stroke-width="2"/>
+  <circle cx="1094" cy="262" r="13" fill="#edf4ff" stroke="#c4d0e0" stroke-width="2"/>
+
+  <!-- Q2: Open text -->
+  <rect x="848" y="312" width="304" height="100" rx="14" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="868" y="332" width="168" height="12" rx="6" fill="#122033" opacity="0.72"/>
+  <rect x="868" y="358" width="264" height="8" rx="4" fill="#7d8ca0" opacity="0.2"/>
+  <rect x="868" y="374" width="236" height="8" rx="4" fill="#7d8ca0" opacity="0.15"/>
+  <rect x="868" y="390" width="180" height="8" rx="4" fill="#7d8ca0" opacity="0.12"/>
+
+  <!-- Q3: Multiple choice -->
+  <rect x="848" y="432" width="304" height="40" rx="12" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="848" y="480" width="304" height="40" rx="12" fill="#edf4ff" stroke="#c4d0e0" stroke-width="2"/>
+  <rect x="848" y="528" width="304" height="40" rx="12" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <circle cx="874" cy="452" r="7" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <circle cx="874" cy="500" r="7" fill="#1f5fd6"/>
+  <circle cx="874" cy="548" r="7" fill="#ffffff" stroke="#dbe3ee" stroke-width="2"/>
+  <rect x="896" y="446" width="130" height="12" rx="6" fill="#122033" opacity="0.7"/>
+  <rect x="896" y="494" width="152" height="12" rx="6" fill="#1f5fd6" opacity="0.85"/>
+  <rect x="896" y="542" width="110" height="12" rx="6" fill="#122033" opacity="0.7"/>
+
+  <!-- Submit button -->
+  <rect x="992" y="576" width="136" height="28" rx="14" fill="#1f5fd6"/>
+
 </svg>
