@@ -4,6 +4,11 @@
   Reads from page front matter and _config.yml — no runtime JS needed.
 {%- endcomment -%}
 
+  <!-- Favicon -->
+  {%- unless page.path == 'dinoclaude.html' %}
+  <link rel="icon" type="image/svg+xml" href="{{ site.baseurl }}/favicon.svg">
+  {%- endunless %}
+
   <!-- Security: CSP + Referrer-Policy (meta fallback — GitHub Pages cannot set HTTP headers) -->
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self';
