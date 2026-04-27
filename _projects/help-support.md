@@ -14,7 +14,7 @@ order: 4
 
 ## Problem
 
-Spectrum serves a broad internal user base across investment, client service, and operations. As the platform expanded, a fragmented support experience became a platform-quality problem — not just an operational inconvenience.
+Spectrum serves a broad internal user base across investment, client service, and operations. As the platform expanded, a fragmented support experience became a platform-quality problem. Not just an operational inconvenience.
 
 Users needed a clearer, more consistent path to help inside the platform. Product teams needed a shared support capability they could rely on, rather than building isolated approaches that diverged in quality and added cost to the overall estate.
 
@@ -24,9 +24,9 @@ I included Help and Support in the set of core products I own across the Spectru
 
 ## Solution
 
-Help and Support became one of the core products supporting Spectrum. It gave the platform a shared, strategically governed support experience — replacing disconnected patterns across the application landscape with a consistent capability teams could build on.
+Help and Support became one of the core products supporting Spectrum. It gave the platform a shared, strategically governed support experience, replacing disconnected patterns across the application landscape with a consistent capability teams could build on.
 
-Because it sat within the broader platform product set, it could be governed, iterated, and improved alongside the design system, dashboards, analytics, and other shared capabilities — rather than drifting independently.
+Because it sat within the broader platform product set, it could be governed, iterated, and improved alongside the design system, dashboards, analytics, and other shared capabilities, rather than drifting independently.
 
 ### Product decisions
 
@@ -36,10 +36,10 @@ Because it sat within the broader platform product set, it could be governed, it
 
 ## Research foundation
 
-In 2023 I completed an MSc in Computer Science (Distinction, University of Bath), with a dissertation applying NLP and machine learning to Spectrum's support ticket corpus. The research — which achieved 83.21% F1 on unseen data and estimated $9.15 in savings per automated ticket — directly informs how I think about support triage as a product problem: what can realistically be automated, where classification breaks down at the edges, and why how you frame the problem determines what the system can actually do.
+In 2023 I completed an MSc in Computer Science (Distinction, University of Bath), with a dissertation applying NLP and machine learning to Spectrum's support ticket corpus. The research, which achieved 83.21% F1 on unseen data and estimated $9.15 in savings per automated ticket, directly informs how I think about support triage as a product problem: what can realistically be automated, where classification breaks down at the edges, and why how you frame the problem determines what the system can actually do.
 
 ## Impact
 
 - Delivered a consistent, governed support experience for thousands of internal users across Spectrum
-- Eliminated the need for individual product teams to build and maintain their own support patterns — removing duplication and keeping experience quality consistent as the platform grows
+- Eliminated the need for individual product teams to build and maintain their own support patterns, removing duplication and keeping experience quality consistent as the platform grows
 - Reinforced the role of shared core products in maintaining platform quality as Spectrum scales
