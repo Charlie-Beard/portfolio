@@ -34,6 +34,10 @@ Because it sat within the broader platform product set, it could be governed, it
 - Applied platform governance to ensure consistency of experience across the user base
 - Positioned Help and Support as part of the strategic core product portfolio, not an operational add-on
 
+## Research foundation
+
+In 2023 I completed an MSc in Computer Science (Distinction, University of Bath), with a dissertation applying NLP and machine learning to Spectrum's support ticket corpus. The research — which achieved 83.21% F1 on unseen data and estimated $9.15 in savings per automated ticket — directly informs how I think about support triage as a product problem: what can realistically be automated, where classification breaks down at the edges, and why how you frame the problem determines what the system can actually do.
+
 ## Impact
 
 - Delivered a consistent, governed support experience for thousands of internal users across Spectrum

@@ -10,6 +10,7 @@ timeline: 2022–2023
 impact: Achieved 83.21% F1 Score on unseen support ticket data, demonstrating that TF-IDF and SVM classification can automate enterprise support triage at scale — with an estimated $9.15 saving per automated ticket.
 cardSummary: MSc dissertation applying NLP and machine learning to classify 12,000+ annual support tickets on Spectrum — awarded Distinction by the University of Bath.
 order: 6
+published: false
 heroImage: content/projects/images/msc-thesis.svg
 heroAlt: Placeholder diagram showing an NLP and machine learning classification pipeline for support tickets
 heroCaption: Conceptual pipeline illustrating the NLP pre-processing and SVM classification system built for the dissertation

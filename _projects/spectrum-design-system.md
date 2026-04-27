@@ -39,11 +39,11 @@ Spectrum Design System is not a single library — it is a suite of tightly coup
 
 **Design tokens** — the binding layer. A token architecture powers theming, density, and visual consistency across both libraries and all downstream applications. Token parity means a change in one surface propagates cleanly to the other — enabling platform-wide theming without per-application rework.
 
-## The tokenisation journey
+## The tokenisation decision
 
-Moving to a fully tokenised system was a significant engineering and design undertaking — not a visual refresh, but a platform-level architectural decision about how design decisions flow through the estate.
+Moving to a fully tokenised system was an architectural commitment, not a visual refresh — and a deliberate strategic bet. Tokens become the binding contract between design and engineering: when a change is made at the token level, it propagates consistently across every dependent surface without per-application rework. The cost was short-term: significant migration effort, coordination across the estate, and engineering investment that didn't immediately ship user-facing features. The return was a design system that scales — one where theming, density changes, and new surfaces don't require bespoke implementation at each point of consumption. That trade-off is the right one at 100+ application scale. It would be the wrong one for a five-application estate.
 
-This journey is documented by my colleague Vicky Kocan in her talk [Tokenisation Revolution](https://www.youtube.com/watch?v=qMMiNmj4KcM), which covers the depth of change required to move a live, multi-application design system onto a token architecture. Tokens became the foundation that made scalable, coherent theming possible across 100+ applications — and the mechanism through which design intent and engineering implementation could stay aligned as the platform grows.
+This journey is documented by my colleague Vicky Kocan in her talk [Tokenisation Revolution](https://www.youtube.com/watch?v=qMMiNmj4KcM), which covers the depth of change required to move a live, multi-application design system onto a token architecture.
 
 ## Strategic evolution: MCP-powered distribution
 

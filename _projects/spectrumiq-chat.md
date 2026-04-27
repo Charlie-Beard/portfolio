@@ -36,6 +36,14 @@ Because it was built within the platform product strategy from day one, it could
 - Applied the same prioritisation, triad model, and delivery standards used across all Spectrum core products
 - Anchored the product in genuine user need rather than novelty — ensuring it added durable value to the platform
 
+## The governance call
+
+The default path for AI in a large enterprise is fragmentation: individual teams build experiments, each optimised for their own users, and the platform ends up with multiple different AI experiences none of which are maintained to a consistent standard. The decision to govern SpectrumIQ into the platform model — applying the same resiliency, quality, and prioritisation standards as every other core capability — was a bet that one coherent, iterable AI experience would deliver more long-term value than many uncoordinated ones. That meant saying no to team-level AI experiments that sat outside the governance model, and making the case to stakeholders that the deliberate path was the right one.
+
+## Research foundation
+
+In 2023 I completed an MSc in Computer Science (Distinction, University of Bath), with a dissertation applying NLP and machine learning to Spectrum's support ticket corpus. The research — which achieved 83.21% F1 on unseen data and estimated $9.15 in savings per automated ticket — directly informs how I think about AI capability as a product problem: what's achievable, where the edge cases are, and why the problem framing matters as much as the algorithm.
+
 ## Impact
 
 - Established AI capability as a governed, iterable platform product — preventing the fragmentation that typically results from team-level AI experiments across a large estate
