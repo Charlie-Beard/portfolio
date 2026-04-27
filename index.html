@@ -18,19 +18,7 @@ schema_person: true
   <body data-page="home">
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="page-shell">
-      <header class="site-header">
-        <div class="site-header__inner">
-          <a class="site-brand" href="index.html">Charles Beard</a>
-          <nav class="site-nav" aria-label="Primary">
-            <ul>
-              <li><a href="index.html" aria-current="page">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="cv.html">CV</a></li>
-              <li><a href="dinoclaude.html">DinoClaude</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+      {% include header.html %}
 
       <main class="page-content" id="main-content">
         <section class="page-intro">
@@ -82,13 +70,7 @@ schema_person: true
         </section>
       </main>
 
-      <footer class="site-footer">
-        <div class="site-footer__inner">
-          <p>AI Product Manager · CFA Charterholder · J.P.Morgan Asset Management</p>
-          <p><a href="https://www.linkedin.com/in/charlesjohnbeard/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
-          <p>&copy; <span data-year></span> Charles Beard</p>
-        </div>
-      </footer>
+      {% include footer.html %}
     </div>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6bbaa05b99284a46898a940262447e2d"}'></script><!-- End Cloudflare Web Analytics -->
   </body>

@@ -1,0 +1,13 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-brand" href="{{ site.baseurl }}/">Charles Beard</a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="{{ site.baseurl }}/" {% if page.url == "/" %}aria-current="page"{% endif %}>Home</a></li>
+        <li><a href="{{ site.baseurl }}/about.html" {% if page.url == "/about.html" %}aria-current="page"{% endif %}>About</a></li>
+        <li><a href="{{ site.baseurl }}/cv.html" {% if page.url == "/cv.html" %}aria-current="page"{% endif %}>CV</a></li>
+        <li><a href="{{ site.baseurl }}/dinoclaude.html" {% if page.url == "/dinoclaude.html" %}aria-current="page"{% endif %}>DinoClaude</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
