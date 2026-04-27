@@ -2,7 +2,7 @@
 layout: project
 title: Analytics, Training & Surveys (Pendo.io)
 slug: telemetry-analytics
-subtitle: Owning Pendo.io across J.P.Morgan Asset Management: product analytics, in-app training and standardised feedback surveys that help teams build the right things and prove it.
+subtitle: "Owning Pendo.io across J.P.Morgan Asset Management: product analytics, in-app training and standardised feedback surveys that help teams build the right things and prove it."
 description: How Charles Beard led the integration and governance of Pendo.io at J.P.Morgan Asset Management, establishing product analytics, in-app training guides, and standardised feedback surveys that give Product, UX and Engineering measurable insight into how their platforms are used.
 role: Senior Product Manager
 company: J.P.Morgan Asset Management

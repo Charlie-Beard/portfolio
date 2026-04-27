@@ -2,13 +2,13 @@
 layout: project
 title: Spectrum Design System
 slug: spectrum-design-system
-subtitle: A tokenised, multi-surface design system: React component library, Figma design library, and MCP-powered distribution, delivering consistent platform experiences across 100+ Spectrum applications.
+subtitle: "A tokenised, multi-surface design system: React component library, Figma design library, and MCP-powered distribution, delivering consistent platform experiences across 100+ Spectrum applications."
 description: How Charles Beard led the Spectrum Design System as a governed shared platform product at J.P.Morgan Asset Management, evolving from a foundational component library to a tokenised, AI-distributed system serving hundreds of engineers across the enterprise.
 role: Senior Product Manager
 company: J.P.Morgan Asset Management
 timeline: 2019 - Present
 impact: Evolved from a foundational library to a tokenised, MCP-served design system enabling thousands of automated code changes across hundreds of engineers and 100+ applications.
-cardSummary: Owned roadmap and delivery for the design system: a tokenised React and Figma library in sync, now distributed via MCP to hundreds of engineers enabling automated code changes at scale.
+cardSummary: "Owned roadmap and delivery for the design system: a tokenised React and Figma library in sync, now distributed via MCP to hundreds of engineers enabling automated code changes at scale."
 order: 2
 heroImage: content/projects/images/spectrum-design-system.svg
 heroAlt: Placeholder product concept for a shared enterprise design system
