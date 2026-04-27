@@ -30,11 +30,11 @@ This research formed the dissertation for my MSc in Computer Science at the Univ
 
 The study was structured around three phases.
 
-**Literature and technology review** — Surveying NLP pre-processing techniques (tokenisation, lemmatisation, stemming, stop word removal), feature extraction methods (BoW, TF-IDF, Word2Vec), and multi-class classification algorithms including Naïve Bayes, KNN, Decision Trees, Random Forest, SVM, and LSTM neural networks.
+**Literature and technology review:** Surveying NLP pre-processing techniques (tokenisation, lemmatisation, stemming, stop word removal), feature extraction methods (BoW, TF-IDF, Word2Vec), and multi-class classification algorithms including Naïve Bayes, KNN, Decision Trees, Random Forest, SVM, and LSTM neural networks.
 
-**System design and implementation** — Building a modular Python classification pipeline using NLTK, spaCy, scikit-learn, and Pandas. The architecture followed low-coupling and high-cohesion principles, ensuring components could be improved or replaced without refactoring the whole system. Three support ticket ingestion channels (Help, Portal, and Email) each introduced different data quality characteristics that shaped the pre-processing design.
+**System design and implementation:** Building a modular Python classification pipeline using NLTK, spaCy, scikit-learn, and Pandas. The architecture followed low-coupling and high-cohesion principles, ensuring components could be improved or replaced without refactoring the whole system. Three support ticket ingestion channels (Help, Portal, and Email) each introduced different data quality characteristics that shaped the pre-processing design.
 
-**Iterative evaluation and improvement** — Using F1 Score as the primary metric (preferred over accuracy for class-imbalanced data), systematically improving the pipeline from a baseline result toward and beyond the 75% OKR threshold set in the project requirements.
+**Iterative evaluation and improvement:** Using F1 Score as the primary metric (preferred over accuracy for class-imbalanced data), systematically improving the pipeline from a baseline result toward and beyond the 75% OKR threshold set in the project requirements.
 
 ## Solution
 
@@ -63,7 +63,7 @@ Iterative improvements to the pipeline and model produced the following results:
 
 ## Impact
 
-- **83.21% F1 Score** on unseen support ticket data — exceeding the 75% OKR threshold defined in the project requirements
-- **$9.15 estimated saving per automated ticket** — with 58% of 12,000+ annual tickets identified as candidates for automation, the research demonstrates meaningful operational efficiency at scale
-- **Distinction awarded** at the University of Bath — validated through the rigorous academic assessment process of the MSc Computer Science programme
-- The research directly informs how I think about AI-enabled tooling in my day-to-day product work on Spectrum — particularly the SpectrumIQ and Help and Support products I own, where understanding how unstructured user language maps to intent and resolution paths is central to the product strategy
+- **83.21% F1 Score** on unseen support ticket data, exceeding the 75% OKR threshold defined in the project requirements
+- **$9.15 estimated saving per automated ticket**, with 58% of 12,000+ annual tickets identified as candidates for automation, the research demonstrates meaningful operational efficiency at scale
+- **Distinction awarded** at the University of Bath
+- The research directly informs how I think about AI-enabled tooling in my day-to-day product work on Spectrum, particularly the SpectrumIQ and Help and Support products I own, where understanding how unstructured user language maps to intent and resolution paths is central to the product strategy
