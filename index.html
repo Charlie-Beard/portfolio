@@ -1,77 +1,55 @@
 ---
+layout: default
 title: "Charles Beard | Enterprise Platform Leadership"
-description: "CFA Charterholder leading enterprise platform strategy and governance at J.P.Morgan Asset Management: shared products, design systems, AI tooling, and analytics for 100+ applications."
+description: "Charles Beard, CFA, leads enterprise platform strategy and governance at J.P.Morgan Asset Management: shared products, design systems, AI tooling, and analytics across 100+ applications."
+body_data_page: home
 schema_website: true
 schema_person: true
 ---
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Charles Beard, CFA, leads enterprise platform strategy and governance at J.P.Morgan Asset Management: shared products, design systems, AI tooling, and analytics across 100+ applications.">
-    <title>Charles Beard | Enterprise Platform Leadership</title>
-    {% include head-meta.html %}
-    <link rel="stylesheet" href="css/styles.css?v={{ site.time | date: '%s' }}">
-    <script type="module" src="js/main.js?v={{ site.time | date: '%s' }}"></script>
-  </head>
-  <body data-page="home">
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="page-shell">
-      {% include header.html %}
+<section class="page-intro">
+  <p class="eyebrow">J.P.Morgan Asset Management · London</p>
+  <h1 class="page-title">Leading enterprise investment platforms that power better decisions at scale.</h1>
+  <p class="page-lead">
+    I lead the product strategy and governance model for <a href="https://am.jpmorgan.com/us/en/asset-management/adv/about-us/spectrum-our-investment-platform/" target="_blank" rel="noopener noreferrer">Spectrum</a>'s core platform: the shared capabilities that 100+ applications and thousands of JPMAM users depend on. My job is keeping the platform coherent as it scales: ensuring that new capabilities, including AI tooling, analytics and design infrastructure, are introduced on terms the whole estate can build on, rather than as isolated experiments that fragment the user experience.
+  </p>
+</section>
 
-      <main class="page-content" id="main-content">
-        <section class="page-intro">
-          <p class="eyebrow">J.P.Morgan Asset Management · London</p>
-          <h1 class="page-title">Leading enterprise investment platforms that power better decisions at scale.</h1>
-          <p class="page-lead">
-            I lead the product strategy and governance model for <a href="https://am.jpmorgan.com/us/en/asset-management/adv/about-us/spectrum-our-investment-platform/" target="_blank" rel="noopener noreferrer">Spectrum</a>'s core platform: the shared capabilities that 100+ applications and thousands of JPMAM users depend on. My job is keeping the platform coherent as it scales: ensuring that new capabilities, including AI tooling, analytics and design infrastructure, are introduced on terms the whole estate can build on, rather than as isolated experiments that fragment the user experience.
-          </p>
-        </section>
-
-        <section class="page-section" aria-labelledby="selected-work">
-          <div class="section-heading">
-            <h2 id="selected-work">Selected Work</h2>
-            <p class="section-copy">Core platform products from J.P.Morgan Asset Management's Spectrum.</p>
+<section class="page-section" aria-labelledby="selected-work">
+  <div class="section-heading">
+    <h2 id="selected-work">Selected Work</h2>
+    <p class="section-copy">Core platform products from J.P.Morgan Asset Management's Spectrum.</p>
+  </div>
+  <div class="project-grid">
+    {% assign sorted_projects = site.projects | sort: "order" %}
+    {% for project in sorted_projects %}
+    <article class="project-card">
+      <div class="project-card__content">
+        <div class="project-card__intro">
+          <h3 class="project-card__title">{{ project.title | escape }}</h3>
+          <p class="project-card__summary">{{ project.cardSummary | escape }}</p>
+        </div>
+        <dl class="project-card__meta">
+          <div>
+            <dt>Role</dt>
+            <dd>{{ project.role | escape }}</dd>
           </div>
-          <div class="project-grid">
-            {% assign sorted_projects = site.projects | sort: "order" %}
-            {% for project in sorted_projects %}
-            <article class="project-card">
-              <div class="project-card__content">
-                <div class="project-card__intro">
-                  <h3 class="project-card__title">{{ project.title | escape }}</h3>
-                  <p class="project-card__summary">{{ project.cardSummary | escape }}</p>
-                </div>
-                <dl class="project-card__meta">
-                  <div>
-                    <dt>Role</dt>
-                    <dd>{{ project.role | escape }}</dd>
-                  </div>
-                  <div>
-                    <dt>Company</dt>
-                    <dd>{{ project.company | escape }}</dd>
-                  </div>
-                </dl>
-                <p class="project-card__impact">{{ project.impact | escape }}</p>
-              </div>
-              <a class="button-link" href="{{ project.url | prepend: site.baseurl }}" aria-label="View {{ project.title }} case study">View case study</a>
-            </article>
-            {% endfor %}
+          <div>
+            <dt>Company</dt>
+            <dd>{{ project.company | escape }}</dd>
           </div>
-        </section>
+        </dl>
+        <p class="project-card__impact">{{ project.impact | escape }}</p>
+      </div>
+      <a class="button-link" href="{{ project.url | prepend: site.baseurl }}" aria-label="View {{ project.title }} case study">View case study</a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
 
-        <section class="page-section contact-section" aria-labelledby="contact">
-          <div class="contact-panel">
-            <h2 id="contact">Let's connect</h2>
-            <p>Follow along on LinkedIn or drop me a line, always happy to meet people working on interesting problems in finance and product.</p>
-            <a class="button-link" href="https://www.linkedin.com/in/charlesjohnbeard/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
-          </div>
-        </section>
-      </main>
-
-      {% include footer.html %}
-    </div>
-    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6bbaa05b99284a46898a940262447e2d"}'></script><!-- End Cloudflare Web Analytics -->
-  </body>
-</html>
+<section class="page-section contact-section" aria-labelledby="contact">
+  <div class="contact-panel">
+    <h2 id="contact">Let's connect</h2>
+    <p>Follow along on LinkedIn or drop me a line, always happy to meet people working on interesting problems in finance and product.</p>
+    <a class="button-link" href="https://www.linkedin.com/in/charlesjohnbeard/" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
+  </div>
+</section>

@@ -1,59 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="{{ page.subtitle | default: page.title | escape }}">
-    <title>{{ page.title | escape }} | Charles Beard</title>
-    {% include head-meta.html %}
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/styles.css?v={{ site.time | date: '%s' }}">
-    <script type="module" src="{{ site.baseurl }}/js/main.js?v={{ site.time | date: '%s' }}"></script>
-  </head>
-  <body data-page="project">
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="page-shell">
-      {% include header.html %}
+---
+layout: default
+---
+<nav aria-label="Breadcrumb" class="case-study__breadcrumb">
+  <a href="{{ site.baseurl }}/">← Work</a>
+</nav>
+<article class="case-study">
+  <header class="case-study__header">
+    <p class="eyebrow">Case Study</p>
+    <h1 class="case-study__title">{{ page.title | escape }}</h1>
+    <p class="case-study__subtitle">{{ page.subtitle | escape }}</p>
+    <dl class="meta-grid">
+      <div>
+        <dt>Role</dt>
+        <dd>{{ page.role | default: "Senior Product Manager" | escape }}</dd>
+      </div>
+      <div>
+        <dt>Company</dt>
+        <dd>{{ page.company | default: "J.P.Morgan Asset Management" | escape }}</dd>
+      </div>
+      <div>
+        <dt>Timeline</dt>
+        <dd>{{ page.timeline | default: "Recent" | escape }}</dd>
+      </div>
+    </dl>
+  </header>
 
-      <main class="page-content" id="main-content">
-        <nav aria-label="Breadcrumb" class="case-study__breadcrumb">
-          <a href="{{ site.baseurl }}/">← Work</a>
-        </nav>
-        <article class="case-study">
-          <header class="case-study__header">
-            <p class="eyebrow">Case Study</p>
-            <h1 class="case-study__title">{{ page.title | escape }}</h1>
-            <p class="case-study__subtitle">{{ page.subtitle | escape }}</p>
-            <dl class="meta-grid">
-              <div>
-                <dt>Role</dt>
-                <dd>{{ page.role | default: "Senior Product Manager" | escape }}</dd>
-              </div>
-              <div>
-                <dt>Company</dt>
-                <dd>{{ page.company | default: "J.P.Morgan Asset Management" | escape }}</dd>
-              </div>
-              <div>
-                <dt>Timeline</dt>
-                <dd>{{ page.timeline | default: "Recent" | escape }}</dd>
-              </div>
-            </dl>
-          </header>
+  {% if page.heroImage %}
+  <figure class="case-study__media">
+    <img src="{{ site.baseurl }}/{{ page.heroImage }}" alt="{{ page.heroAlt | default: page.title | escape }}" loading="lazy" width="1280" height="720">
+    {% if page.heroCaption %}<figcaption>{{ page.heroCaption | escape }}</figcaption>{% endif %}
+  </figure>
+  {% endif %}
 
-          {% if page.heroImage %}
-          <figure class="case-study__media">
-            <img src="{{ site.baseurl }}/{{ page.heroImage }}" alt="{{ page.heroAlt | default: page.title | escape }}" loading="lazy" width="1280" height="720">
-            {% if page.heroCaption %}<figcaption>{{ page.heroCaption | escape }}</figcaption>{% endif %}
-          </figure>
-          {% endif %}
-
-          <div class="case-study__body rich-text">
-            {{ content }}
-          </div>
-        </article>
-      </main>
-
-      {% include footer.html %}
-    </div>
-    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6bbaa05b99284a46898a940262447e2d"}'></script><!-- End Cloudflare Web Analytics -->
-  </body>
-</html>
+  <div class="case-study__body rich-text">
+    {{ content }}
+  </div>
+</article>

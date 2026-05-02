@@ -15,6 +15,8 @@ social:
 
 # og_image: content/og-image.png   # uncomment and add a 1200×630 px image for social previews
 
+cloudflare_token: "6bbaa05b99284a46898a940262447e2d"
+
 plugins:
   - jekyll-sitemap
 
@@ -22,6 +24,10 @@ markdown: kramdown
 kramdown:
   input: GFM
   auto_ids: true
+
+sass:
+  style: compressed
+  sourcemap: never
 
 collections:
   projects:

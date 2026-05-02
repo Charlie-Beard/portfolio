@@ -4,10 +4,11 @@
   Reads from page front matter and _config.yml — no runtime JS needed.
 {%- endcomment -%}
 
+  <!-- Preconnect to analytics origin so deferred beacon fetch is faster -->
+  <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>
+
   <!-- Favicon -->
-  {%- unless page.path == 'dinoclaude.html' %}
-  <link rel="icon" type="image/svg+xml" href="{{ site.baseurl }}/favicon.svg">
-  {%- endunless %}
+  <link rel="icon" type="image/svg+xml" href="{{ site.baseurl }}/{{ page.favicon | default: 'favicon.svg' }}">
 
   <!-- Security: CSP + Referrer-Policy (meta fallback — GitHub Pages cannot set HTTP headers) -->
   <meta http-equiv="Content-Security-Policy"
@@ -71,7 +72,7 @@
   {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Charles Beard",
+    "name": {{ site.author.name | jsonify }},
     "jobTitle": "Senior Product Manager",
     "worksFor": {
       "@type": "Organization",
@@ -134,12 +135,12 @@
     "description": {{ _desc | jsonify }},
     "author": {
       "@type": "Person",
-      "name": "Charles Beard",
+      "name": {{ site.author.name | jsonify }},
       "url": {{ site.url | append: site.baseurl | jsonify }}
     },
     "publisher": {
       "@type": "Person",
-      "name": "Charles Beard"
+      "name": {{ site.author.name | jsonify }}
     }
   }
   </script>

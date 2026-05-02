@@ -1,33 +1,14 @@
 ---
+layout: default
 title: "DinoClaude | Charles Beard"
-description: "DinoClaude, a browser-based endless runner game inspired by the Chrome dinosaur game. Jump the CONTEXT LIMIT, duck the OUT OF TOKENS."
+description: "DinoClaude, a browser-based runner game inspired by the Chrome dinosaur game."
+body_data_page: dinoclaude
+body_class: is-loading
+has_loader: true
+favicon: favicon-dinoclaude.svg
+extra_scripts:
+  - js/game.js
 ---
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="DinoClaude, a browser-based runner game inspired by the Chrome dinosaur game.">
-    <title>DinoClaude | Charles Beard</title>
-    {% include head-meta.html %}
-    <link rel="icon" type="image/svg+xml" href="favicon-dinoclaude.svg">
-    <link rel="stylesheet" href="css/styles.css?v={{ site.time | date: '%s' }}">
-    <script type="module" src="js/main.js?v={{ site.time | date: '%s' }}"></script>
-  </head>
-  <body class="is-loading" data-page="dinoclaude">
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="page-loader" aria-hidden="true"></div>
-    <div class="page-shell">
-      {% include header.html %}
-
-      <main class="page-content" id="main-content">
-        <div class="game-wrapper">
-          <canvas id="game-canvas" aria-label="DinoClaude runner game"></canvas>
-        </div>
-      </main>
-    </div>
-
-    <script defer src="js/game.js?v={{ site.time | date: '%s' }}"></script>
-    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6bbaa05b99284a46898a940262447e2d"}'></script><!-- End Cloudflare Web Analytics -->
-  </body>
-</html>
+<div class="game-wrapper">
+  <canvas id="game-canvas" aria-label="DinoClaude runner game"></canvas>
+</div>
