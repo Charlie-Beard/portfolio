@@ -107,7 +107,9 @@ sitemap: false
       <div id="hd-stats">
         <span class="stt"><span class="sval" id="s-size">--</span>&thinsp;KB</span>
         <span class="sdt">·</span>
-        <span class="stt">0 deps</span>
+        <span class="stt"><span class="sval" id="s-reqs">--</span>&thinsp;req</span>
+        <span class="sdt">·</span>
+        <span class="stt">TTFB&thinsp;<span class="sval" id="s-ttfb">--</span></span>
         <span class="sdt">·</span>
         <span class="stt">FCP&thinsp;<span class="sval" id="s-fcp">--</span></span>
         <span class="sdt">·</span>
@@ -408,7 +410,10 @@ sitemap: false
       if (nav) {
         const sz = nav.encodedBodySize || nav.transferSize;
         if (sz > 256) document.getElementById('s-size').textContent = (sz / 1024).toFixed(1);
+        const ttfb = nav.responseStart - nav.fetchStart;
+        if (ttfb > 0) document.getElementById('s-ttfb').textContent = Math.round(ttfb) + ' ms';
         if (nav.duration > 0) document.getElementById('s-load').textContent = Math.round(nav.duration) + ' ms';
+        document.getElementById('s-reqs').textContent = performance.getEntriesByType('resource').length + 1;
       }
       if (window.PerformanceObserver) {
         const obs = new PerformanceObserver(list => {
