@@ -672,7 +672,7 @@ if (nav.duration > 0) $('s-load').textContent = Math.round(nav.duration) + ' ms'
 
     // Update the live badge and tell all peers the new count
     function setLiveBadge(n) {
-      $('live-count').textContent = n;
+      $('live-count').textContent = n - 1;
       $('live-badge').style.display = n > 1 ? 'flex' : 'none';
     }
 
