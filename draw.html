@@ -8,7 +8,7 @@ sitemap: false
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-  <title>Draw</title>
+  <title>FastDraw</title>
   <meta name="robots" content="noindex, nofollow">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -20,71 +20,77 @@ sitemap: false
       position:fixed;top:0;left:0;width:100%;height:100%;
       z-index:3;cursor:crosshair;touch-action:none;
     }
-    #tb{
-      position:fixed;bottom:0;left:0;right:0;z-index:10;
-      display:flex;align-items:center;
-      overflow-x:auto;overflow-y:hidden;
-      -webkit-overflow-scrolling:touch;
-      scrollbar-width:none;
-      gap:4px;
-      padding:8px 14px;
-      padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));
-      background:rgba(255,255,255,0.95);
-      backdrop-filter:blur(16px);
-      -webkit-backdrop-filter:blur(16px);
-      border-top:1px solid rgba(0,0,0,0.09);
-      white-space:nowrap;
-    }
-    #tb::-webkit-scrollbar{display:none}
-    .tbg{display:inline-flex;align-items:center;gap:3px;flex-shrink:0}
-    .tbdiv{
-      display:inline-block;width:1px;height:22px;
-      background:rgba(0,0,0,0.12);margin:0 4px;flex-shrink:0;
-    }
-    .btn{
-      height:34px;min-width:34px;padding:0 11px;
-      border:1px solid rgba(0,0,0,0.14);border-radius:7px;
-      background:transparent;color:#1a1a1a;
-      font:-apple-system-ui 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-      font-size:13px;font-weight:500;
-      cursor:pointer;user-select:none;-webkit-user-select:none;
-      display:inline-flex;align-items:center;justify-content:center;
-      transition:background 70ms,border-color 70ms,color 70ms;flex-shrink:0;
-    }
-    .btn:active{transform:scale(.96)}
-    .btn.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
-    .sw{
-      width:26px;height:26px;border-radius:50%;
-      border:2.5px solid transparent;
-      cursor:pointer;flex-shrink:0;
-      transition:transform 70ms;
-    }
-    .sw:active{transform:scale(.92)}
-    .sw.on{border-color:#1a1a1a;transform:scale(1.08)}
-    .sw[data-c="#f0f0f0"]{border-color:rgba(0,0,0,0.18)}
-    .sw[data-c="#f0f0f0"].on{border-color:#1a1a1a}
-    .dim{opacity:.3;pointer-events:none}
+
+    /* ── Header ── */
     #hd{
       position:fixed;top:0;left:0;right:0;z-index:10;
       display:flex;align-items:center;justify-content:space-between;
-      height:44px;padding:0 16px;
+      height:44px;padding:0 12px;gap:8px;
       background:rgba(255,255,255,0.95);
-      backdrop-filter:blur(16px);
-      -webkit-backdrop-filter:blur(16px);
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
       border-bottom:1px solid rgba(0,0,0,0.09);
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     }
     #hd-name{font-size:15px;font-weight:700;color:#1a1a1a;letter-spacing:-.3px;flex-shrink:0}
+    #hd-right{display:flex;align-items:center;gap:8px;overflow:hidden;min-width:0}
     #hd-stats{
-      display:flex;align-items:center;gap:5px;
-      font-size:11.5px;color:#66758a;
-      font-variant-numeric:tabular-nums;
-      overflow:hidden;
+      display:flex;align-items:center;gap:4px;flex-shrink:1;
+      font-size:clamp(9.5px,2.5vw,11.5px);
+      color:#66758a;font-variant-numeric:tabular-nums;
+      overflow:hidden;min-width:0;
     }
-    .stt{white-space:nowrap;display:flex;align-items:center;gap:3px}
-    .sdt{color:rgba(0,0,0,0.18)}
+    .stt{white-space:nowrap;flex-shrink:1}
+    .sdt{color:rgba(0,0,0,0.18);flex-shrink:0}
     .sval{font-weight:600;color:#1a1a1a}
-    @media(max-width:539px){.hd-lg{display:none}}
+    #rst{
+      height:26px;padding:0 9px;flex-shrink:0;
+      border:1px solid rgba(0,0,0,0.14);border-radius:6px;
+      background:transparent;color:#66758a;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      font-size:11.5px;font-weight:500;
+      cursor:pointer;user-select:none;-webkit-user-select:none;
+      transition:background 70ms,color 70ms;
+    }
+    #rst:hover{background:rgba(0,0,0,0.05);color:#1a1a1a}
+    #rst:active{transform:scale(.95)}
+
+    /* ── Toolbar ── */
+    #tb{
+      position:fixed;bottom:0;left:0;right:0;z-index:10;
+      display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+      gap:3px;
+      padding:5px 12px;
+      padding-bottom:calc(5px + env(safe-area-inset-bottom,0px));
+      background:rgba(255,255,255,0.95);
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      border-top:1px solid rgba(0,0,0,0.09);
+    }
+    /* A flex-basis:100% element forces everything after it onto a new row */
+    .tb-break{flex-basis:100%;height:1px;background:rgba(0,0,0,0.07);margin:3px 0}
+    .tbg{display:flex;align-items:center;gap:3px;flex-shrink:0}
+    .tbdiv{width:1px;height:20px;background:rgba(0,0,0,0.12);margin:0 4px;flex-shrink:0}
+    .btn{
+      height:32px;min-width:32px;padding:0 9px;
+      border:1px solid rgba(0,0,0,0.14);border-radius:7px;
+      background:transparent;color:#1a1a1a;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      font-size:12.5px;font-weight:500;
+      cursor:pointer;user-select:none;-webkit-user-select:none;
+      display:inline-flex;align-items:center;justify-content:center;
+      transition:background 70ms,border-color 70ms,color 70ms;flex-shrink:0;
+    }
+    .btn:active{transform:scale(.95)}
+    .btn.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+    .sw{
+      width:24px;height:24px;border-radius:50%;
+      border:2px solid transparent;
+      cursor:pointer;flex-shrink:0;transition:transform 70ms;
+    }
+    .sw:active{transform:scale(.9)}
+    .sw.on{border-color:#1a1a1a;transform:scale(1.1)}
+    .dim{opacity:.3;pointer-events:none}
+
+    /* ── Text input overlay ── */
     #ti{
       position:fixed;border:none;outline:none;
       background:transparent;padding:0;margin:0;
@@ -97,24 +103,30 @@ sitemap: false
 <body>
   <div id="hd">
     <span id="hd-name">FastDraw</span>
-    <div id="hd-stats">
-      <span class="stt">3.5 KB gzip</span>
-      <span class="sdt">·</span>
-      <span class="stt">0 deps</span>
-      <span class="sdt hd-lg">·</span>
-      <span class="stt hd-lg">FCP <span class="sval" id="s-fcp">--</span></span>
-      <span class="sdt hd-lg">·</span>
-      <span class="stt hd-lg">Load <span class="sval" id="s-load">--</span></span>
+    <div id="hd-right">
+      <div id="hd-stats">
+        <span class="stt"><span class="sval" id="s-size">--</span>&thinsp;KB</span>
+        <span class="sdt">·</span>
+        <span class="stt">0 deps</span>
+        <span class="sdt">·</span>
+        <span class="stt">FCP&thinsp;<span class="sval" id="s-fcp">--</span></span>
+        <span class="sdt">·</span>
+        <span class="stt">Load&thinsp;<span class="sval" id="s-load">--</span></span>
+      </div>
+      <button id="rst">Reset</button>
     </div>
   </div>
+
   <canvas id="base"></canvas>
   <canvas id="preview"></canvas>
   <div id="cap"></div>
+
   <div id="tb">
+    <!-- Row 1: tools + colours -->
     <div class="tbg">
       <button class="btn on" data-tool="pen">Pen</button>
       <button class="btn" data-tool="rect">Rect</button>
-      <button class="btn" data-tool="ellipse">Ellipse</button>
+      <button class="btn" data-tool="oval">Oval</button>
       <button class="btn" data-tool="text">Text</button>
     </div>
     <div class="tbdiv"></div>
@@ -125,7 +137,9 @@ sitemap: false
       <button class="sw" data-c="#16a34a" style="background:#16a34a" aria-label="Green"></button>
       <button class="sw" data-c="#9333ea" style="background:#9333ea" aria-label="Purple"></button>
     </div>
-    <div class="tbdiv"></div>
+    <!-- Row break -->
+    <div class="tb-break"></div>
+    <!-- Row 2: font sizes + download -->
     <div class="tbg dim" id="fsz">
       <button class="btn" data-fs="12">XS</button>
       <button class="btn" data-fs="18">S</button>
@@ -138,16 +152,18 @@ sitemap: false
       <button class="btn" id="dl">Save PNG</button>
     </div>
   </div>
+
   <input id="ti" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+
   <script>
   (function(){
-    const base  = document.getElementById('base');
-    const prev  = document.getElementById('preview');
-    const cap   = document.getElementById('cap');
-    const ti    = document.getElementById('ti');
-    const bx    = base.getContext('2d');
-    const px    = prev.getContext('2d');
-    const dpr   = devicePixelRatio || 1;
+    const base = document.getElementById('base');
+    const prev = document.getElementById('preview');
+    const cap  = document.getElementById('cap');
+    const ti   = document.getElementById('ti');
+    const bx   = base.getContext('2d');
+    const px   = prev.getContext('2d');
+    const dpr  = devicePixelRatio || 1;
     let W = 0, H = 0;
 
     function initCanvas(c, ctx) {
@@ -225,7 +241,7 @@ sitemap: false
       ctx.stroke();
     }
 
-    function drawEllipse(ctx, x1, y1, x2, y2) {
+    function drawOval(ctx, x1, y1, x2, y2) {
       const cx = (x1+x2)/2, cy = (y1+y2)/2;
       const rx = Math.abs(x2-x1)/2 || 0.5;
       const ry = Math.abs(y2-y1)/2 || 0.5;
@@ -273,7 +289,7 @@ sitemap: false
       } else {
         px.clearRect(0, 0, W, H);
         applyStyle(px);
-        S.tool === 'rect' ? drawRect(px, x0, y0, x, y) : drawEllipse(px, x0, y0, x, y);
+        S.tool === 'rect' ? drawRect(px, x0, y0, x, y) : drawOval(px, x0, y0, x, y);
       }
     });
 
@@ -295,8 +311,8 @@ sitemap: false
         }
       } else if (S.tool === 'rect') {
         drawRect(bx, x0, y0, x, y);
-      } else if (S.tool === 'ellipse') {
-        drawEllipse(bx, x0, y0, x, y);
+      } else if (S.tool === 'oval') {
+        drawOval(bx, x0, y0, x, y);
       }
     }
 
@@ -310,12 +326,12 @@ sitemap: false
     function showText(x, y) {
       tx = x; ty = y;
       ti.value = '';
-      ti.style.display    = 'block';
-      ti.style.left       = x + 'px';
-      ti.style.top        = (y - S.fs) + 'px';
-      ti.style.fontSize   = S.fs + 'px';
-      ti.style.color      = S.color;
-      ti.style.width      = '4px';
+      ti.style.display  = 'block';
+      ti.style.left     = x + 'px';
+      ti.style.top      = (y - S.fs) + 'px';
+      ti.style.fontSize = S.fs + 'px';
+      ti.style.color    = S.color;
+      ti.style.width    = '4px';
       ti.focus();
     }
 
@@ -357,7 +373,7 @@ sitemap: false
       });
     });
 
-    // Toolbar — colors
+    // Toolbar — colours
     document.querySelectorAll('.sw').forEach(b => {
       b.addEventListener('click', () => {
         document.querySelectorAll('.sw').forEach(x => x.classList.remove('on'));
@@ -377,17 +393,28 @@ sitemap: false
       });
     });
 
-    // Performance metrics — measured from the actual page load
+    // Reset — clears both canvas layers in place (no reload needed)
+    document.getElementById('rst').addEventListener('click', () => {
+      commitText();
+      bx.clearRect(0, 0, W, H);
+      px.clearRect(0, 0, W, H);
+    });
+
+    // Performance metrics — all live from the browser's own timing data
+    // encodedBodySize = actual gzipped body bytes; works from cache too (unlike transferSize)
+    // This self-updates on every build automatically — no pipeline step needed
     function measurePerf() {
       const nav = performance.getEntriesByType('navigation')[0];
-      if (nav && nav.duration > 0) {
-        document.getElementById('s-load').textContent = Math.round(nav.duration) + ' ms';
+      if (nav) {
+        const sz = nav.encodedBodySize || nav.transferSize;
+        if (sz > 256) document.getElementById('s-size').textContent = (sz / 1024).toFixed(1);
+        if (nav.duration > 0) document.getElementById('s-load').textContent = Math.round(nav.duration) + ' ms';
       }
       if (window.PerformanceObserver) {
         const obs = new PerformanceObserver(list => {
           for (const e of list.getEntries()) {
             if (e.name === 'first-contentful-paint') {
-              document.getElementById('s-fcp').textContent = Math.round(e.startTime) + ' ms';
+              document.getElementById('s-fcp').textContent = Math.round(e.startTime) + ' ms';
               obs.disconnect();
             }
           }
