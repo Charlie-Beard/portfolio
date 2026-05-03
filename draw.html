@@ -40,9 +40,9 @@ sitemap: false
       border-bottom:1px solid rgba(0,0,0,0.09);
     }
     #hd-name{font-size:15px;font-weight:700;color:#1a1a1a;letter-spacing:-.3px;flex-shrink:0}
-    #hd-right{display:flex;align-items:center;gap:5px;overflow:hidden;min-width:0}
+    #hd-right{display:flex;align-items:center;gap:8px;overflow:hidden;min-width:0}
     #hd-stats{
-      display:flex;align-items:center;gap:1px;flex-shrink:1;
+      display:flex;align-items:center;gap:4px;flex-shrink:1;
       font-size:clamp(9.5px,2.5vw,11.5px);
       color:#66758a;font-variant-numeric:tabular-nums;
       overflow:hidden;min-width:0;
@@ -192,8 +192,6 @@ sitemap: false
     <div id="hd-right">
       <div id="hd-stats">
         <span class="stt"><span class="sval" id="s-size">--</span>&thinsp;KB</span>
-        <span class="sdt">·</span>
-        <span class="stt">TTFB&thinsp;<span class="sval" id="s-ttfb">--</span></span>
         <span class="sdt">·</span>
         <span class="stt">FCP&thinsp;<span class="sval" id="s-fcp">--</span></span>
         <span class="sdt">·</span>
@@ -553,9 +551,7 @@ sitemap: false
       if (nav) {
         const sz = nav.encodedBodySize || nav.transferSize;
         if (sz > 256) $('s-size').textContent = (sz / 1024).toFixed(1);
-        const ttfb = nav.responseStart - nav.fetchStart;
-        if (ttfb > 0) $('s-ttfb').textContent = Math.round(ttfb) + ' ms';
-        if (nav.duration > 0) $('s-load').textContent = Math.round(nav.duration) + ' ms';
+if (nav.duration > 0) $('s-load').textContent = Math.round(nav.duration) + ' ms';
       }
       if (window.PerformanceObserver) {
         const obs = new PerformanceObserver(list => {
