@@ -1,0 +1,413 @@
+---
+layout: null
+permalink: /draw/
+sitemap: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>Draw</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;overflow:hidden;background:#fff;touch-action:none}
+    canvas{display:block;position:fixed;top:0;left:0}
+    #base{z-index:1}
+    #preview{z-index:2;pointer-events:none}
+    #cap{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      z-index:3;cursor:crosshair;touch-action:none;
+    }
+    #tb{
+      position:fixed;bottom:0;left:0;right:0;z-index:10;
+      display:flex;align-items:center;
+      overflow-x:auto;overflow-y:hidden;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      gap:4px;
+      padding:8px 14px;
+      padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));
+      background:rgba(255,255,255,0.95);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-top:1px solid rgba(0,0,0,0.09);
+      white-space:nowrap;
+    }
+    #tb::-webkit-scrollbar{display:none}
+    .tbg{display:inline-flex;align-items:center;gap:3px;flex-shrink:0}
+    .tbdiv{
+      display:inline-block;width:1px;height:22px;
+      background:rgba(0,0,0,0.12);margin:0 4px;flex-shrink:0;
+    }
+    .btn{
+      height:34px;min-width:34px;padding:0 11px;
+      border:1px solid rgba(0,0,0,0.14);border-radius:7px;
+      background:transparent;color:#1a1a1a;
+      font:-apple-system-ui 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      font-size:13px;font-weight:500;
+      cursor:pointer;user-select:none;-webkit-user-select:none;
+      display:inline-flex;align-items:center;justify-content:center;
+      transition:background 70ms,border-color 70ms,color 70ms;flex-shrink:0;
+    }
+    .btn:active{transform:scale(.96)}
+    .btn.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+    .sw{
+      width:26px;height:26px;border-radius:50%;
+      border:2.5px solid transparent;
+      cursor:pointer;flex-shrink:0;
+      transition:transform 70ms;
+    }
+    .sw:active{transform:scale(.92)}
+    .sw.on{border-color:#1a1a1a;transform:scale(1.08)}
+    .sw[data-c="#f0f0f0"]{border-color:rgba(0,0,0,0.18)}
+    .sw[data-c="#f0f0f0"].on{border-color:#1a1a1a}
+    .dim{opacity:.3;pointer-events:none}
+    #hd{
+      position:fixed;top:0;left:0;right:0;z-index:10;
+      display:flex;align-items:center;justify-content:space-between;
+      height:44px;padding:0 16px;
+      background:rgba(255,255,255,0.95);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(0,0,0,0.09);
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    }
+    #hd-name{font-size:15px;font-weight:700;color:#1a1a1a;letter-spacing:-.3px;flex-shrink:0}
+    #hd-stats{
+      display:flex;align-items:center;gap:5px;
+      font-size:11.5px;color:#66758a;
+      font-variant-numeric:tabular-nums;
+      overflow:hidden;
+    }
+    .stt{white-space:nowrap;display:flex;align-items:center;gap:3px}
+    .sdt{color:rgba(0,0,0,0.18)}
+    .sval{font-weight:600;color:#1a1a1a}
+    @media(max-width:539px){.hd-lg{display:none}}
+    #ti{
+      position:fixed;border:none;outline:none;
+      background:transparent;padding:0;margin:0;
+      line-height:1.25;z-index:20;display:none;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      min-width:4px;width:4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="hd">
+    <span id="hd-name">FastDraw</span>
+    <div id="hd-stats">
+      <span class="stt">3.5 KB gzip</span>
+      <span class="sdt">·</span>
+      <span class="stt">0 deps</span>
+      <span class="sdt hd-lg">·</span>
+      <span class="stt hd-lg">FCP <span class="sval" id="s-fcp">--</span></span>
+      <span class="sdt hd-lg">·</span>
+      <span class="stt hd-lg">Load <span class="sval" id="s-load">--</span></span>
+    </div>
+  </div>
+  <canvas id="base"></canvas>
+  <canvas id="preview"></canvas>
+  <div id="cap"></div>
+  <div id="tb">
+    <div class="tbg">
+      <button class="btn on" data-tool="pen">Pen</button>
+      <button class="btn" data-tool="rect">Rect</button>
+      <button class="btn" data-tool="ellipse">Ellipse</button>
+      <button class="btn" data-tool="text">Text</button>
+    </div>
+    <div class="tbdiv"></div>
+    <div class="tbg">
+      <button class="sw on" data-c="#1a1a1a" style="background:#1a1a1a" aria-label="Black"></button>
+      <button class="sw" data-c="#e63946" style="background:#e63946" aria-label="Red"></button>
+      <button class="sw" data-c="#2563eb" style="background:#2563eb" aria-label="Blue"></button>
+      <button class="sw" data-c="#16a34a" style="background:#16a34a" aria-label="Green"></button>
+      <button class="sw" data-c="#9333ea" style="background:#9333ea" aria-label="Purple"></button>
+    </div>
+    <div class="tbdiv"></div>
+    <div class="tbg dim" id="fsz">
+      <button class="btn" data-fs="12">XS</button>
+      <button class="btn" data-fs="18">S</button>
+      <button class="btn on" data-fs="24">M</button>
+      <button class="btn" data-fs="36">L</button>
+      <button class="btn" data-fs="48">XL</button>
+    </div>
+    <div class="tbdiv"></div>
+    <div class="tbg">
+      <button class="btn" id="dl">Save PNG</button>
+    </div>
+  </div>
+  <input id="ti" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <script>
+  (function(){
+    const base  = document.getElementById('base');
+    const prev  = document.getElementById('preview');
+    const cap   = document.getElementById('cap');
+    const ti    = document.getElementById('ti');
+    const bx    = base.getContext('2d');
+    const px    = prev.getContext('2d');
+    const dpr   = devicePixelRatio || 1;
+    let W = 0, H = 0;
+
+    function initCanvas(c, ctx) {
+      c.width  = W * dpr;
+      c.height = H * dpr;
+      c.style.width  = W + 'px';
+      c.style.height = H + 'px';
+      ctx.scale(dpr, dpr);
+    }
+
+    function boot() {
+      W = innerWidth; H = innerHeight;
+      initCanvas(base, bx);
+      initCanvas(prev, px);
+    }
+
+    function resizeRestore() {
+      const url = base.toDataURL();
+      W = innerWidth; H = innerHeight;
+      initCanvas(base, bx);
+      initCanvas(prev, px);
+      const img = new Image();
+      img.onload = () => bx.drawImage(img, 0, 0, W, H);
+      img.src = url;
+    }
+
+    boot();
+    let rsT;
+    addEventListener('resize', () => { clearTimeout(rsT); rsT = setTimeout(resizeRestore, 220); });
+
+    // Tool state
+    const S = { tool: 'pen', color: '#1a1a1a', fs: 24, lw: 2.5 };
+    let active = false, pid = -1, x0 = 0, y0 = 0, pts = [];
+
+    function pos(e) {
+      const r = cap.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    }
+
+    function applyStyle(ctx) {
+      ctx.strokeStyle = S.color;
+      ctx.fillStyle   = S.color;
+      ctx.lineWidth   = S.lw;
+      ctx.lineCap     = 'round';
+      ctx.lineJoin    = 'round';
+    }
+
+    // Chaikin corner-cutting smoothing
+    function chaikin(p, n) {
+      if (p.length < 3) return p;
+      let a = p;
+      for (let i = 0; i < n; i++) {
+        const b = [a[0]];
+        for (let j = 0; j < a.length - 1; j++) {
+          b.push({ x: .75*a[j].x + .25*a[j+1].x, y: .75*a[j].y + .25*a[j+1].y });
+          b.push({ x: .25*a[j].x + .75*a[j+1].x, y: .25*a[j].y + .75*a[j+1].y });
+        }
+        b.push(a[a.length - 1]);
+        a = b;
+      }
+      return a;
+    }
+
+    function polyline(ctx, p) {
+      if (p.length < 2) return;
+      ctx.beginPath();
+      ctx.moveTo(p[0].x, p[0].y);
+      for (let i = 1; i < p.length; i++) ctx.lineTo(p[i].x, p[i].y);
+      ctx.stroke();
+    }
+
+    function drawRect(ctx, x1, y1, x2, y2) {
+      ctx.beginPath();
+      ctx.rect(Math.min(x1,x2), Math.min(y1,y2), Math.abs(x2-x1), Math.abs(y2-y1));
+      ctx.stroke();
+    }
+
+    function drawEllipse(ctx, x1, y1, x2, y2) {
+      const cx = (x1+x2)/2, cy = (y1+y2)/2;
+      const rx = Math.abs(x2-x1)/2 || 0.5;
+      const ry = Math.abs(y2-y1)/2 || 0.5;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+      ctx.stroke();
+    }
+
+    // Pointer handling
+    cap.addEventListener('pointerdown', e => {
+      if (e.button > 0) return;
+      cap.setPointerCapture(e.pointerId);
+      pid = e.pointerId;
+      const {x, y} = pos(e);
+
+      if (S.tool === 'text') { commitText(); showText(x, y); return; }
+
+      active = true;
+      x0 = x; y0 = y;
+      px.clearRect(0, 0, W, H);
+
+      if (S.tool === 'pen') {
+        pts = [{x, y}];
+        applyStyle(px);
+        px.beginPath();
+        px.moveTo(x, y);
+      }
+    });
+
+    cap.addEventListener('pointermove', e => {
+      if (!active || e.pointerId !== pid) return;
+      const {x, y} = pos(e);
+
+      if (S.tool === 'pen') {
+        const l = pts[pts.length - 1];
+        const dx = x - l.x, dy = y - l.y;
+        if (dx*dx + dy*dy > 4) {
+          pts.push({x, y});
+          applyStyle(px);
+          px.lineTo(x, y);
+          px.stroke();
+          px.beginPath();
+          px.moveTo(x, y);
+        }
+      } else {
+        px.clearRect(0, 0, W, H);
+        applyStyle(px);
+        S.tool === 'rect' ? drawRect(px, x0, y0, x, y) : drawEllipse(px, x0, y0, x, y);
+      }
+    });
+
+    function endDraw(e) {
+      if (!active || e.pointerId !== pid) return;
+      active = false; pid = -1;
+      const {x, y} = pos(e);
+      px.clearRect(0, 0, W, H);
+      applyStyle(bx);
+
+      if (S.tool === 'pen') {
+        pts.push({x, y});
+        if (pts.length === 1) {
+          bx.beginPath();
+          bx.arc(pts[0].x, pts[0].y, S.lw / 2, 0, Math.PI*2);
+          bx.fill();
+        } else {
+          polyline(bx, chaikin(pts, pts.length > 8 ? 3 : 1));
+        }
+      } else if (S.tool === 'rect') {
+        drawRect(bx, x0, y0, x, y);
+      } else if (S.tool === 'ellipse') {
+        drawEllipse(bx, x0, y0, x, y);
+      }
+    }
+
+    cap.addEventListener('pointerup',     endDraw);
+    cap.addEventListener('pointercancel', endDraw);
+    cap.addEventListener('contextmenu',   e => e.preventDefault());
+
+    // Text tool
+    let tx = 0, ty = 0;
+
+    function showText(x, y) {
+      tx = x; ty = y;
+      ti.value = '';
+      ti.style.display    = 'block';
+      ti.style.left       = x + 'px';
+      ti.style.top        = (y - S.fs) + 'px';
+      ti.style.fontSize   = S.fs + 'px';
+      ti.style.color      = S.color;
+      ti.style.width      = '4px';
+      ti.focus();
+    }
+
+    function commitText() {
+      if (ti.style.display === 'none') return;
+      const t = ti.value.trim();
+      if (t) {
+        applyStyle(bx);
+        bx.font = S.fs + 'px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif';
+        bx.fillText(t, tx, ty);
+      }
+      ti.style.display = 'none';
+      ti.value = '';
+    }
+
+    ti.addEventListener('input', () => {
+      ti.style.width = Math.max(4, ti.scrollWidth) + 'px';
+    });
+
+    ti.addEventListener('keydown', e => {
+      if (e.key === 'Enter')  { e.preventDefault(); commitText(); }
+      if (e.key === 'Escape') { ti.style.display = 'none'; ti.value = ''; }
+    });
+
+    ti.addEventListener('blur', () => {
+      setTimeout(() => {
+        if (ti.style.display !== 'none' && document.activeElement !== ti) commitText();
+      }, 80);
+    });
+
+    // Toolbar — tools
+    document.querySelectorAll('[data-tool]').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('[data-tool]').forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+        S.tool = b.dataset.tool;
+        document.getElementById('fsz').classList.toggle('dim', S.tool !== 'text');
+        if (S.tool !== 'text') commitText();
+      });
+    });
+
+    // Toolbar — colors
+    document.querySelectorAll('.sw').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.sw').forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+        S.color = b.dataset.c;
+        if (ti.style.display !== 'none') ti.style.color = S.color;
+      });
+    });
+
+    // Toolbar — font sizes
+    document.querySelectorAll('[data-fs]').forEach(b => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('[data-fs]').forEach(x => x.classList.remove('on'));
+        b.classList.add('on');
+        S.fs = +b.dataset.fs;
+        if (ti.style.display !== 'none') ti.style.fontSize = S.fs + 'px';
+      });
+    });
+
+    // Performance metrics — measured from the actual page load
+    function measurePerf() {
+      const nav = performance.getEntriesByType('navigation')[0];
+      if (nav && nav.duration > 0) {
+        document.getElementById('s-load').textContent = Math.round(nav.duration) + ' ms';
+      }
+      if (window.PerformanceObserver) {
+        const obs = new PerformanceObserver(list => {
+          for (const e of list.getEntries()) {
+            if (e.name === 'first-contentful-paint') {
+              document.getElementById('s-fcp').textContent = Math.round(e.startTime) + ' ms';
+              obs.disconnect();
+            }
+          }
+        });
+        try { obs.observe({ type: 'paint', buffered: true }); } catch(_) {}
+      }
+    }
+    if (document.readyState === 'complete') setTimeout(measurePerf, 0);
+    else addEventListener('load', () => setTimeout(measurePerf, 0));
+
+    // Download
+    document.getElementById('dl').addEventListener('click', () => {
+      commitText();
+      const a = document.createElement('a');
+      a.download = 'drawing.png';
+      a.href = base.toDataURL('image/png');
+      a.click();
+    });
+
+  })();
+  </script>
+</body>
+</html>
