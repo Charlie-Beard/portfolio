@@ -113,12 +113,12 @@ sitemap: false
       min-width:4px;width:4px;
     }
 
-    #sm{
+    #sm,#rm{
       position:fixed;inset:0;z-index:100;
       display:none;align-items:center;justify-content:center;
       background:rgba(0,0,0,0.45);padding:20px;
     }
-    #sm-card{
+    #sm-card,#rm-card{
       background:#fff;border-radius:14px;padding:22px 20px;
       width:100%;max-width:340px;
       box-shadow:0 20px 60px rgba(0,0,0,0.25);
@@ -142,7 +142,7 @@ sitemap: false
       font-size:11px;color:#1a1a1a;background:#f7f9fc;
       outline:none;
     }
-    #sm-btns{display:flex;gap:8px;justify-content:flex-end}
+    #sm-btns,#rm-btns{display:flex;gap:8px;justify-content:flex-end}
     .m-btn{
       height:34px;padding:0 14px;border-radius:8px;
       font-size:13px;font-weight:500;cursor:pointer;
@@ -154,6 +154,12 @@ sitemap: false
     #sm-go:hover{background:#333}
     #sm-go:disabled{opacity:.45;cursor:default}
     #sm-copy{height:32px;padding:0 11px;font-size:12px}
+    #rm-title{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:8px}
+    #rm-body{font-size:12.5px;color:#516072;line-height:1.55;margin-bottom:16px}
+    #rm-cancel{border:1px solid rgba(0,0,0,0.14);background:transparent;color:#1a1a1a}
+    #rm-cancel:hover{background:rgba(0,0,0,0.05)}
+    #rm-go{border:none;background:#e63946;color:#fff}
+    #rm-go:hover{background:#c1121f}
 
     .ov{
       position:fixed;inset:0;z-index:100;
@@ -263,6 +269,18 @@ sitemap: false
       <div id="sm-btns">
         <button id="sm-cancel" class="m-btn">Cancel</button>
         <button id="sm-go" class="m-btn">I understand</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset-session confirmation modal -->
+  <div id="rm">
+    <div id="rm-card">
+      <p id="rm-title">Reset shared session?</p>
+      <p id="rm-body">This will clear the canvas and disconnect all live users.</p>
+      <div id="rm-btns">
+        <button id="rm-cancel" class="m-btn">Cancel</button>
+        <button id="rm-go" class="m-btn">Reset</button>
       </div>
     </div>
   </div>
@@ -567,10 +585,10 @@ sitemap: false
 
     // Reset
     $('rst').addEventListener('click', () => {
+      if (shareActive) { $('rm').style.display = 'flex'; return; }
       commitText();
       bx.fillStyle = '#fff'; bx.fillRect(0, 0, W, H);
       px.clearRect(0, 0, W, H);
-      if (shareActive) shareOp({type:'reset'});
     });
 
     // Performance metrics
@@ -664,6 +682,22 @@ if (nav.duration > 0) $('s-load').textContent = Math.round(nav.duration) + ' ms'
       peerConns.forEach(c => { if (c.open) c.send({type:'count', n}); });
     }
 
+    // Tear down the session — disconnect peers, reset state and UI
+    function endSession() {
+      peerConns.forEach(c => { try { c.close(); } catch(_){} });
+      peerConns = [];
+      if (hostConn) { try { hostConn.close(); } catch(_){} hostConn = null; }
+      if (myPeer)   { try { myPeer.destroy(); } catch(_){} myPeer = null; }
+      isHost = false; shareActive = false;
+      history.replaceState(null, '', location.pathname);
+      $('shr').textContent = 'Share';
+      $('shr').classList.remove('live');
+      setLiveBadge(0);
+      commitText();
+      bx.fillStyle = '#fff'; bx.fillRect(0, 0, W, H);
+      px.clearRect(0, 0, W, H);
+    }
+
     // Host: wire up a new incoming connection
     function setupConn(conn) {
       peerConns.push(conn);
@@ -705,6 +739,7 @@ if (nav.duration > 0) $('s-load').textContent = Math.round(nav.duration) + ' ms'
           $('sm-btns').style.display = 'none';
           $('sm-url-row').style.display = 'flex';
           $('shr').classList.add('live');
+          $('shr').textContent = 'Shared';
           setLiveBadge(1);
         });
         myPeer.on('connection', conn => setupConn(conn));
@@ -769,6 +804,8 @@ if (nav.duration > 0) $('s-load').textContent = Math.round(nav.duration) + ' ms'
     }
     $('sm-cancel').addEventListener('click', closeModal);
     $('sm-close').addEventListener('click', closeModal);
+    $('rm-cancel').addEventListener('click', () => { $('rm').style.display = 'none'; });
+    $('rm-go').addEventListener('click', () => { $('rm').style.display = 'none'; endSession(); });
 
     $('sm-go').addEventListener('click', startSession);
 
