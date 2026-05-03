@@ -42,6 +42,16 @@ sitemap: false
     .stt{white-space:nowrap;flex-shrink:1}
     .sdt{color:rgba(0,0,0,0.18);flex-shrink:0}
     .sval{font-weight:600;color:#1a1a1a}
+    .stt[data-tip]{cursor:pointer}
+    #tip{
+      position:fixed;z-index:50;
+      background:#1a1a1a;color:#fff;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      font-size:11px;line-height:1.5;
+      padding:6px 10px;border-radius:7px;
+      max-width:190px;pointer-events:none;
+      white-space:normal;display:none;
+    }
     #rst{
       height:26px;padding:0 9px;flex-shrink:0;
       border:1px solid rgba(0,0,0,0.14);border-radius:6px;
@@ -105,15 +115,13 @@ sitemap: false
     <span id="hd-name">FastDraw</span>
     <div id="hd-right">
       <div id="hd-stats">
-        <span class="stt"><span class="sval" id="s-size">--</span>&thinsp;KB</span>
+        <span class="stt" data-tip="Gzipped transfer size — the actual bytes sent over the network for this page"><span class="sval" id="s-size">--</span>&thinsp;KB</span>
         <span class="sdt">·</span>
-        <span class="stt"><span class="sval" id="s-reqs">--</span>&thinsp;req</span>
+        <span class="stt" data-tip="Time to First Byte — how long the browser waited before the server started responding">TTFB&thinsp;<span class="sval" id="s-ttfb">--</span></span>
         <span class="sdt">·</span>
-        <span class="stt">TTFB&thinsp;<span class="sval" id="s-ttfb">--</span></span>
+        <span class="stt" data-tip="First Contentful Paint — time until the first content was rendered on screen">FCP&thinsp;<span class="sval" id="s-fcp">--</span></span>
         <span class="sdt">·</span>
-        <span class="stt">FCP&thinsp;<span class="sval" id="s-fcp">--</span></span>
-        <span class="sdt">·</span>
-        <span class="stt">Load&thinsp;<span class="sval" id="s-load">--</span></span>
+        <span class="stt" data-tip="Total load time — from navigation start until the page fully loaded">Load&thinsp;<span class="sval" id="s-load">--</span></span>
       </div>
       <button id="rst">Reset</button>
     </div>
@@ -413,7 +421,6 @@ sitemap: false
         const ttfb = nav.responseStart - nav.fetchStart;
         if (ttfb > 0) document.getElementById('s-ttfb').textContent = Math.round(ttfb) + ' ms';
         if (nav.duration > 0) document.getElementById('s-load').textContent = Math.round(nav.duration) + ' ms';
-        document.getElementById('s-reqs').textContent = performance.getEntriesByType('resource').length + 1;
       }
       if (window.PerformanceObserver) {
         const obs = new PerformanceObserver(list => {
@@ -429,6 +436,23 @@ sitemap: false
     }
     if (document.readyState === 'complete') setTimeout(measurePerf, 0);
     else addEventListener('load', () => setTimeout(measurePerf, 0));
+
+    // Tooltips — one shared element, click-triggered (works identically on desktop and touch)
+    const tip = document.getElementById('tip');
+    document.querySelectorAll('[data-tip]').forEach(el => {
+      el.addEventListener('click', e => {
+        e.stopPropagation();
+        tip.textContent = el.dataset.tip;
+        tip.style.display = 'block';
+        const r = el.getBoundingClientRect();
+        const tw = tip.offsetWidth;
+        let left = r.left + r.width / 2 - tw / 2;
+        left = Math.max(8, Math.min(left, innerWidth - tw - 8));
+        tip.style.left = left + 'px';
+        tip.style.top  = (r.bottom + 6) + 'px';
+      });
+    });
+    document.addEventListener('click', () => { tip.style.display = 'none'; });
 
     // Download
     document.getElementById('dl').addEventListener('click', () => {
@@ -449,5 +473,6 @@ sitemap: false
 
   })();
   </script>
+  <div id="tip"></div>
 </body>
 </html>
