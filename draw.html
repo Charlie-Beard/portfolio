@@ -429,7 +429,15 @@ sitemap: false
     document.getElementById('dl').addEventListener('click', () => {
       commitText();
       const a = document.createElement('a');
-      a.download = 'drawing.png';
+      const now = new Date();
+      const ts = now.getFullYear().toString()
+        + String(now.getMonth()+1).padStart(2,'0')
+        + String(now.getDate()).padStart(2,'0')
+        + '-'
+        + String(now.getHours()).padStart(2,'0')
+        + String(now.getMinutes()).padStart(2,'0')
+        + String(now.getSeconds()).padStart(2,'0');
+      a.download = ts + '-fastdraw.png';
       a.href = base.toDataURL('image/png');
       a.click();
     });
