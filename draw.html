@@ -22,7 +22,7 @@ sitemap: false
              object-src 'none';">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html,body{width:100%;height:100%;overflow:hidden;background:#fff;touch-action:none}
+    html,body{width:100%;height:100%;overflow:hidden;background:#fff;touch-action:none;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
     canvas{display:block;position:fixed;top:0;left:0}
     #base{z-index:1}
     #preview{z-index:2;pointer-events:none}
@@ -31,7 +31,6 @@ sitemap: false
       z-index:3;cursor:crosshair;touch-action:none;
     }
 
-    /* ── Header ── */
     #hd{
       position:fixed;top:0;left:0;right:0;z-index:10;
       display:flex;align-items:center;justify-content:space-between;
@@ -39,7 +38,6 @@ sitemap: false
       background:rgba(255,255,255,0.95);
       backdrop-filter:blur(8px);
       border-bottom:1px solid rgba(0,0,0,0.09);
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     }
     #hd-name{font-size:15px;font-weight:700;color:#1a1a1a;letter-spacing:-.3px;flex-shrink:0}
     #hd-right{display:flex;align-items:center;gap:8px;overflow:hidden;min-width:0}
@@ -52,12 +50,10 @@ sitemap: false
     .stt{white-space:nowrap;flex-shrink:1}
     .sdt{color:rgba(0,0,0,0.18);flex-shrink:0}
     .sval{font-weight:600;color:#1a1a1a}
-    /* shared style for header action buttons */
     .hd-btn{
       height:26px;padding:0 9px;flex-shrink:0;
       border:1px solid rgba(0,0,0,0.14);border-radius:6px;
       background:transparent;color:#66758a;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       font-size:11.5px;font-weight:500;
       cursor:pointer;user-select:none;-webkit-user-select:none;
       transition:background 70ms,color 70ms,border-color 70ms;
@@ -66,10 +62,8 @@ sitemap: false
     .hd-btn:active{transform:scale(.95)}
     #shr.live{color:#16a34a;border-color:#16a34a}
 
-    /* ── Live badge ── */
     #live-badge{
       display:none;align-items:center;gap:4px;flex-shrink:0;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       font-size:11.5px;font-weight:500;color:#16a34a;
     }
     .live-dot{
@@ -78,7 +72,6 @@ sitemap: false
     }
     @keyframes lpulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-    /* ── Toolbar ── */
     #tb{
       position:fixed;bottom:0;left:0;right:0;z-index:10;
       display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
@@ -96,7 +89,6 @@ sitemap: false
       height:32px;min-width:32px;padding:0 9px;
       border:1px solid rgba(0,0,0,0.14);border-radius:7px;
       background:transparent;color:#1a1a1a;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       font-size:12.5px;font-weight:500;
       cursor:pointer;user-select:none;-webkit-user-select:none;
       display:inline-flex;align-items:center;justify-content:center;
@@ -113,16 +105,13 @@ sitemap: false
     .sw.on{border-color:#1a1a1a;transform:scale(1.1)}
     .dim{opacity:.3;pointer-events:none}
 
-    /* ── Text input overlay ── */
     #ti{
       position:fixed;border:none;outline:none;
       background:transparent;padding:0;margin:0;
       line-height:1.25;z-index:20;display:none;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       min-width:4px;width:4px;
     }
 
-    /* ── Share modal ── */
     #sm{
       position:fixed;inset:0;z-index:100;
       display:none;align-items:center;justify-content:center;
@@ -131,7 +120,6 @@ sitemap: false
     #sm-card{
       background:#fff;border-radius:14px;padding:22px 20px;
       width:100%;max-width:340px;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       box-shadow:0 20px 60px rgba(0,0,0,0.25);
     }
     #sm-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
@@ -151,13 +139,11 @@ sitemap: false
       flex:1;height:32px;padding:0 8px;min-width:0;
       border:1px solid rgba(0,0,0,0.14);border-radius:7px;
       font-size:11px;color:#1a1a1a;background:#f7f9fc;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       outline:none;
     }
     #sm-btns{display:flex;gap:8px;justify-content:flex-end}
     .m-btn{
       height:34px;padding:0 14px;border-radius:8px;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
       font-size:13px;font-weight:500;cursor:pointer;
       transition:background 70ms;
     }
@@ -168,11 +154,9 @@ sitemap: false
     #sm-go:disabled{opacity:.45;cursor:default}
     #sm-copy{height:32px;padding:0 11px;font-size:12px}
 
-    /* ── Overlays ── */
     .ov{
       position:fixed;inset:0;z-index:100;
       display:none;align-items:center;justify-content:center;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     }
     #ov-conn{
       background:rgba(255,255,255,0.92);
@@ -192,7 +176,6 @@ sitemap: false
       background:#fff;border-radius:14px;padding:24px 20px;
       width:100%;max-width:300px;text-align:center;
       box-shadow:0 20px 60px rgba(0,0,0,0.3);
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     }
     #ov-end-card h3{font-size:16px;font-weight:700;color:#1a1a1a;margin-bottom:8px}
     #ov-end-card p{font-size:13px;color:#516072;line-height:1.5;margin-bottom:20px}
@@ -265,10 +248,10 @@ sitemap: false
     <div id="sm-card">
       <div id="sm-head">
         <p id="sm-title">Start a live session</p>
-        <button id="sm-close">&times;</button>
+        <button id="sm-close">×</button>
       </div>
       <p id="sm-body">Your browser must stay open. Closing this tab ends the session for everyone.</p>
-      <p id="sm-conn" style="display:none">Connecting&hellip;</p>
+      <p id="sm-conn" style="display:none">Connecting…</p>
       <div id="sm-url-row" style="display:none">
         <input id="sm-url" type="text" readonly>
         <button id="sm-copy" class="m-btn">Copy</button>
@@ -296,15 +279,16 @@ sitemap: false
   <!-- Connecting overlay (shown to joiners on page load) -->
   <div id="ov-conn" class="ov">
     <div class="spinner"></div>
-    <span>Connecting to session&hellip;</span>
+    <span>Connecting to session…</span>
   </div>
 
   <script>
   (function(){
-    const base = document.getElementById('base');
-    const prev = document.getElementById('preview');
-    const cap  = document.getElementById('cap');
-    const ti   = document.getElementById('ti');
+    const $=id=>document.getElementById(id);
+    const base = $('base');
+    const prev = $('preview');
+    const cap  = $('cap');
+    const ti   = $('ti');
     const bx   = base.getContext('2d', { alpha: false });
     const px   = prev.getContext('2d');
     let dpr = devicePixelRatio || 1;
@@ -529,7 +513,7 @@ sitemap: false
         document.querySelectorAll('[data-tool]').forEach(x => x.classList.remove('on'));
         b.classList.add('on');
         S.tool = b.dataset.tool;
-        document.getElementById('fsz').classList.toggle('dim', S.tool !== 'text');
+        $('fsz').classList.toggle('dim', S.tool !== 'text');
         if (S.tool !== 'text') commitText();
       });
     });
@@ -556,7 +540,7 @@ sitemap: false
     });
 
     // Reset
-    document.getElementById('rst').addEventListener('click', () => {
+    $('rst').addEventListener('click', () => {
       commitText();
       bx.fillStyle = '#fff'; bx.fillRect(0, 0, W, H);
       px.clearRect(0, 0, W, H);
@@ -568,16 +552,16 @@ sitemap: false
       const nav = performance.getEntriesByType('navigation')[0];
       if (nav) {
         const sz = nav.encodedBodySize || nav.transferSize;
-        if (sz > 256) document.getElementById('s-size').textContent = (sz / 1024).toFixed(1);
+        if (sz > 256) $('s-size').textContent = (sz / 1024).toFixed(1);
         const ttfb = nav.responseStart - nav.fetchStart;
-        if (ttfb > 0) document.getElementById('s-ttfb').textContent = Math.round(ttfb) + ' ms';
-        if (nav.duration > 0) document.getElementById('s-load').textContent = Math.round(nav.duration) + ' ms';
+        if (ttfb > 0) $('s-ttfb').textContent = Math.round(ttfb) + ' ms';
+        if (nav.duration > 0) $('s-load').textContent = Math.round(nav.duration) + ' ms';
       }
       if (window.PerformanceObserver) {
         const obs = new PerformanceObserver(list => {
           for (const e of list.getEntries()) {
             if (e.name === 'first-contentful-paint') {
-              document.getElementById('s-fcp').textContent = Math.round(e.startTime) + ' ms';
+              $('s-fcp').textContent = Math.round(e.startTime) + ' ms';
               obs.disconnect();
             }
           }
@@ -589,7 +573,7 @@ sitemap: false
     else addEventListener('load', () => setTimeout(measurePerf, 0));
 
     // Download
-    document.getElementById('dl').addEventListener('click', () => {
+    function savePng() {
       commitText();
       const a = document.createElement('a');
       const p2 = n => String(n).padStart(2,'0');
@@ -598,7 +582,8 @@ sitemap: false
       a.download = ts + '-fastdraw.png';
       a.href = base.toDataURL('image/png');
       a.click();
-    });
+    }
+    $('dl').addEventListener('click', savePng);
 
     // ── Live sharing ──────────────────────────────────────────────────────────
 
@@ -612,11 +597,11 @@ sitemap: false
       s.src = 'https://unpkg.com/peerjs@1/dist/peerjs.min.js';
       s.onload = cb;
       s.onerror = () => {
-        document.getElementById('sm-conn').style.display = 'none';
-        document.getElementById('sm-err').textContent = 'Could not load sharing library. Check your connection.';
-        document.getElementById('sm-err').style.display = 'block';
-        document.getElementById('sm-go').disabled = false;
-        document.getElementById('ov-conn').style.display = 'none';
+        $('sm-conn').style.display = 'none';
+        $('sm-err').textContent = 'Could not load sharing library. Check your connection.';
+        $('sm-err').style.display = 'block';
+        $('sm-go').disabled = false;
+        $('ov-conn').style.display = 'none';
       };
       document.head.appendChild(s);
     }
@@ -644,8 +629,8 @@ sitemap: false
 
     // Update the live badge and tell all peers the new count
     function setLiveBadge(n) {
-      document.getElementById('live-count').textContent = n;
-      document.getElementById('live-badge').style.display = n > 1 ? 'flex' : 'none';
+      $('live-count').textContent = n;
+      $('live-badge').style.display = n > 1 ? 'flex' : 'none';
     }
 
     function updateCount() {
@@ -677,9 +662,9 @@ sitemap: false
 
     // Host: create a new session
     function startSession() {
-      const smGo   = document.getElementById('sm-go');
-      const smConn = document.getElementById('sm-conn');
-      const smErr  = document.getElementById('sm-err');
+      const smGo   = $('sm-go');
+      const smConn = $('sm-conn');
+      const smErr  = $('sm-err');
       smGo.disabled = true;
       smConn.style.display = 'block';
       smErr.style.display  = 'none';
@@ -690,11 +675,11 @@ sitemap: false
           isHost      = true;
           shareActive = true;
           history.replaceState(null, '', `?room=${id}`);
-          document.getElementById('sm-url').value = location.href;
+          $('sm-url').value = location.href;
           smConn.style.display = 'none';
-          document.getElementById('sm-btns').style.display = 'none';
-          document.getElementById('sm-url-row').style.display = 'flex';
-          document.getElementById('shr').classList.add('live');
+          $('sm-btns').style.display = 'none';
+          $('sm-url-row').style.display = 'flex';
+          $('shr').classList.add('live');
           setLiveBadge(1);
         });
         myPeer.on('connection', conn => setupConn(conn));
@@ -708,14 +693,14 @@ sitemap: false
 
     // Joiner: connect to an existing session via room ID in URL
     function joinSession(roomId) {
-      document.getElementById('ov-conn').style.display = 'flex';
+      $('ov-conn').style.display = 'flex';
       loadPeerJS(() => {
         myPeer = new Peer();
         myPeer.on('open', () => {
           hostConn = myPeer.connect(roomId, { reliable: true });
           hostConn.on('open', () => {
             shareActive = true;
-            document.getElementById('ov-conn').style.display = 'none';
+            $('ov-conn').style.display = 'none';
           });
           hostConn.on('data', data => {
             if (data.type === 'init') {
@@ -731,66 +716,50 @@ sitemap: false
           hostConn.on('close', () => {
             shareActive = false;
             setLiveBadge(0);
-            document.getElementById('ov-end').style.display = 'flex';
+            $('ov-end').style.display = 'flex';
           });
         });
         myPeer.on('error', () => {
           // Connection failed — just proceed in solo mode
-          document.getElementById('ov-conn').style.display = 'none';
+          $('ov-conn').style.display = 'none';
         });
       });
     }
 
     // Share button
-    document.getElementById('shr').addEventListener('click', () => {
-      if (shareActive) {
-        // Already hosting — re-show modal with the URL
-        document.getElementById('sm-conn').style.display = 'none';
-        document.getElementById('sm-btns').style.display = 'none';
-        document.getElementById('sm-url-row').style.display = 'flex';
-        document.getElementById('sm-err').style.display = 'none';
-      } else {
-        // Fresh start
-        document.getElementById('sm-conn').style.display    = 'none';
-        document.getElementById('sm-url-row').style.display = 'none';
-        document.getElementById('sm-err').style.display     = 'none';
-        document.getElementById('sm-btns').style.display    = 'flex';
-        document.getElementById('sm-go').disabled = false;
-      }
-      document.getElementById('sm').style.display = 'flex';
-    });
+    function openModal() {
+      const s = shareActive;
+      $('sm-conn').style.display    = 'none';
+      $('sm-err').style.display     = 'none';
+      $('sm-btns').style.display    = s ? 'none' : 'flex';
+      $('sm-url-row').style.display = s ? 'flex' : 'none';
+      if (!s) $('sm-go').disabled = false;
+      $('sm').style.display = 'flex';
+    }
+    $('shr').addEventListener('click', openModal);
 
     function closeModal() {
-      document.getElementById('sm').style.display = 'none';
+      $('sm').style.display = 'none';
       if (!shareActive && myPeer) { myPeer.destroy(); myPeer = null; }
     }
-    document.getElementById('sm-cancel').addEventListener('click', closeModal);
-    document.getElementById('sm-close').addEventListener('click', closeModal);
+    $('sm-cancel').addEventListener('click', closeModal);
+    $('sm-close').addEventListener('click', closeModal);
 
-    document.getElementById('sm-go').addEventListener('click', startSession);
+    $('sm-go').addEventListener('click', startSession);
 
-    document.getElementById('sm-copy').addEventListener('click', () => {
-      navigator.clipboard.writeText(document.getElementById('sm-url').value).then(() => {
-        const btn = document.getElementById('sm-copy');
+    $('sm-copy').addEventListener('click', () => {
+      navigator.clipboard.writeText($('sm-url').value).then(() => {
+        const btn = $('sm-copy');
         btn.textContent = 'Copied!';
         setTimeout(() => btn.textContent = 'Copy', 2000);
       });
     });
 
     // Session-ended overlay buttons
-    document.getElementById('ov-end-save').addEventListener('click', () => {
-      commitText();
-      const a = document.createElement('a');
-      const p2 = n => String(n).padStart(2,'0');
-      const d = new Date();
-      const ts = `${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}-${p2(d.getHours())}${p2(d.getMinutes())}${p2(d.getSeconds())}`;
-      a.download = ts + '-fastdraw.png';
-      a.href = base.toDataURL('image/png');
-      a.click();
-    });
+    $('ov-end-save').addEventListener('click', savePng);
 
-    document.getElementById('ov-end-cont').addEventListener('click', () => {
-      document.getElementById('ov-end').style.display = 'none';
+    $('ov-end-cont').addEventListener('click', () => {
+      $('ov-end').style.display = 'none';
     });
 
     // Detect join URL on page load and lazy-load PeerJS only if needed
