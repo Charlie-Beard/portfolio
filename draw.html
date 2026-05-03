@@ -27,7 +27,7 @@ sitemap: false
       display:flex;align-items:center;justify-content:space-between;
       height:44px;padding:0 12px;gap:8px;
       background:rgba(255,255,255,0.95);
-      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
       border-bottom:1px solid rgba(0,0,0,0.09);
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     }
@@ -62,7 +62,7 @@ sitemap: false
       padding:5px 12px;
       padding-bottom:calc(5px + env(safe-area-inset-bottom,0px));
       background:rgba(255,255,255,0.95);
-      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
       border-top:1px solid rgba(0,0,0,0.09);
     }
     /* A flex-basis:100% element forces everything after it onto a new row */
@@ -161,9 +161,9 @@ sitemap: false
     const prev = document.getElementById('preview');
     const cap  = document.getElementById('cap');
     const ti   = document.getElementById('ti');
-    const bx   = base.getContext('2d');
+    const bx   = base.getContext('2d', { alpha: false });
     const px   = prev.getContext('2d');
-    const dpr  = devicePixelRatio || 1;
+    let dpr = devicePixelRatio || 1;
     let W = 0, H = 0;
 
     function initCanvas(c, ctx) {
@@ -177,13 +177,16 @@ sitemap: false
     function boot() {
       W = innerWidth; H = innerHeight;
       initCanvas(base, bx);
+      bx.fillStyle = '#fff'; bx.fillRect(0, 0, W, H);
       initCanvas(prev, px);
     }
 
     function resizeRestore() {
+      dpr = devicePixelRatio || 1;
       const url = base.toDataURL();
       W = innerWidth; H = innerHeight;
       initCanvas(base, bx);
+      bx.fillStyle = '#fff'; bx.fillRect(0, 0, W, H);
       initCanvas(prev, px);
       const img = new Image();
       img.onload = () => bx.drawImage(img, 0, 0, W, H);
@@ -196,11 +199,10 @@ sitemap: false
 
     // Tool state
     const S = { tool: 'pen', color: '#1a1a1a', fs: 24, lw: 2.5 };
-    let active = false, pid = -1, x0 = 0, y0 = 0, pts = [];
+    let active = false, pid = -1, x0 = 0, y0 = 0, pts = [], rafPending = false, rx = 0, ry = 0;
 
     function pos(e) {
-      const r = cap.getBoundingClientRect();
-      return { x: e.clientX - r.left, y: e.clientY - r.top };
+      return { x: e.clientX, y: e.clientY };
     }
 
     function applyStyle(ctx) {
@@ -287,9 +289,17 @@ sitemap: false
           px.moveTo(x, y);
         }
       } else {
-        px.clearRect(0, 0, W, H);
-        applyStyle(px);
-        S.tool === 'rect' ? drawRect(px, x0, y0, x, y) : drawOval(px, x0, y0, x, y);
+        rx = x; ry = y;
+        if (!rafPending) {
+          rafPending = true;
+          requestAnimationFrame(() => {
+            rafPending = false;
+            if (!active) return;
+            px.clearRect(0, 0, W, H);
+            applyStyle(px);
+            S.tool === 'rect' ? drawRect(px, x0, y0, rx, ry) : drawOval(px, x0, y0, rx, ry);
+          });
+        }
       }
     });
 
@@ -396,7 +406,7 @@ sitemap: false
     // Reset — clears both canvas layers in place (no reload needed)
     document.getElementById('rst').addEventListener('click', () => {
       commitText();
-      bx.clearRect(0, 0, W, H);
+      bx.fillStyle = '#fff'; bx.fillRect(0, 0, W, H);
       px.clearRect(0, 0, W, H);
     });
 
