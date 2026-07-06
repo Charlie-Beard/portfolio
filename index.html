@@ -20,7 +20,7 @@ schema_person: true
     <p class="section-copy">Core platform products from J.P.Morgan Asset Management's Spectrum.</p>
   </div>
   <div class="project-grid">
-    {% assign sorted_projects = site.projects | sort: "order" %}
+    {% assign sorted_projects = site.projects | where_exp: "project", "project.hidden != true" | sort: "order" %}
     {% for project in sorted_projects %}
     <article class="project-card">
       <div class="project-card__content">
@@ -40,7 +40,7 @@ schema_person: true
         </dl>
         <p class="project-card__impact">{{ project.impact | escape }}</p>
       </div>
-      <a class="button-link" href="{{ project.url | prepend: site.baseurl }}" aria-label="View {{ project.title }} case study">View case study</a>
+      <a class="button-link" href="{{ project.url | prepend: site.baseurl }}" aria-label="View {{ project.title | escape }} case study">View case study</a>
     </article>
     {% endfor %}
   </div>

@@ -35,4 +35,23 @@ layout: default
   <div class="case-study__body rich-text">
     {{ content }}
   </div>
+
+  {% assign nav_projects = site.projects | where_exp: "project", "project.hidden != true" | sort: "order" %}
+  {% assign next_project = nil %}
+  {% for project in nav_projects %}
+    {% if project.url == page.url %}
+      {% assign next_index = forloop.index0 | plus: 1 %}
+      {% if next_index >= nav_projects.size %}{% assign next_index = 0 %}{% endif %}
+      {% assign next_project = nav_projects[next_index] %}
+    {% endif %}
+  {% endfor %}
+  {% if next_project and next_project.url != page.url %}
+  <nav class="case-study__next" aria-label="Continue reading">
+    <p class="eyebrow">Next case study</p>
+    <a class="case-study__next-link" href="{{ next_project.url | prepend: site.baseurl }}">
+      <span class="case-study__next-title">{{ next_project.title | escape }}</span>
+      <span class="case-study__next-summary">{{ next_project.cardSummary | escape }}</span>
+    </a>
+  </nav>
+  {% endif %}
 </article>

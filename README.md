@@ -80,8 +80,7 @@ layout: default
 title: "Page Title | Charles Beard"
 description: "Page description for meta + OG tags."
 body_data_page: my-page          # populates <body data-page="...">; used for page-specific CSS hooks
-body_class: optional-class       # extra <body> class (e.g. is-loading)
-has_loader: false                # set true to render the page-loader div before page-shell
+body_class: optional-class       # extra <body> class
 favicon: favicon.svg             # override the default favicon
 extra_scripts:                   # additional deferred scripts loaded after the page shell
   - js/example.js
