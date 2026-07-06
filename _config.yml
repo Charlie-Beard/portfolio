@@ -1,5 +1,5 @@
 title: Charles Beard | Enterprise Platform Leadership
-description: CFA Charterholder leading enterprise platform strategy and governance at J.P.Morgan Asset Management — shared products, design systems, AI tooling, and analytics for 100+ applications.
+description: "CFA Charterholder leading enterprise platform strategy and governance at J.P.Morgan Asset Management: shared products, design systems, AI tooling, and analytics for 100+ applications."
 baseurl: "/portfolio"
 url: "https://charlie-beard.github.io"
 
@@ -13,7 +13,7 @@ social:
     - https://www.linkedin.com/in/charlesjohnbeard/
     - https://charlie-beard.github.io/portfolio/
 
-# og_image: content/og-image.png   # uncomment and add a 1200×630 px image for social previews
+og_image: content/og-image.png   # 1200x630 social preview image
 
 cloudflare_token: "6bbaa05b99284a46898a940262447e2d"
 

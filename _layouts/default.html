@@ -15,9 +15,6 @@
   </head>
   <body{% if page.body_class %} class="{{ page.body_class }}"{% endif %} data-page="{{ page.body_data_page | default: page.layout }}">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    {%- if page.has_loader %}
-    <div class="page-loader" aria-hidden="true"></div>
-    {%- endif %}
     <div class="page-shell">
       {% include header.html %}
 

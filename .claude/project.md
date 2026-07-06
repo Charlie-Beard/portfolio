@@ -10,4 +10,4 @@
 3. Analytics, Training & Surveys — Pendo.io (`telemetry-analytics.md`)
 4. Help and Support (`help-support.md`)
 5. Dashboards (`dashboards.md`)
-6. MSc Thesis (`msc-thesis.md`) — `published: false`, hidden from home grid
+6. MSc Thesis (`msc-thesis.md`) — `hidden: true`, deep-link only: builds for the CV link but excluded from home grid, llms.txt, and sitemap

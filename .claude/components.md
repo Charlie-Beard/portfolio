@@ -16,7 +16,8 @@ order:        # ascending int, controls home grid sort
 heroImage:    # optional — content/projects/images/xxx.svg
 heroAlt:
 heroCaption:
-published:    # false = hidden from site.projects / home grid
+published:    # false = page not built at all (breaks inbound links)
+hidden:       # true = page builds but is excluded from home grid + llms.txt (deep-link only); pair with sitemap: false
 ```
 
 ## Case Study Section Order
